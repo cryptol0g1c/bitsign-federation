@@ -1,5 +1,11 @@
 # Bitsign Federation Network
 
+#### Explorer
+Bitsign Federation block explorer can be found [here](https://explorer.bitsign.io)
+
+#### Statistics
+Statistic explorer can be found [here](https://stats.bitsign.io)
+
 #### Configuration
 
 To connect to Bitsign Federation Blockchain you need to:
