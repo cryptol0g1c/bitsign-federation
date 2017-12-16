@@ -12,8 +12,8 @@ Statistic explorer can be found [here](https://stats.bitsign.io)
 
 #### Configuration
 
-To connect to Bitsign Federation Blockchain you need to:
-Use **genesis.json** settings and initial conditions.
+To connect to Bitsign Federation Blockchain you need to use **genesis.json** for settings and initial conditions.
+
 File can be downloaded from [here](https://github.com/cryptol0g1c/bitsign-federation/blob/master/genesis.json)
 
 ```json
