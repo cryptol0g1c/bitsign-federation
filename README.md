@@ -33,5 +33,5 @@ Parity software can be downloaded [here](https://github.com/paritytech/parity/re
 
 For running Parity on Bitsign Federation an example command line can be:
 ```
-parity --chain=genesis.json --bootnodes enode://a891225909f70a4ee3f40c1dac05da763fe0354d5f259922abf841db51706283d2957c09fc7266e5f4633583a34dbef3f38a769eb35551788740a06e387dfa2a@159.203.176.160:30303
+$ parity --chain=genesis.json --bootnodes enode://a891225909f70a4ee3f40c1dac05da763fe0354d5f259922abf841db51706283d2957c09fc7266e5f4633583a34dbef3f38a769eb35551788740a06e387dfa2a@159.203.176.160:30303
 ```
