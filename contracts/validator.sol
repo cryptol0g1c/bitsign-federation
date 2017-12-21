@@ -2,7 +2,7 @@ pragma solidity ^0.4.13;
 
 contract Validator {
   address[] private _validatorArr;
-	address[] private _pendingArr = [0x0a0f29a9b479d91f6d112b203c7d9db0cb4cdb84];
+	address[] private _pendingArr = [0x0a0F29a9B479d91F6D112B203C7D9dB0cb4CDb84];
 	bool private _finalized = true;
 
   event InitiateChange(bytes32 indexed _parent_hash, address[] _new_set);
@@ -13,23 +13,23 @@ contract Validator {
     _;
   }
 
-	function Validator() {
+	function Validator() public {
 		_validatorArr = _pendingArr;
 	}
 
 	// Called on every block to update node validator list.
-  function getValidators() constant returns (address[]) {
+  function getValidators() public constant returns (address[]) {
 		return _validatorArr;
 	}
 
 	// Expand the list of validators.
-	function addValidator(address newValidator) finalized {
+	function addValidator(address newValidator) public finalized {
     _pendingArr.push(newValidator);
     initiateChange();
   }
 
 	// Remove a validator from the list.
-  function removeValidator(address validator) finalized {
+  function removeValidator(address validator) public finalized {
     for (uint i = 0; i < _pendingArr.length; i++) {
       if (_pendingArr[i] == validator) {
         for (uint j = i; j < _pendingArr.length - 1; j++) {
@@ -47,7 +47,7 @@ contract Validator {
     InitiateChange(block.blockhash(block.number - 1), _pendingArr);
   }
 
-	function finalizeChange() {
+	function finalizeChange() public {
     _validatorArr = _pendingArr;
     _finalized = true;
     ChangeFinalized(_validatorArr);

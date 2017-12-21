@@ -3,8 +3,8 @@
 */
 pragma solidity ^0.4.15;
 
-contract Notarize {
 
+contract Notarize {
   //State variables
   mapping (bytes32 => address) private proofs;
   address private owner;

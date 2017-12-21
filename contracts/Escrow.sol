@@ -3,6 +3,7 @@
 */
 pragma solidity ^0.4.15;
 
+
 contract Escrow {
   //State variables
   address public buyer;
@@ -63,17 +64,18 @@ contract Escrow {
     Refund(this.balance, buyer);
     buyer.transfer(this.balance);
   }
+
   /**
     TODO: Devuelve el balance depositando en el contrato
-   */
+  */
   function getBalance() external constant returns (uint) {
     return this.balance;
   }
 
   /**
     TODO: doc
-   */
+  */
   function kill() public isArbiter() {
-	  selfdestruct(msg.sender);
-	}
+    selfdestruct(msg.sender);
+  }
 }

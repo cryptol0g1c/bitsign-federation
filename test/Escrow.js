@@ -11,7 +11,7 @@ const endTime = 0;
 
 contract('Escrow', accounts => {
   let instance;
-  let value = Web3.utils.toWei(1, 'ether');
+  let value = Web3.utils.toWei('1', 'ether');
   let web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
   let initialSellerBalance;
   let initialBuyerBalance;
@@ -99,7 +99,7 @@ contract('Escrow', accounts => {
         event: 'Payout',
         logIndex: 0,
         args: {
-          _value: new BigNumber(value),
+          _value: new BigNumber(value.toString()),
           _to: seller.address
         }
       })
@@ -145,7 +145,7 @@ contract('Escrow', accounts => {
         event: 'Refund',
         logIndex: 0,
         args: {
-          _value: new BigNumber(value),
+          _value: new BigNumber(value.toString()),
           _to: buyer.address
         }
       })

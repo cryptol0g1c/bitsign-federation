@@ -1,5 +1,4 @@
 const Notarize = artifacts.require('Notarize');
-const environments = require('../config/environments');
 const utils = require('./utils/index');
 
 const account = utils.addresses[0].address;
@@ -27,7 +26,7 @@ contract('Notarize', accounts => {
         event: 'Notary',
         logIndex: 0,
         args: {
-          _sghash: hashToNotarize,
+          _data: hashToNotarize,
           _address: account
         }
       })
