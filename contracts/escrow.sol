@@ -9,55 +9,71 @@ contract Escrow {
   address public seller;
   address public arbiter;
   uint public value;
-  uint public endTime;
+  uint public endtime;
   //Events
   event Payout(uint _value, address _to);
   event Refund(uint _value, address _to);
 
+  modifier validateParams (address _seller, address _buyer) {
+    require (_seller != address(0) && _buyer != address(0) && _seller != _buyer);
+    _;
+  }
+
+  modifier isBuyerOrArbiter () {
+    require (msg.sender == buyer || msg.sender == arbiter);
+    _;
+  }
+
+  modifier isSellerOrArbiter () {
+    require (msg.sender == seller || msg.sender == arbiter);
+    _;
+  }
+
+
+  modifier isArbiter () {
+    require (msg.sender == arbiter);
+    _;
+  }
+
   /**
     TODO: doc
    */
-  function Escrow (address _seller, address _buyer, uint _endtime) payable {
+  function Escrow (address _seller, address _buyer, uint _endtime) public payable validateParams (_seller, _buyer) {
     arbiter = msg.sender;
     value = msg.value;
     buyer = _buyer;
     seller = _seller;
-    endTime = _endtime;
+    endtime = _endtime;
   }
 
   /**
-    TODO: Si las condiciones del contrato se cumplen, el arbiter o comprador puede ejecutar 
+    TODO: Si las condiciones del contrato se cumplen, el arbiter o comprador puede ejecutar
     esta función para pagar al vendedor.
    */
-  function pay() {
-    if (msg.sender == buyer || msg.sender == arbiter) {
-      Payout(this.balance, seller);
-      seller.transfer(this.balance);
-    }
+  function pay() external isBuyerOrArbiter() {
+    Payout(this.balance, seller);
+    seller.transfer(this.balance);
   }
 
   /**
-    TODO: Si las condiciones no se cumplen por algún motivo, se ejecuta 
+    TODO: Si las condiciones no se cumplen por algún motivo, se ejecuta
     esta función para devolver al comprador los fondos.
    */
-  function refund() {
-    if (msg.sender == seller || msg.sender == arbiter) {
-      Refund(this.balance, buyer);
-      buyer.transfer(this.balance);
-    }
+  function refund() external isSellerOrArbiter() {
+    Refund(this.balance, buyer);
+    buyer.transfer(this.balance);
   }
   /**
     TODO: Devuelve el balance depositando en el contrato
    */
-  function getBalance() constant returns (uint) {
+  function getBalance() external constant returns (uint) {
     return this.balance;
   }
 
   /**
     TODO: doc
    */
-  function kill() public {
-    if (msg.sender == arbiter)
-		  selfdestruct(msg.sender);
+  function kill() public isArbiter() {
+	  selfdestruct(msg.sender);
 	}
 }

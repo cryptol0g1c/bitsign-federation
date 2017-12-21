@@ -6,10 +6,21 @@
     "type": "git",
     "url": "git+https://github.com/cryptol0g1c/bitsign-federation.git"
   },
+  "scripts": {
+    "test:contracts": "truffle test",
+    "lint:contracts": "./node_modules/solium/bin/solium.js -d contracts/"
+  },
   "author": "bitsign",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cryptol0g1c/bitsign-federation/issues"
   },
-  "homepage": "https://github.com/cryptol0g1c/bitsign-federation#readme"
+  "homepage": "https://github.com/cryptol0g1c/bitsign-federation#readme",
+  "dependencies": {
+    "zeppelin-solidity": "^1.4.0"
+  },
+  "devDependencies": {
+    "solium": "^1.0.5",
+    "truffle": "^4.0.4"
+  }
 }
