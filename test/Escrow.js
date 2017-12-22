@@ -88,9 +88,9 @@ contract('Escrow', accounts => {
       instance.getBalance(),
       web3.eth.getBalance(seller.address)
     ]).then(([tx, contractBalance, sellerBalance]) => {
-      assert.equal(contractBalance.toNumber(), value);
-      assert.equal(Number(sellerBalance), initialSellerBalance);
-    });
+        assert.equal(contractBalance.toNumber(), value);
+        assert.equal(Number(sellerBalance), initialSellerBalance);
+    }).catch(error => utils.assertRevert(error));
   });
 
   it('should send Payout event on pay()', () => {
@@ -136,7 +136,7 @@ contract('Escrow', accounts => {
     ]).then(([tx, contractBalance, buyerBalance]) => {
       assert.equal(contractBalance.toNumber(), value);
       assert.equal(Number(buyerBalance), initialBuyerBalance);
-    });
+    }).catch(error => utils.assertRevert(error));
   });
 
   it('should send Refund event on refund()', () => {
@@ -178,6 +178,6 @@ contract('Escrow', accounts => {
     ]).then(([tx, contractBalance, arbiterBalance]) => {
       assert.equal(contractBalance.toNumber(), value);
       assert.equal(Number(arbiterBalance), initialArbiterBalance);
-    })
+    }).catch(error => utils.assertRevert(error));
   });
 });

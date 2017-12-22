@@ -34,6 +34,7 @@ contract('Notarize', accounts => {
   });
 
   it('should not notarize the contract if sender is not the owner', () => {
-    // TODO: Ver como se puede testear el revert()
+    return instance.notarize(hashToNotarize, {from: account})
+      .catch(error => utils.assertRevert(error));
   });
 });

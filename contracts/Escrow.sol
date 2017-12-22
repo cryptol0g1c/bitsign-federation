@@ -10,7 +10,7 @@ contract Escrow {
   address public seller;
   address public arbiter;
   uint public value;
-  uint public endtime;
+  uint public endTime;
   //Events
   event Payout(uint _value, address _to);
   event Refund(uint _value, address _to);
@@ -39,12 +39,12 @@ contract Escrow {
   /**
     TODO: doc
    */
-  function Escrow (address _seller, address _buyer, uint _endtime) public payable validateParams (_seller, _buyer) {
+  function Escrow (address _seller, address _buyer, uint _endTime) public payable validateParams (_seller, _buyer) {
     arbiter = msg.sender;
     value = msg.value;
     buyer = _buyer;
     seller = _seller;
-    endtime = _endtime;
+    endTime = _endTime;
   }
 
   /**

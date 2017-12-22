@@ -3,6 +3,7 @@ const ethjs = require('ethjs-account');
 const Promise = require('bluebird');
 const randomstring = require('randomstring');
 const Web3 = require('web3');
+const assertRevert = require('zeppelin-solidity/test/helpers/assertRevert');
 
 const assertEvent = (contract, filter) => new Promise((resolve, reject) => {
     let event = contract[filter.event]();
@@ -46,5 +47,6 @@ module.exports = {
   addresses,
   assertAddress,
   assertEvent,
+  assertRevert,
   generateRandomAddress
 };
