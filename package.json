@@ -10,7 +10,7 @@
     "test:contracts": "truffle test",
     "lint:contracts": "./node_modules/solium/bin/solium.js -d contracts/"
   },
-  "author": "bitsign",
+  "author": "cryptologic",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cryptol0g1c/bitsign-federation/issues"
