@@ -25,6 +25,8 @@
     "ethjs-account": "^0.1.4",
     "lodash": "^4.17.4",
     "randomstring": "^1.1.5",
+    "rimraf": "^2.6.2",
+    "solc": "^0.4.19",
     "solium": "^1.0.5",
     "truffle": "^4.0.4",
     "web3": "^1.0.0-beta.27"
