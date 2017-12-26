@@ -1,0 +1,501 @@
+FORMAT: 1A
+HOST: https://api.bitsign.io/
+
+# Bitsign BaaS API documentation 
+
+![Bitsign](https://bitsign.io/img/logos/logo.png "Bitsign Logo")
+
+##### What is  Bitsign Baas?
+
+Bitsign's BaaS **(Blockchain as a Service)** is a service which acts as an 
+abstraction layer and lets you interact with different types of blockchains and
+run descentralized apps (DApps) like Smart Contracts.
+
+Bitsign resources can be found here:
+
+https://github.com/cryptol0g1c/bitsign
+
+Anytime you alter the blockchain state thus creating a transaction that information can 
+be searched using transaction hash, account or smart contract address at:
+
+https://explorer.bitsign.io
+
+
+##### Blockchain types
+
+* BSG blockchain
+
+Bitsign chain is an Ethereum opcode compatible chain that runs on several
+Parity nodes using **PoA** (Proof of Authority) consensus algorithm.
+Chain parameters and initial conditions can be found here:
+
+https://github.com/cryptol0g1c/bitsign/blob/master/genesis.json
+
+New nodes can be addeed using a validator contract, its code can be found here:
+
+https://github.com/cryptol0g1c/bitsign/blob/master/contracts/validator.sol
+
+* Ropsten Blockchain (Work In Progress)
+
+* Ethereum Main Net (Work In Progress)
+
+* RSK (Work In Progress)
+
+## User Endpoints [/api/v2/user]
+
+### User Info [GET /api/v2/user?email={email}&password={password}]
+This endpoint retrieves token and Ethereum keys needed to interact with the rest of the endpoints.
+**Email** and **password** parameters must be provided.
+
++ Parameters
+
+    + email: alice@crypto.com (string) - Unique email address.
+    + password: some_crafty_password (string) - User Password
+
++ Response 200 (application/json)
+
+        {
+            "success": true,
+            "data": {
+                "username": "alice",
+                "email": "alice@crypto.com",
+                "ethereumAddress": "0xA2..99",
+                "token": "ey..yk"
+            },
+            "error": null
+        }
+
+### New User [POST]
+Create new user trough our API to get token access and pre-configured Ethereum keys.
+With the token you can query all other endpoints and interact with all blockchains and the Smart Contracts.
+
++ Request (application/json)
+
+        {
+            "email": "alice@crypto.com",
+            "password": "crafty_password!",
+            "username": "alice"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "success": true,
+            "data": {
+                "_id": "5a..1a",
+                "username": "alice",
+                "email": "alice@crypto.com",
+                "etherAddress": "0x94..17",
+                "etherPrivKey": "0x34..06",
+                "token": "ey..gk"
+            },
+            "error": null
+        }
+
+
+## Transaction Endpoints [/eth/notarizetx]
+### Notarization TX [POST]
+This endpoints uses data field input to create a **notary transaction** and include it in a new block.
+Transactions from this endpoints will be executed **from Bitsign's main node** to facilitate its creation.
+If you want to create your own transaction and send it from your account please use **sendRawTX endpoint instead**.
+
++ Request (application/json)
+
+        {
+            "token": "<your_token>",
+            "data": "<some_hexadecimal_data>",
+            "address": "<your_ethereum_address>"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "success": true,
+            "data": {
+                "blockHash": "0x96..3b",
+                "blockNumber": 1958,
+                "gasUsed": 21136,
+                "transactionHash": "0x2d..b7",
+                "explorerUrl": "https://explorer.bitsign.io/tx/0x2d49344a2d59d713a2195acd934060d945bb4fc4c0e792d46d1d5e33b67aaeb7"
+            },
+            "error": null
+        }
+        
+### Send TX [POST /eth/sendtx]
+This enpoint allow the user to send a transaction from the user's account.
+
++ Request (application/json)
+
+        {
+            "data": "Data the user want to send in SHA or ascii",
+            "token": "<your_token>",
+            "password": "<your_password>",
+            "to": "The destination address of the message",
+            "value": "The value transferred for the transaction in ETH"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "success": true,
+            "data": {
+                "blockHash": "0x...",
+                "blockNumber": 12278,
+                "contractAddress": null,
+                "cumulativeGasUsed": 23176,
+                "gasUsed": 23176,
+                "logs": [],
+                "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                "root": null,
+                "status": null,
+                "transactionHash": "0x...",
+                "transactionIndex": 0,
+                "txExplorerUrl": "https://explorer.bitsign.io/tx/0x..."
+            },
+            "error": null
+        }
+        
+        
+        
+## Raw Transactions Endpoints [/eth/rawtx]
+
+### SendRawTransaction [POST]
+If you don't trust or don't want to use the **keypair provided by Bitsign**, you can always call this endpoint that will publish your **offline
+signed** raw [transaction](https://web3js.readthedocs.io/en/1.0/web3-eth.html#sendsignedtransaction). Bitsign node will only handle gas cost and transaction publication, 
+but you have to **craft the entire transaction** on your end.
+We will be releasing Bitsign tx library to facilitate this process soon.
+
+
++ Request (application/json)
+
+        {
+            "token": "",
+            "env": "",
+            "tx": ""
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "success": true,
+            "data": {},
+            "error": null
+        }
+
+
+## Smart Contract Endpoints [/eth/contract]
+### Deploy new Smart Contract [PUT]
+This endpoint allow the user to deploy a new smart contract. The available smart contracts are:
+
+##### Notarize
+This smart contract allow the user to notarize documents.
+###### Constructor
+In order to initialize Notarize contract the user must send an address, that will be set as the owner of the contract. The owner will be the only one that is able to notarize.
+###### Methods
+* notarize: This method receive as a parameter a bytes32 that will be the evidence to be notarized. The owner of the contract will be the only one that is capable of execute this method. If the sender is not the owner, the tx will be reverted. After the evidence is notarized the Notary event will be raised with two parameters: the evidence and the address.
+
+##### Escrow
+This smart contract allow the user to deposit founds in the smart contract and define a buyer, a seller and an arbiter. Each actor can release the found to the other part based on pre established conditions.
+###### Constructor
+In order to initialize Escrow contract the user must send _seller (address), _buyer (address) and _endTime (uint). The sender of the transaction will be the arbiter of the contract. The arbiter act as an impartial third party. Also the value should be passed in order to set funds on the contract.
+###### Methods
+* pay: This method can be executed by the buyer or the arbiter. This method will transfer the balance of the contract to the seller address. After that, it will raise the Payout event with two parameters: balance and seller address.
+* refund: This method can be executed by the seller or the arbiter. This method will transfer the balance of the contract to the buyer address. After that, it will raise the Refund event with two parameters: balance and buyer address.
+* getBalance: This method will return the balance of the contract. It can be executed by any member of the contract.
+* kill: This method can be executed by the arbiter only. It will destruct the contract and send the balance of the contract to its address.
+
+#####  NotarizeTX
+###### Constructor
+In order to initialize NotarizeTx contract the user must send the following values:
+buyer (address),
+seller (address),
+id  (bytes32),
+date (string),
+value (uint),
+hash (bytes32),
+status (string),
+shipping (string)
+###### Methods
+* updateStatus: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx status. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
+* updateShipping: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx shipping. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
+
++ Request (application/json)
+
+        {
+            "token": "",
+            "env": "production",
+            "args": {
+                "_user": "<eth-address>"
+            },
+            "type": "Notarize",
+            "value": "0"
+        }
+    
++ Response 200 (application/json)
+
+        {
+          "success": true,
+          "data": {
+            "__v": 0,
+            "encodedAbi": "00..84",
+            "address": "0x9B..D3",
+            "bytecode": "0x60..029",
+            "gas": 166571,
+            "type": "Notarize",
+            "_id": "5a..31",
+            "events": [],
+            "abi": [
+              {
+                "signature": "0xcbef362f",
+                "type": "function",
+                "stateMutability": "nonpayable",
+                "payable": false,
+                "outputs": [],
+                "name": "notarize",
+                "inputs": [
+                  {
+                    "type": "bytes32",
+                    "name": "_sghash"
+                  }
+                ],
+                "constant": false
+              },
+              {
+                "signature": "constructor",
+                "type": "constructor",
+                "stateMutability": "nonpayable",
+                "payable": false,
+                "inputs": [
+                  {
+                    "type": "address",
+                    "name": "_user"
+                  }
+                ]
+              },
+              {
+                "signature": "0x8d..f6",
+                "type": "event",
+                "name": "Notary",
+                "inputs": [
+                  {
+                    "type": "bytes32",
+                    "name": "_sghash",
+                    "indexed": false
+                  },
+                  {
+                    "type": "address",
+                    "name": "_address",
+                    "indexed": false
+                  }
+                ],
+                "anonymous": false
+              }
+            ],
+            "owner": {
+              "address": "0x06..E4",
+              "email": "test@testuser.com"
+            },
+            "date": {
+              "created": "2017-12-09T01:07:30.634Z"
+            }
+          },
+          "error": null
+        }
+
+### Contract Usage [GET /eth/contract/doc?token={token}&type={type}]
+This endpoint returns smart contract's ABI and functions to use its functionality.
+
++ Parameters
+
+    + token: <user_token> (string) - User token.
+    + type: <contract_name> (string) - Smart Contract type.
+
++ Response 200 (application/json)
+
+        {
+            "success": true,
+            "data": [
+                {
+                    "name": "seller",
+                    "parameters": [],
+                    "return": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "type": "function"
+                },
+                {
+                    "name": "getBalance",
+                    "parameters": [],
+                    "return": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "type": "function"
+                },
+                {
+                    "name": "pay",
+                    "parameters": [],
+                    "return": [],
+                    "type": "function"
+                },
+                {
+                    "name": "endTime",
+                    "parameters": [],
+                    "return": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "type": "function"
+                },
+                {
+                    "name": "value",
+                    "parameters": [],
+                    "return": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "type": "function"
+                },
+                {
+                    "name": "kill",
+                    "parameters": [],
+                    "return": [],
+                    "type": "function"
+                },
+                {
+                    "name": "refund",
+                    "parameters": [],
+                    "return": [],
+                    "type": "function"
+                },
+                {
+                    "name": "buyer",
+                    "parameters": [],
+                    "return": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "type": "function"
+                },
+                {
+                    "name": "arbiter",
+                    "parameters": [],
+                    "return": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "type": "function"
+                },
+                {
+                    "parameters": [
+                        {
+                            "name": "_seller",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_buyer",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_endtime",
+                            "type": "uint256"
+                        }
+                    ],
+                    "type": "constructor"
+                },
+                {
+                    "name": "Payout",
+                    "parameters": [
+                        {
+                            "indexed": false,
+                            "name": "_value",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": false,
+                            "name": "_to",
+                            "type": "address"
+                        }
+                    ],
+                    "type": "event"
+                },
+                {
+                    "name": "Refund",
+                    "parameters": [
+                        {
+                            "indexed": false,
+                            "name": "_value",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": false,
+                            "name": "_to",
+                            "type": "address"
+                        }
+                    ],
+                    "type": "event"
+                }
+            ],
+            "error": null
+        }
+
+
+### Call Contract Method [POST]
+
+This endpoint allow the user to read the state from the blockchain using contract methods. 
+This endpoint will not alter blockchain state and therefore wont cost gas.
+
++ Request (application/json)
+
+        {
+            "token": "",
+            "address": "",
+            "env": "",
+            "method": "",
+            "args": {}
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "success": true,
+            "data": {},
+            "error": null
+        }
+
+### Execute Contract Method[PATCH]
+
+This endpoint allow the user to send a transaction to the node and therefore modify the blockchain state. 
+Altough this method will generally cost gas, there is no limitation about it when using BSG Chain and gast cost will be handled internally.
+
+
++ Request (application/json)
+
+        {
+            "token": "",
+            "address": "",
+            "env": "",
+            "method": "",
+            "args": {}
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "success": true,
+            "data": {},
+            "error": null
+        }
