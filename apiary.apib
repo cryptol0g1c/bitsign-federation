@@ -1,13 +1,13 @@
 FORMAT: 1A
 HOST: https://api.bitsign.io/
 
-# Bitsign BaaS API documentation 
+# Bitsign BaaS API documentation
 
 ![Bitsign](https://bitsign.io/img/logos/logo.png "Bitsign Logo")
 
 ##### What is  Bitsign Baas?
 
-Bitsign's BaaS **(Blockchain as a Service)** is a service which acts as an 
+Bitsign's BaaS **(Blockchain as a Service)** is a service which acts as an
 abstraction layer and lets you interact with different types of blockchains and
 run descentralized apps (DApps) like Smart Contracts.
 
@@ -15,7 +15,7 @@ Bitsign resources can be found here:
 
 https://github.com/cryptol0g1c/bitsign
 
-Anytime you alter the blockchain state thus creating a transaction that information can 
+Anytime you alter the blockchain state thus creating a transaction that information can
 be searched using transaction hash, account or smart contract address at:
 
 https://explorer.bitsign.io
@@ -92,6 +92,29 @@ With the token you can query all other endpoints and interact with all blockchai
             "error": null
         }
 
+### Change Password [PUT]
+This endpoint allow the user to changes their password. You must send the old password and the new one that must respect our security policies.
+
++ Request (application/json)
+
+        {
+            "email": "alice@crypto.com",
+            "password": "crafty_password!",
+            "newPassword": "new_crafty_password"
+        }
+
++ Response 200 (application/json)
+
+        {
+          "success": true,
+          "data": {
+            "_id": "5a..1a",
+            "username": "alice",
+            "email": "alice@crypto.com",
+            "token": "ey..gk"
+          },
+          "error": null
+        }
 
 ## Transaction Endpoints [/eth/notarizetx]
 ### Notarization TX [POST]
@@ -120,7 +143,7 @@ If you want to create your own transaction and send it from your account please 
             },
             "error": null
         }
-        
+
 ### Send TX [POST /eth/sendtx]
 This enpoint allow the user to send a transaction from the user's address signed with the private key associated on Bitsign's account.
 
@@ -154,14 +177,14 @@ This enpoint allow the user to send a transaction from the user's address signed
             },
             "error": null
         }
-        
-        
-        
+
+
+
 ## Raw Transactions Endpoints [/eth/rawtx]
 
 ### SendRawTransaction [POST]
 If you don't trust or don't want to use the **keypair provided by Bitsign**, you can always call this endpoint that will publish your **offline
-signed** raw [transaction](https://web3js.readthedocs.io/en/1.0/web3-eth.html#sendsignedtransaction). Bitsign node will only handle gas cost and transaction publication, 
+signed** raw [transaction](https://web3js.readthedocs.io/en/1.0/web3-eth.html#sendsignedtransaction). Bitsign node will only handle gas cost and transaction publication,
 but you have to **craft the entire transaction** on your end.
 We will be releasing Bitsign tx library to facilitate this process soon.
 
@@ -173,7 +196,7 @@ We will be releasing Bitsign tx library to facilitate this process soon.
             "env": "",
             "tx": ""
         }
-        
+
 + Response 200 (application/json)
 
         {
@@ -230,7 +253,7 @@ shipping (string)
             "type": "Notarize",
             "value": "0"
         }
-    
+
 + Response 200 (application/json)
 
         {
@@ -455,7 +478,7 @@ This endpoint returns smart contract's ABI and functions to use its functionalit
 
 ### Call Contract Method [POST]
 
-This endpoint allow the user to read the state from the blockchain using contract methods. 
+This endpoint allow the user to read the state from the blockchain using contract methods.
 This endpoint will not alter blockchain state and therefore wont cost gas.
 
 + Request (application/json)
@@ -467,7 +490,7 @@ This endpoint will not alter blockchain state and therefore wont cost gas.
             "method": "",
             "args": {}
         }
-        
+
 + Response 200 (application/json)
 
         {
@@ -478,7 +501,7 @@ This endpoint will not alter blockchain state and therefore wont cost gas.
 
 ### Execute Contract Method[PATCH]
 
-This endpoint allow the user to send a transaction to the node and therefore modify the blockchain state. 
+This endpoint allow the user to send a transaction to the node and therefore modify the blockchain state.
 Altough this method will generally cost gas, there is no limitation about it when using BSG Chain and gast cost will be handled internally.
 
 
@@ -491,7 +514,7 @@ Altough this method will generally cost gas, there is no limitation about it whe
             "method": "",
             "args": {}
         }
-        
+
 + Response 200 (application/json)
 
         {
