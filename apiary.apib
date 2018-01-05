@@ -127,7 +127,8 @@ If you want to create your own transaction and send it from your account please 
         {
             "token": "<your_token>",
             "data": "<some_hexadecimal_data>",
-            "address": "<your_ethereum_address>"
+            "address": "<to_ethereum_address>",
+            "password": "<your_password>"
         }
 
 + Response 200 (application/json)
@@ -245,13 +246,14 @@ shipping (string)
 + Request (application/json)
 
         {
-            "token": "",
+            "token": "<your_token>",
             "env": "production",
             "args": {
                 "_user": "<eth-address>"
             },
             "type": "Notarize",
-            "value": "0"
+            "value": "0",
+            "password": "<your_password>"
         }
 
 + Response 200 (application/json)
@@ -484,10 +486,10 @@ This endpoint will not alter blockchain state and therefore wont cost gas.
 + Request (application/json)
 
         {
-            "token": "",
-            "address": "",
-            "env": "",
-            "method": "",
+            "token": "<your_token>",
+            "address": "<contract_address>",
+            "env": "<environment>",
+            "method": "<method_to_call>",
             "args": {}
         }
 
@@ -508,11 +510,12 @@ Altough this method will generally cost gas, there is no limitation about it whe
 + Request (application/json)
 
         {
-            "token": "",
-            "address": "",
-            "env": "",
-            "method": "",
-            "args": {}
+            "token": "<your_token>",
+            "address": "<contract_address>",
+            "env": "<environment>",
+            "method": "<method_to_execute>",
+            "args": {},
+            "password": "<your_password"
         }
 
 + Response 200 (application/json)
