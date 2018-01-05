@@ -72,9 +72,9 @@ With the token you can query all other endpoints and interact with all blockchai
 + Request (application/json)
 
         {
-            "email": "alice@crypto.com",
-            "password": "crafty_password!",
-            "username": "alice"
+            "email": "",
+            "password": "",
+            "username": ""
         }
 
 + Response 200 (application/json)
@@ -82,12 +82,12 @@ With the token you can query all other endpoints and interact with all blockchai
         {
             "success": true,
             "data": {
-                "_id": "5a..1a",
-                "username": "alice",
-                "email": "alice@crypto.com",
-                "etherAddress": "0x94..17",
-                "etherPrivKey": "0x34..06",
-                "token": "ey..gk"
+                "_id": "",
+                "username": "",
+                "email": "",
+                "etherAddress": "",
+                "etherPrivKey": "",
+                "token": ""
             },
             "error": null
         }
@@ -249,9 +249,11 @@ shipping (string)
             "token": "<your_token>",
             "env": "production",
             "args": {
-                "_user": "<eth-address>"
+                "_buyer": "",
+                "_seller": "",
+                "_endTime": 314159
             },
-            "type": "Notarize",
+            "type": "Escrow",
             "value": "0",
             "password": "<your_password>"
         }
