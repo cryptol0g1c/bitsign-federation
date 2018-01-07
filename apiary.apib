@@ -35,11 +35,35 @@ New nodes can be addeed using a validator contract, its code can be found here:
 
 https://github.com/cryptol0g1c/bitsign/blob/master/contracts/validator.sol
 
-* Ropsten Blockchain (Work In Progress)
+* Ropsten Blockchain (WIP)
 
-* Ethereum Main Net (Work In Progress)
+* Ethereum Main Net (WIP)
 
-* RSK (Work In Progress)
+* RSK (WIP)
+
+* MultiChain (WIP)
+
+
+## Blockchain Status [/status]
+This endpoint returns Bitsign blockchain status, latestblock, bootnodes, etc.
+
++ Response 200 (application/json)
+
+        {
+          "success": true,
+          "data": {
+            "status": "Running, healthy",
+            "lastblock": 20201,
+            "hash": "0x2c1b018d0cb86087f7e226459e998e6b7515bc6bf529833c90f8e3883d290c49",
+            "timestamp": 1515282880,
+            "explorer": "https://explorer.bitsign.io/block/20201",
+            "bootnodes": [
+              "enode://a891225909f70a4ee3f40c1dac05da763fe0354d5f259922abf841db51706283d2957c09fc7266e5f4633583a34dbef3f38a769eb35551788740a06e387dfa2a@159.203.176.160:30303",
+              "enode://b21d8b85165319a86c822dadcd51fbaf1aca3fe7854df8644c03ac304e34205d31d44d0eac7dd6366a8f8a621eeb2198d9644090d59771148fb3ac92630d2dd6@198.211.100.127:30303"
+            ]
+          },
+          "error": null
+        }
 
 ## User Endpoints [/api/v2/user]
 
@@ -127,8 +151,7 @@ If you want to create your own transaction and send it from your account please 
         {
             "token": "<your_token>",
             "data": "<some_hexadecimal_data>",
-            "address": "<to_ethereum_address>",
-            "password": "<your_password>"
+            "address": "<your_ethereum_address>"
         }
 
 + Response 200 (application/json)
@@ -246,7 +269,7 @@ shipping (string)
 + Request (application/json)
 
         {
-            "token": "<your_token>",
+            "token": "",
             "env": "production",
             "args": {
                 "_buyer": "",
@@ -254,8 +277,7 @@ shipping (string)
                 "_endTime": 314159
             },
             "type": "Escrow",
-            "value": "0",
-            "password": "<your_password>"
+            "value": "0"
         }
 
 + Response 200 (application/json)
@@ -488,10 +510,10 @@ This endpoint will not alter blockchain state and therefore wont cost gas.
 + Request (application/json)
 
         {
-            "token": "<your_token>",
-            "address": "<contract_address>",
-            "env": "<environment>",
-            "method": "<method_to_call>",
+            "token": "",
+            "address": "",
+            "env": "",
+            "method": "",
             "args": {}
         }
 
@@ -512,12 +534,13 @@ Altough this method will generally cost gas, there is no limitation about it whe
 + Request (application/json)
 
         {
-            "token": "<your_token>",
+            "token": "",
             "address": "<contract_address>",
-            "env": "<environment>",
-            "method": "<method_to_execute>",
-            "args": {},
-            "password": "<your_password"
+            "env": "production",
+            "method": "pay",
+            "args": {
+
+            }
         }
 
 + Response 200 (application/json)
