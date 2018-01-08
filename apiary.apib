@@ -153,7 +153,8 @@ If you want to create your own transaction and send it from your account please 
         {
             "token": "<your_token>",
             "data": "<some_hexadecimal_data>",
-            "address": "<your_ethereum_address>"
+            "address": "<your_ethereum_address>",
+            "password": "<your_password>"
         }
 
 + Response 200 (application/json)
@@ -180,7 +181,8 @@ This enpoint allow the user to send a transaction from the user's address signed
             "token": "<your_token>",
             "password": "<your_password>",
             "to": "The destination address of the message",
-            "value": "The value transferred for the transaction in ETH"
+            "value": "The value transferred for the transaction in ETH",
+            "password": "<your_password>"
         }
 
 + Response 200 (application/json)
@@ -279,7 +281,8 @@ shipping (string)
                 "_endTime": 314159
             },
             "type": "Escrow",
-            "value": "0"
+            "value": "0",
+            "password": "<your_password>"
         }
 
 + Response 200 (application/json)
@@ -542,7 +545,8 @@ Altough this method will generally cost gas, there is no limitation about it whe
             "method": "pay",
             "args": {
 
-            }
+            },
+            "password": "<your_password>"
         }
 
 + Response 200 (application/json)
