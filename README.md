@@ -74,6 +74,11 @@ nyc node: enode://b21d8b85165319a86c822dadcd51fbaf1aca3fe7854df8644c03ac304e3420
 
 Parity software can be downloaded [here](https://github.com/paritytech/parity/releases/tag/v1.7.9) (version 1.7.9 stable required)
 
+#### Configuration file
+For a quick run you can use the simple yet working config file to start Parity below:
+[federation-config.toml](https://github.com/cryptol0g1c/bitsign-federation/blob/master/federation-config.toml)
+
+
 
 #### Command line 
 
