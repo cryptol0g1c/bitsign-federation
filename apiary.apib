@@ -172,44 +172,7 @@ If you want to create your own transaction and send it from your account please 
             "error": null
         }
 
-### Send TX [POST /eth/sendtx]
-This enpoint allow the user to send a transaction from the user's address signed with the private key associated on Bitsign's account.
-
-+ Request (application/json)
-
-        {
-            "data": "Data the user want to send in SHA or ascii",
-            "token": "<your_token>",
-            "password": "<your_password>",
-            "to": "The destination address of the message",
-            "value": "The value transferred for the transaction in ETH",
-            "password": "<your_password>"
-        }
-
-+ Response 200 (application/json)
-
-        {
-            "success": true,
-            "data": {
-                "blockHash": "0x...",
-                "blockNumber": 12278,
-                "contractAddress": null,
-                "cumulativeGasUsed": 23176,
-                "gasUsed": 23176,
-                "logs": [],
-                "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-                "root": null,
-                "status": null,
-                "transactionHash": "0x...",
-                "transactionIndex": 0,
-                "txExplorerUrl": "https://explorer.bitsign.io/tx/0x..."
-            },
-            "error": null
-        }
-
-
-
-## Raw Transactions Endpoints [/eth/rawtx]
+## Raw Transactions Endpoints [/eth/signedRawTx]
 
 ### SendRawTransaction [POST]
 If you don't trust or don't want to use the **keypair provided by Bitsign**, you can always call this endpoint that will publish your **offline
