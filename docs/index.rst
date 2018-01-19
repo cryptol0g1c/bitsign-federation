@@ -1,2 +1,0 @@
-Bitsign Federation Official Documentation
-=====
