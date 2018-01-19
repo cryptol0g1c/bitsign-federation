@@ -1,4 +1,6 @@
-site_name: Bitsign BaaS Oficial Documentation
+Bitsign BaaS Oficial Documentation
+====
+
 pages:
     - Home: index.md
     - API Reference: api.md
