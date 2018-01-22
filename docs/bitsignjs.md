@@ -1,3 +1,6 @@
+BitsignJS
+=====
+
 # APIS
 First of all you must instanciate the api with your token:
 ```
