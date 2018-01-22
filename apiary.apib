@@ -239,6 +239,17 @@ shipping (string)
 * updateStatus: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx status. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
 * updateShipping: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx shipping. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
 
++ Attributes
+    + token: ey..yk (string) - User token.
+    + env: production (string) - Environment.
+    + args
+        + _buyer: 0x..yk (string) - Buyer address.
+        + _seller: 0x..6f (string) - Seller address.
+        + _endTime: 314159 (number) - Escrow automatic endtime.
+    + type: Escrow (string) - Contract type to deploy.
+    + value: 0 (string) - Value in ethers to send to the smart contract.
+    + password: some_crafty_password (string) - User Password.
+
 + Request (application/json)
 
         {
