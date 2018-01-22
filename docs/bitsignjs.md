@@ -9,8 +9,8 @@ First of all you must instanciate the api with your token:
   let api = bitsignjs.init(<your_token>);
 ```
 
-### contracts
-#### api.contracts.deploy
+## contracts
+### api.contracts.deploy
 
 ```
   api.contracts.deploy({
@@ -20,7 +20,7 @@ First of all you must instanciate the api with your token:
   }).then(data => console.log(data))
 ```
 
-#### api.contracts.send
+### api.contracts.send
 
 ```
   api.contracts.send({
@@ -31,7 +31,7 @@ First of all you must instanciate the api with your token:
   }).then(data => console.log(data))
 ```
 
-#### api.contracts.call
+### api.contracts.call
 
 ```
   api.contracts.call({
@@ -42,27 +42,27 @@ First of all you must instanciate the api with your token:
   }).then(data => console.log(data))
 ```
 
-#### api.contracts.docs
+### api.contracts.docs
 
 ```
   api.contracts.docs(<type>).then(data => console.log(data))
 ```
 
-#### api.contracts.deployed
+### api.contracts.deployed
 
 ```
   api.contracts.deployed().then(data => console.log(data))
 ```
 
-### eth
-#### api.eth.status
+## eth
+### api.eth.status
 
 ```
   api.eth.status().then(data => console.log(data))
 ```
 
-### transactions
-#### api.transactions.notarizeTx
+## transactions
+### api.transactions.notarizeTx
 
 ```
   api.transactions.notarizeTx({
@@ -75,7 +75,7 @@ First of all you must instanciate the api with your token:
 ## RawTx
 In order to use create and/or send a raw tx you don't need to init the library or pass the token.
 
-#### bitsignjs.createRawTx
+### bitsignjs.createRawTx
 You must send:
 * sender: Sender address.
 * privateKey: Private key of the sender address.
@@ -93,7 +93,7 @@ You must send:
   }).then(signedTx => console.log(signedTx))
 ```
 
-#### bitsignjs.signedRawTx
+### bitsignjs.signedRawTx
 
 ```
   const bitsignjs = require('bitsignjs');
