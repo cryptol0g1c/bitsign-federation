@@ -1,7 +1,13 @@
 BitsignJS
 =====
 
-## APIS
+## Installation
+Using npm:
+```
+npm install bitsignjs
+```
+
+## APIs
 First of all you must instanciate the api with your token:
 ```
   const bitsignjs = require('bitsignjs');

@@ -13,11 +13,16 @@ This endpoint retrieves token and Ethereum keys needed to interact with the rest
 + Parameters
 
     + email: alice@crypto.com (string) - Unique email address.
-    + password: some_crafty_password (string) - User Password
+    + password: some_crafty_password (string) - User Password.
 
 ### [New User [POST /api/v2/user]](https://bitsign.docs.apiary.io/#reference/0/user-endpoints/new-user)
 Create new user trough our API to get token access and pre-configured Ethereum keys.
 With the token you can query all other endpoints and interact with all blockchains and the Smart Contracts.
+
++ Attributes
+    + email: alice@crypto.com (string) - Unique email address.
+    + password: some_crafty_password (string) - User Password.
+    + username: alice (string) - Unique user name.
 
 + Request (application/json)
 
