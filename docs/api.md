@@ -2,11 +2,11 @@ API
 =====
 
 ## Status Endpoints
-### Get Bitsign Status [GET /status]
+### [Get Bitsign Status [GET /status]](https://bitsign.docs.apiary.io/#reference/0/get-bitsign-status/get-bitsign-status)
 This endpoint returns Bitsign blockchain status, latestblock, bootnodes, etc.
 
 ## User Endpoints
-### User Info [GET /api/v2/user?email={email}&password={password}]
+### [User Info [GET /api/v2/user?email={email}&password={password}]](https://bitsign.docs.apiary.io/#reference/0/user-endpoints/user-info)
 This endpoint retrieves token and Ethereum keys needed to interact with the rest of the endpoints.
 **Email** and **password** parameters must be provided.
 
@@ -15,7 +15,7 @@ This endpoint retrieves token and Ethereum keys needed to interact with the rest
     + email: alice@crypto.com (string) - Unique email address.
     + password: some_crafty_password (string) - User Password
 
-### New User [POST /api/v2/user]
+### [New User [POST /api/v2/user]](https://bitsign.docs.apiary.io/#reference/0/user-endpoints/new-user)
 Create new user trough our API to get token access and pre-configured Ethereum keys.
 With the token you can query all other endpoints and interact with all blockchains and the Smart Contracts.
 
@@ -27,7 +27,7 @@ With the token you can query all other endpoints and interact with all blockchai
             "username": ""
         }
 
-### Change Password [PUT /api/v2/user]
+### [Change Password [PUT /api/v2/user]](https://bitsign.docs.apiary.io/#reference/0/user-endpoints/change-password)
 This endpoint allow the user to changes their password. You must send the old password and the new one that must respect our security policies.
 
 + Request (application/json)
@@ -39,7 +39,7 @@ This endpoint allow the user to changes their password. You must send the old pa
         }
 
 ## Transaction Endpoints
-### Notarization TX [POST /eth/notarizetx]
+### [Notarization TX [POST /eth/notarizetx]](https://bitsign.docs.apiary.io/#reference/0/transaction-endpoints/notarization-tx)
 This endpoints uses data field input to create a **notary transaction** and include it in a new block.
 Transactions from this endpoints will be executed **from Bitsign's main node** to facilitate its creation.
 If you want to create your own transaction and send it from your account please use **sendRawTX endpoint instead**.
@@ -54,7 +54,7 @@ If you want to create your own transaction and send it from your account please 
         }
 
 ## Raw Transactions Endpoints
-### SendRawTransaction [POST /eth/signedRawTx]
+### [SendRawTransaction [POST /eth/signedRawTx]](https://bitsign.docs.apiary.io/#reference/0/raw-transactions-endpoints/sendrawtransaction)
 If you don't trust or don't want to use the **keypair provided by Bitsign**, you can always call this endpoint that will publish your **offline
 signed** raw [transaction](https://web3js.readthedocs.io/en/1.0/web3-eth.html#sendsignedtransaction). Bitsign node will only handle gas cost and transaction publication,
 but you have to **craft the entire transaction** on your end.
@@ -70,7 +70,7 @@ We will be releasing Bitsign tx library to facilitate this process soon.
         }
 
 ## Smart Contract Endpoints
-### Deploy new Smart Contract [PUT /eth/contract]
+### [Deploy new Smart Contract [PUT /eth/contract]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/deploy-new-smart-contract)
 This endpoint allow the user to deploy a new smart contract. The available smart contracts are:
 
 ##### Notarize
@@ -120,7 +120,7 @@ shipping (string)
             "password": "<your_password>"
         }
 
-### Contract Usage [GET /eth/contract/doc?token={token}&type={type}]
+### [Contract Usage [GET /eth/contract/doc?token={token}&type={type}]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/contract-usage)
 This endpoint returns smart contract's ABI and functions to use its functionality.
 
 + Parameters
@@ -128,7 +128,7 @@ This endpoint returns smart contract's ABI and functions to use its functionalit
     + token: <user_token> (string) - User token.
     + type: <contract_name> (string) - Smart Contract type.
 
-### Call Contract Method [POST /eth/contract]
+### [Call Contract Method [POST /eth/contract]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/call-contract-method)
 
 This endpoint allow the user to read the state from the blockchain using contract methods.
 This endpoint will not alter blockchain state and therefore wont cost gas.
@@ -143,7 +143,7 @@ This endpoint will not alter blockchain state and therefore wont cost gas.
             "args": {}
         }
 
-### Execute Contract Method[PATCH /eth/contract]
+### [Execute Contract Method[PATCH /eth/contract]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/execute-contract-method)
 
 This endpoint allow the user to send a transaction to the node and therefore modify the blockchain state.
 Altough this method will generally cost gas, there is no limitation about it when using BSG Chain and gast cost will be handled internally.
