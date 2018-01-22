@@ -8,7 +8,7 @@ npm install bitsignjs
 ```
 
 ## APIs
-First of all you must instanciate the api with your token:
+First of all you must instantiate the api with your token:
 ```
   const bitsignjs = require('bitsignjs');
 
@@ -79,7 +79,7 @@ First of all you must instanciate the api with your token:
 ```
 
 ## RawTx
-In order to use create and/or send a raw tx you don't need to init the library or pass the token.
+In order to use create and/or send a raw tx you don't need to initialize the library or pass the token.
 
 ### bitsignjs.createRawTx
 You must send:

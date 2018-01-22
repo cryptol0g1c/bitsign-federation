@@ -33,7 +33,7 @@ With the token you can query all other endpoints and interact with all blockchai
         }
 
 ### [Change Password [PUT /api/v2/user]](https://bitsign.docs.apiary.io/#reference/0/user-endpoints/change-password)
-This endpoint allow the user to changes their password. You must send the old password and the new one that must respect our security policies.
+This endpoint allows the user to changes their password. You must send the old password and the new one that must respect our security policies.
 
 + Request (application/json)
 
@@ -76,17 +76,17 @@ We will be releasing Bitsign tx library to facilitate this process soon.
 
 ## Smart Contract Endpoints
 ### [Deploy new Smart Contract [PUT /eth/contract]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/deploy-new-smart-contract)
-This endpoint allow the user to deploy a new smart contract. The available smart contracts are:
+This endpoint allows the user to deploy a new smart contract. The available smart contracts are:
 
 ##### Notarize
-This smart contract allow the user to notarize documents.
+This smart contract allows the user to notarize documents.
 ###### Constructor
 In order to initialize Notarize contract the user must send an address, that will be set as the owner of the contract. The owner will be the only one that is able to notarize.
 ###### Methods
 * notarize: This method receive as a parameter a bytes32 that will be the evidence to be notarized. The owner of the contract will be the only one that is capable of execute this method. If the sender is not the owner, the tx will be reverted. After the evidence is notarized the Notary event will be raised with two parameters: the evidence and the address.
 
 ##### Escrow
-This smart contract allow the user to deposit founds in the smart contract and define a buyer, a seller and an arbiter. Each actor can release the found to the other part based on pre established conditions.
+This smart contract allows the user to deposit founds in the smart contract and define a buyer, a seller and an arbiter. Each actor can release the found to the other part based on pre established conditions.
 ###### Constructor
 In order to initialize Escrow contract the user must send _seller (address), _buyer (address) and _endTime (uint). The sender of the transaction will be the arbiter of the contract. The arbiter act as an impartial third party. Also the value should be passed in order to set funds on the contract.
 ###### Methods
@@ -135,7 +135,7 @@ This endpoint returns smart contract's ABI and functions to use its functionalit
 
 ### [Call Contract Method [POST /eth/contract]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/call-contract-method)
 
-This endpoint allow the user to read the state from the blockchain using contract methods.
+This endpoint allows the user to read the state from the blockchain using contract methods.
 This endpoint will not alter blockchain state and therefore wont cost gas.
 
 + Request (application/json)
@@ -150,8 +150,8 @@ This endpoint will not alter blockchain state and therefore wont cost gas.
 
 ### [Execute Contract Method[PATCH /eth/contract]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/execute-contract-method)
 
-This endpoint allow the user to send a transaction to the node and therefore modify the blockchain state.
-Altough this method will generally cost gas, there is no limitation about it when using BSG Chain and gast cost will be handled internally.
+This endpoint allows the user to send a transaction to the node and therefore modify the blockchain state.
+Although this method will generally cost gas, there is no limitation about it when using BSG Chain and gas cost will be handled internally.
 
 
 + Request (application/json)

@@ -1,4 +1,4 @@
-Bitsign BaaS Oficial Documentation
+Bitsign BaaS Official Documentation
 ====
 
 ## What is Bitsign Federation?
