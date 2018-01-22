@@ -4,7 +4,9 @@ Bitsign BaaS Oficial Documentation
 ## What is Bitsign Federation?
 
 Bitsign Federation blockchain is a special type of blockchain (Proof of Authority algorithm) underpinned by Ethereum technology, that lets you use features of blockchain/smart contracts like notarization, timestamping, escrow/crowdsale contracts but with low to zero fee and costs.
+
 Also we've created an abstraction layer that can be used to connect business models with blockchain but only using APIs, and allow to every size and type of business to fully exploited the benefits of the decentralized ledger technology, without any worries about technical barriers or significant upfront costs.
+
 Developers, organizations and companies can work on BSG BLOCKCHAIN and build smart contracts and decentralized applications, but safer, faster, and more efficiently than in many others public blockchains.
 
 ## Explorer
