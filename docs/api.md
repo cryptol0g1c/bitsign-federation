@@ -86,7 +86,7 @@ In order to initialize Notarize contract the user must send an address, that wil
 * notarize: This method receive as a parameter a bytes32 that will be the evidence to be notarized. The owner of the contract will be the only one that is capable of execute this method. If the sender is not the owner, the tx will be reverted. After the evidence is notarized the Notary event will be raised with two parameters: the evidence and the address.
 
 ##### Escrow
-This smart contract allows the user to deposit founds in the smart contract and define a buyer, a seller and an arbiter. Each actor can release the found to the other part based on pre established conditions.
+This smart contract allows the user to deposit funds in the smart contract and define a buyer and a seller. Each actor can release the funds to the other part based on pre established conditions. Also there is BSG arbiter which act as an impartial third party that can release the payment to one party in case the other part breaks the initial conditions.
 ###### Constructor
 In order to initialize Escrow contract the user must send _seller (address), _buyer (address) and _endTime (uint). The sender of the transaction will be the arbiter of the contract. The arbiter act as an impartial third party. Also the value should be passed in order to set funds on the contract.
 ###### Methods
