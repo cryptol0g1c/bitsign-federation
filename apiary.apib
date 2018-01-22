@@ -74,15 +74,9 @@ This endpoint returns Bitsign blockchain status, latestblock, bootnodes, etc.
 This endpoint retrieves token and Ethereum keys needed to interact with the rest of the endpoints.
 **Email** and **password** parameters must be provided.
 
-+ Attributes
-    + email: alice@crypto.com (string) - Unique email address.
-    + password: some_crafty_password (string) - User Password.
-    + username: alice (string) - Unique user name.
-
 + Parameters
-
     + email: alice@crypto.com (string) - Unique email address.
-    + password: some_crafty_password (string) - User Password
+    + password: some_crafty_password (string) - User password
 
 + Response 200 (application/json)
 
@@ -100,6 +94,11 @@ This endpoint retrieves token and Ethereum keys needed to interact with the rest
 ### New User [POST]
 Create new user trough our API to get token access and pre-configured Ethereum keys.
 With the token you can query all other endpoints and interact with all blockchains and the Smart Contracts.
+
++ Attributes
+    + email: alice@crypto.com (string) - Unique email address.
+    + password: some_crafty_password (string) - User password.
+    + username: alice (string) - Unique user name.
 
 + Request (application/json)
 
@@ -127,6 +126,11 @@ With the token you can query all other endpoints and interact with all blockchai
 ### Change Password [PUT]
 This endpoint allow the user to changes their password. You must send the old password and the new one that must respect our security policies.
 
++ Attributes
+    + email: alice@crypto.com (string) - Unique email address.
+    + password: some_crafty_password (string) - User password.
+    + newPassword: new_crafty_password (string) - User new password.
+
 + Request (application/json)
 
         {
@@ -153,6 +157,12 @@ This endpoint allow the user to changes their password. You must send the old pa
 This endpoints uses data field input to create a **notary transaction** and include it in a new block.
 Transactions from this endpoints will be executed **from Bitsign's main node** to facilitate its creation.
 If you want to create your own transaction and send it from your account please use **sendRawTX endpoint instead**.
+
++ Attributes
+    + token: ey..yk (string) - User token.
+    + data: 0x..3F (string) - Data to notarize.
+    + address: 0x..m3 (string) - User ethereum address.
+    + password: new_crafty_password (string) - User password.
 
 + Request (application/json)
 
@@ -185,6 +195,10 @@ signed** raw [transaction](https://web3js.readthedocs.io/en/1.0/web3-eth.html#se
 but you have to **craft the entire transaction** on your end.
 We will be releasing Bitsign tx library to facilitate this process soon.
 
++ Attributes
+    + token: ey..yk (string) - User token.
+    + env: production (string) - Environment to deploy the smart contract.
+    + tx: 0x..m3 (string) - Signed data.
 
 + Request (application/json)
 
@@ -241,7 +255,7 @@ shipping (string)
 
 + Attributes
     + token: ey..yk (string) - User token.
-    + env: production (string) - Environment.
+    + env: production (string) - Environment to deploy the smart contract.
     + args
         + _buyer: 0x..yk (string) - Buyer address.
         + _seller: 0x..6f (string) - Seller address.
@@ -340,7 +354,6 @@ shipping (string)
 This endpoint returns smart contract's ABI and functions to use its functionality.
 
 + Parameters
-
     + token: <user_token> (string) - User token.
     + type: <contract_name> (string) - Smart Contract type.
 
@@ -515,6 +528,15 @@ This endpoint will not alter blockchain state and therefore wont cost gas.
 This endpoint allow the user to send a transaction to the node and therefore modify the blockchain state.
 Altough this method will generally cost gas, there is no limitation about it when using BSG Chain and gast cost will be handled internally.
 
++ Attributes
+    + token: ey..yk (string) - User token.
+    + address: production (string) - Contract's address.
+    + env: production (string) - Environment.
+    + args
+      + arg_1
+      + arg_2
+    + method: pay (string) - Contract's method to execute.
+    + password: some_crafty_password (string) - User Password.
 
 + Request (application/json)
 
