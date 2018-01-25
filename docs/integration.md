@@ -18,8 +18,8 @@ Steps to connect MyEtherWallet to Bitsign Federation:
 + Go to [https://www.myetherwallet.com/](https://www.myetherwallet.com/)
 + Click on _Add Custom Network / Node_
 + Set up with the following parameters:
-  - Node Name: BitsignFederation
-  - URL: http://159.203.178.88
-  - PORT: 8545
-  - Click in _Custom_ radio button
+    - Node Name: BitsignFederation
+    - URL: http://159.203.178.88
+    - PORT: 8545
+    - Click in _Custom_ radio button
 + Save!
