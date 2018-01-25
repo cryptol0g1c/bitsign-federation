@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test:contracts": "truffle test",
-    "lint:contracts": "./node_modules/solium/bin/solium.js -d contracts/"
+    "lint:contracts": "./node_modules/solium/bin/solium.js -d contracts/",
+    "compile": "node ./utils/compile.js"
   },
   "author": "cryptologic",
   "license": "ISC",

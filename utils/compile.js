@@ -33,6 +33,14 @@ if (fs.existsSync(abiPath)) {
         return ({contents: fs.readFileSync(parsedImportPath).toString()})
       });
 
+      if (compiledContract.errors) {
+        console.log('------------------------------------------------------------------------------------------------------------------------------------------------');
+        console.log(fileName);
+        console.log('------------------------------------------------------------------------------------------------------------------------------------------------');
+        console.log(compiledContract.errors);
+        console.log('------------------------------------------------------------------------------------------------------------------------------------------------');
+      }
+
       fs.writeFileSync(path.join(abiPath, `${fileName}.json`), JSON.stringify(compiledContract.contracts[`${fileName}.sol:${fileName}`]));
     });
   })
