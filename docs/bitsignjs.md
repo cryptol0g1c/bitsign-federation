@@ -83,10 +83,11 @@ In order to use create and/or send a raw tx you don't need to initialize the lib
 
 ### bitsignjs.createRawTx
 You must send:
-* sender: Sender address.
-* privateKey: Private key of the sender address.
-* to: Address of the transaction destination.
-* value: Value in ethers.
+
+  + sender: Sender address.
+  + privateKey: Private key of the sender address.
+  + to: Address of the transaction destination.
+  + value: Value in ethers.
 
 ```
   const bitsignjs = require('bitsignjs');
