@@ -65,20 +65,19 @@ You can use:
 
 #### Federation Nodes:
 ```
-main node: enode://a891225909f70a4ee3f40c1dac05da763fe0354d5f259922abf841db51706283d2957c09fc7266e5f4633583a34dbef3f38a769eb35551788740a06e387dfa2a@159.203.176.160:30303
-nyc node: enode://b21d8b85165319a86c822dadcd51fbaf1aca3fe7854df8644c03ac304e34205d31d44d0eac7dd6366a8f8a621eeb2198d9644090d59771148fb3ac92630d2dd6@198.211.100.127:30303
-eua node:
+enode://a891225909f70a4ee3f40c1dac05da763fe0354d5f259922abf841db51706283d2957c09fc7266e5f4633583a34dbef3f38a769eb35551788740a06e387dfa2a@159.203.176.160:30303
+enode://b21d8b85165319a86c822dadcd51fbaf1aca3fe7854df8644c03ac304e34205d31d44d0eac7dd6366a8f8a621eeb2198d9644090d59771148fb3ac92630d2dd6@198.211.100.127:30303
 enode://399eb9b379410a66c80899cf03bec59bce930cd6f8a8440e6c8601c881f68d994f054f297e931304c090bacbfca29d45063d624e45c7deb74b4b76993c14658a@159.203.178.88:30303
 
 ```
 
 #### Running Parity
 
-Parity software can be downloaded [here](https://github.com/paritytech/parity/releases/tag/v1.7.9) (version 1.7.9 stable required)
+Parity software can be downloaded [here](https://github.com/paritytech/parity/releases/tag/v1.9.2) (version 1.9.x+ recommended)
 
 #### Configuration file
 For a quick run you can use the simple yet working config file to start Parity below:
-[federation-config.toml](https://github.com/cryptol0g1c/bitsign-federation/blob/master/federation-config.toml)
+[config.toml](https://github.com/cryptol0g1c/bitsign-federation/blob/master/config.toml)
 
 
 
@@ -86,11 +85,5 @@ For a quick run you can use the simple yet working config file to start Parity b
 
 For running Parity on Bitsign Federation an example command line can be:
 ```
-$ parity --chain=genesis.json --bootnodes enode://a891225909f70a4ee3f40c1dac05da763fe0354d5f259922abf841db51706283d2957c09fc7266e5f4633583a34dbef3f38a769eb35551788740a06e387dfa2a@159.203.176.160:30303
-```
-
-Or with .toml file
-
-```
-$ parity --config=federation-config.toml
+$ parity --config config.toml
 ```
