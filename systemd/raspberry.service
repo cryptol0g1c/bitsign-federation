@@ -1,0 +1,14 @@
+[Unit]
+Description=Parity BSG Node
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/parity --config /home/pi/bitsign/bitsign-federation/config.toml
+WorkingDirectory=/home/pi/bitsign/bitsign-federation/
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
