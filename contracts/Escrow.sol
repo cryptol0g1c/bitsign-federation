@@ -60,7 +60,7 @@ contract Escrow {
     TODO: Si las condiciones no se cumplen por algún motivo, se ejecuta
     esta función para devolver al comprador los fondos.
    */
-  function refund() external isSellerOrArbiter() {
+  function refund() external payable isSellerOrArbiter() {
     Refund(this.balance, buyer);
     buyer.transfer(this.balance);
   }
@@ -75,7 +75,7 @@ contract Escrow {
   /**
     TODO: doc
   */
-  function kill() public isArbiter() {
+  function kill() public payable isArbiter() {
     selfdestruct(msg.sender);
   }
 }

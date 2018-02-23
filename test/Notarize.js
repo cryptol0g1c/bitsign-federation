@@ -1,12 +1,12 @@
 const Notarize = artifacts.require('Notarize');
 const utils = require('./utils/index');
 
-const account = utils.addresses[0].address;
-const otherAccount = '0xaa40437adbed7e88363a779ef431747358e0d47e';
-
-contract('Notarize', accounts => {
+contract('Notarize', addresses => {
   let hashToNotarize = '0x1131231200000000000000000000000000000000000000000000000000000000';
   let instance;
+
+  const account = addresses[0];
+  const otherAccount = '0xaa40437adbed7e88363a779ef431747358e0d47e';
 
   beforeEach((done) => {
     Notarize.new(account).then(contract => {

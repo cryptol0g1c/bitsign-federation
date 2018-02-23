@@ -1,183 +1,131 @@
 const Escrow = artifacts.require('Escrow');
-const BigNumber = require('bignumber.js');
 const Promise = require('bluebird');
 const utils = require('./utils/index');
 const Web3 = require('web3');
+const { BigNumber } = web3;
+const should = require("chai")
+  .use(require("chai-as-promised"))
+  .use(require("chai-bignumber")(BigNumber))
+  .should();
 
-const arbiter = utils.addresses[0];
-const seller = utils.addresses[1];
-const buyer = utils.addresses[2];
-const endTime = 0;
-
-contract('Escrow', accounts => {
+contract('Escrow', addresses => {
   let instance;
-  let value = Web3.utils.toWei('1', 'ether');
+  let value = new BigNumber(Web3.utils.toWei('1', 'ether'));
   let web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
   let initialSellerBalance;
   let initialBuyerBalance;
   let initialArbiterBalance;
 
-  before(done => {
-    Promise.all([
-      web3.eth.getBalance(seller.address),
-      web3.eth.getBalance(buyer.address),
-      web3.eth.getBalance(arbiter.address)
-    ]).then(([b1, b2, b3]) => {
-      initialSellerBalance = Number(b1);
-      initialBuyerBalance = Number(b2);
-      initialArbiterBalance = Number(b3);
-      done()
-    });
-  })
+  const arbiter = addresses[0];
+  const seller = addresses[1];
+  const buyer = addresses[2];
+  const endTime = 0;
 
-  beforeEach(done => {
-    Escrow.new(seller.address, buyer.address, endTime, {value, from: arbiter.address})
-      .then(contract => {
-        instance = contract;
-        done();
-      });
+  beforeEach(async() => {
+    instance = (await Escrow.new(seller, buyer, endTime, {value, from: arbiter})).contract;
+    initialSellerBalance = new BigNumber((await web3.eth.getBalance(seller)));
+    initialBuyerBalance = new BigNumber((await web3.eth.getBalance(buyer)));
+    initialArbiterBalance = new BigNumber((await web3.eth.getBalance(arbiter)));
   });
 
-  it('should set variables', () => {
-    return Promise.all([
-      instance.arbiter(),
-      instance.buyer(),
-      instance.endTime(),
-      instance.seller(),
-      instance.value()
-    ]).then(([
-      _arbiter,
-      _buyer,
-      _endTime,
-      _seller,
-      _value
-    ]) => {
-      assert.equal(_endTime, endTime);
-      assert.equal(_value, value);
-      utils.assertAddress(_arbiter, arbiter.address);
-      utils.assertAddress(_seller, seller.address);
-      utils.assertAddress(_buyer, buyer.address);
-    });
+  it('should set variables', async() => {
+    (await instance.value()).should.bignumber.equal(value);
+    assert.equal(await (instance.endTime()), endTime);
+    assert.equal(await (instance.arbiter()), arbiter);
+    assert.equal(await (instance.seller()), seller);
+    assert.equal(await (instance.buyer()), buyer);
   });
 
-  it('should pay to seller on pay() if sender is buyer', () => {
-    return Promise.all([
-      instance.pay({from: buyer.address}),
-      instance.getBalance(),
-      web3.eth.getBalance(seller.address)
-    ]).then(([tx, contractBalance, sellerBalance]) => {
-      assert.equal(contractBalance.toNumber(), 0);
-      assert.equal(Number(sellerBalance), initialSellerBalance + Number(value));
-    });
+  it('should pay to seller on pay() if sender is buyer', async() => {
+    (await instance.pay({from: buyer}));
+
+    (await instance.getBalance()).should.bignumber.equal(0);
+    (await web3.eth.getBalance(seller)).should.bignumber.equal(initialSellerBalance.plus(value));
   });
 
-  it('should pay to seller on pay() if sender is arbiter', () => {
-    return Promise.all([
-      instance.pay({from: arbiter.address}),
-      instance.getBalance(),
-      web3.eth.getBalance(seller.address)
-    ]).then(([tx, contractBalance, sellerBalance]) => {
-      assert.equal(contractBalance.toNumber(), 0);
-      assert.equal(Number(sellerBalance), initialSellerBalance + Number(value));
+  it('should pay to seller on pay() if sender is arbiter', async() => {
+    (await instance.pay({from: arbiter}));
+    (await instance.getBalance()).should.bignumber.equal(0);
+    (await web3.eth.getBalance(seller)).should.bignumber.equal(initialSellerBalance.plus(value));
+  });
+
+  it('should not pay to seller on pay() if sender is not arbiter or buyer', async() => {
+    try {
+      (await instance.pay({from: seller}));
+    } catch (error) {
+      utils.assertRevert(error);
+      (await instance.getBalance()).should.bignumber.equal(value);
+    }
+  });
+
+  it('should send Payout event on pay()', async() => {
+    (await instance.pay({from: arbiter}));
+
+    utils.assertEvent(instance, {
+      event: 'Payout',
+      logIndex: 0,
+      args: {
+        _value: new BigNumber(value.toString()),
+        _to: seller
+      }
     });
   });
 
-  it('should not pay to seller on pay() if sender is not arbiter or buyer', () => {
-    return Promise.all([
-      instance.pay({from: seller.address}),
-      instance.getBalance(),
-      web3.eth.getBalance(seller.address)
-    ]).then(([tx, contractBalance, sellerBalance]) => {
-        assert.equal(contractBalance.toNumber(), value);
-        assert.equal(Number(sellerBalance), initialSellerBalance);
-    }).catch(error => utils.assertRevert(error));
+  it('should pay to buyer on refund() if sender is seller', async() => {
+    (await instance.refund({from: seller}));
+
+    (await instance.getBalance()).should.bignumber.equal(0);
+    (await web3.eth.getBalance(buyer)).should.bignumber.equal(initialBuyerBalance.plus(value));
   });
 
-  it('should send Payout event on pay()', () => {
-    return instance.pay({from: arbiter.address})
-      .then(() => utils.assertEvent(instance, {
-        event: 'Payout',
-        logIndex: 0,
-        args: {
-          _value: new BigNumber(value.toString()),
-          _to: seller.address
-        }
-      })
-    );
+  it('should pay to buyer on refund() if sender is arbiter', async() => {
+    (await instance.refund({from: arbiter}));
+
+    (await instance.getBalance()).should.bignumber.equal(0);
+    (await web3.eth.getBalance(buyer)).should.bignumber.equal(initialBuyerBalance.plus(value));
   });
 
-  it('should pay to buyer on refund() if sender is seller', () => {
-    return Promise.all([
-      instance.refund({from: seller.address}),
-      instance.getBalance(),
-      web3.eth.getBalance(buyer.address)
-    ]).then(([tx, contractBalance, buyerBalance]) => {
-      assert.equal(contractBalance.toNumber(), 0);
-      assert.equal(Number(buyerBalance), initialBuyerBalance + Number(value));
+  it('should not pay to buyer on refund() if sender is not arbiter or seller', async() => {
+    try {
+      instance.refund({from: buyer})
+    } catch (error) {
+      utils.assertRevert(error);
+      (await instance.getBalance()).should.bignumber.equal(value);
+    }
+  });
+
+  it('should send Refund event on refund()', async() => {
+    (await instance.refund({from: arbiter}))
+
+    utils.assertEvent(instance, {
+      event: 'Refund',
+      logIndex: 0,
+      args: {
+        _value: new BigNumber(value.toString()),
+        _to: buyer
+      }
     });
   });
 
-  it('should pay to buyer on refund() if sender is arbiter', () => {
-    return Promise.all([
-      instance.refund({from: arbiter.address}),
-      instance.getBalance(),
-      web3.eth.getBalance(buyer.address)
-    ]).then(([tx, contractBalance, buyerBalance]) => {
-      assert.equal(contractBalance.toNumber(), 0);
-      assert.equal(Number(buyerBalance), initialBuyerBalance + Number(value));
-    });
+
+  it('should get contract\'s balance on getBalance()', async() => {
+    (await instance.getBalance()).should.bignumber.equal(value);
   });
 
-  it('should not pay to buyer on refund() if sender is not arbiter or seller', () => {
-    return Promise.all([
-      instance.refund({from: buyer.address}),
-      instance.getBalance(),
-      web3.eth.getBalance(buyer.address)
-    ]).then(([tx, contractBalance, buyerBalance]) => {
-      assert.equal(contractBalance.toNumber(), value);
-      assert.equal(Number(buyerBalance), initialBuyerBalance);
-    }).catch(error => utils.assertRevert(error));
+  it('should selfdestruct on kill() if sender is arbiter', async() => {
+    instance.kill({from: arbiter});
+
+    (await instance.getBalance()).should.bignumber.equal(0);
+    (await web3.eth.getBalance(arbiter)).should.bignumber.greaterThan(initialArbiterBalance);
   });
 
-  it('should send Refund event on refund()', () => {
-    return instance.refund({from: arbiter.address})
-      .then(() => utils.assertEvent(instance, {
-        event: 'Refund',
-        logIndex: 0,
-        args: {
-          _value: new BigNumber(value.toString()),
-          _to: buyer.address
-        }
-      })
-    );
-  });
-
-  it('should get contract\'s balance on getBalance()', () => {
-    return instance.getBalance()
-      .then(balance => {
-        assert.equal(balance, value);
-      });
-  });
-
-  it('should selfdestruct on kill() if sender is arbiter', () => {
-    return Promise.all([
-      instance.kill({from: arbiter.address}),
-      instance.getBalance(),
-      web3.eth.getBalance(arbiter.address)
-    ]).then(([tx, contractBalance, arbiterBalance]) => {
-      assert.equal(contractBalance.toNumber(), 0);
-      assert.equal(Number(arbiterBalance), initialArbiterBalance + Number(value));
-    })
-  });
-
-  it('should not selfdestruct on kill() if sender is not arbiter', () => {
-    return Promise.all([
-      instance.kill({from: seller.address}),
-      instance.getBalance(),
-      web3.eth.getBalance(arbiter.address)
-    ]).then(([tx, contractBalance, arbiterBalance]) => {
-      assert.equal(contractBalance.toNumber(), value);
-      assert.equal(Number(arbiterBalance), initialArbiterBalance);
-    }).catch(error => utils.assertRevert(error));
+  it('should not selfdestruct on kill() if sender is not arbiter', async() => {
+    try {
+      (await instance.kill({from: seller}));
+    } catch (error) {
+      utils.assertRevert(error);
+      (await instance.getBalance()).should.bignumber.equal(value);
+      (await web3.eth.getBalance(arbiter)).should.bignumber.equal(initialArbiterBalance);
+    }
   });
 });
