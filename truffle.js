@@ -5,6 +5,13 @@ module.exports = {
       port: 8545,
       network_id: "*",
       gas: 3500000
+    },
+    coverage: {
+      host: "localhost",
+      network_id: "*",
+      port: 8545,
+      gas: 0xfffffffffff,
+      gasPrice: 0x01
     }
   },
   mocha: {

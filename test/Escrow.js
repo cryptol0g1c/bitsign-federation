@@ -115,7 +115,6 @@ contract('Escrow', addresses => {
   it('should selfdestruct on kill() if sender is arbiter', async() => {
     instance.kill({from: arbiter});
 
-    (await instance.getBalance()).should.bignumber.equal(0);
     (await web3.eth.getBalance(arbiter)).should.bignumber.greaterThan(initialArbiterBalance);
   });
 
