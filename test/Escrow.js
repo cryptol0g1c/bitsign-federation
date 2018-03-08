@@ -3,9 +3,9 @@ const Promise = require('bluebird');
 const utils = require('./utils/index');
 const Web3 = require('web3');
 const { BigNumber } = web3;
-const should = require("chai")
-  .use(require("chai-as-promised"))
-  .use(require("chai-bignumber")(BigNumber))
+const should = require('chai')
+  .use(require('chai-as-promised'))
+  .use(require('chai-bignumber')(BigNumber))
   .should();
 
 contract('Escrow', addresses => {

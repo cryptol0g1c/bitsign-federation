@@ -1,10 +1,17 @@
 pragma solidity ^0.4.18;
 
-import 'zeppelin-solidity/contracts/token/MintableToken.sol';
+import 'zeppelin-solidity/contracts/token/ERC20/StandardToken.sol';
 
+contract BSGToken is StandardToken {
+  string public constant name = 'Bitsign';
+  string public constant symbol = 'BSG';
+  uint256 public constant decimals = 18;
+  
+  uint256 public constant INITIAL_SUPPLY = 100 * (10 ** uint256(decimals));
 
-contract BSGToken is MintableToken {
-  string public name = 'Bitsign';
-  string public symbol = 'BSG';
-  uint public decimals = 2;
+   function BSGToken() public {
+    totalSupply_ = INITIAL_SUPPLY;
+    balances[msg.sender] = INITIAL_SUPPLY;
+    Transfer(0x0, msg.sender, INITIAL_SUPPLY);
+  }
 }
