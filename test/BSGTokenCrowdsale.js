@@ -19,6 +19,10 @@ contract('BSGTokenCrowdsale', addresses => {
   const _tokenSupply = utils.toEther(100);
   const _wallet = addresses[0];
 
+  // accounts
+  const buyer = addresses[1];
+  const nonWhitelistedBuyer = addresses[2];
+
   beforeEach(async() => {
     token = await BSGToken.new();
     crowdsale = await BSGTokenCrowdsale.new(
@@ -29,20 +33,48 @@ contract('BSGTokenCrowdsale', addresses => {
     await token.transfer(crowdsale.address, _tokenSupply);
   });
 
-  it('has the correct total supply', async() => {
-    (await token.totalSupply()).should.bignumber.equal(_tokenSupply);
+  describe('Token', () => {
+    
+    it('has the correct total supply', async() => {
+      (await token.totalSupply()).should.bignumber.equal(_tokenSupply);
+    });  
   });
 
-  it('should initialize with 0 tokens', async() => {
-    (await crowdsale.weiRaised()).should.bignumber.equal(0);
+  describe('Crowdsale', () => {
+    
+    it('should initialize with 0 tokens', async() => {
+      (await crowdsale.weiRaised()).should.bignumber.equal(0);
+    });
+  
+    it('should add address to whitelist', async() => {
+      await crowdsale.addToWhitelist(buyer);
+  
+      (await crowdsale.whitelist(buyer)).should.equal(true);    
+    });
   });
 
-  it('should allow user to buy', async() => {
-    let buyer = addresses[1];
-    let value = utils.toEther(10);
+  describe('for whiteliste\'d address', () => {
 
-    const tx = await crowdsale.sendTransaction({value, from: buyer});
+    beforeEach(async() => await crowdsale.addToWhitelist(buyer));
+    
+    it('should allow user to buy', async() => {
+      let value = utils.toEther(10);
+  
+      await crowdsale.sendTransaction({value, from: buyer});
+      (await token.balanceOf(buyer)).should.bignumber.equal(value.times(_rate));
+    });
+  });
 
-    (await token.balanceOf(buyer)).should.bignumber.equal(value.times(_rate));
+  describe('for non whiteliste\'d address', () => {
+    
+    it('should revert transaction', async() => {
+      let value = utils.toEther(10);
+
+      try {
+        await crowdsale.sendTransaction({value, from: nonWhitelistedBuyer});
+      } catch (error) {
+        utils.assertRevert(error);
+      }
+    });
   });
 });
