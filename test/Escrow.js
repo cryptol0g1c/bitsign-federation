@@ -1,7 +1,5 @@
 const Escrow = artifacts.require('Escrow');
-const Promise = require('bluebird');
 const utils = require('./utils/index');
-const Web3 = require('web3');
 const { BigNumber } = web3;
 const should = require('chai')
   .use(require('chai-as-promised'))
@@ -10,8 +8,8 @@ const should = require('chai')
 
 contract('Escrow', addresses => {
   let instance;
-  let value = new BigNumber(Web3.utils.toWei('1', 'ether'));
-  let web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+  let value = new BigNumber(web3.toWei('1', 'ether'));
+  
   let initialSellerBalance;
   let initialBuyerBalance;
   let initialArbiterBalance;

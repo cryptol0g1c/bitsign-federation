@@ -1,9 +1,7 @@
 const Notarize = artifacts.require('Notarize');
 const utils = require('./utils/index');
-const Web3 = require('web3');
 
 contract('Notarize', addresses => {
-  let web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
   let hashToNotarize = '0x1131231200000000000000000000000000000000000000000000000000000000';
   let instance;
 

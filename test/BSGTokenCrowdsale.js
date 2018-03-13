@@ -1,34 +1,40 @@
-import { util } from 'chai/lib/chai';
-import { log } from 'util';
-
 const BSGTokenCrowdsale = artifacts.require('BSGTokenCrowdsale');
 const BSGToken = artifacts.require('BSGToken');
+
 const utils = require('./utils/index');
-const Web3 = require('web3');
 const { BigNumber } = web3;
 const should = require('chai')
   .use(require('chai-as-promised'))
   .use(require('chai-bignumber')(BigNumber))
   .should();
+import { increaseTimeTo, duration } from 'zeppelin-solidity/test/helpers/increaseTime';
+import latestTime from 'zeppelin-solidity/test/helpers/latestTime';
 
 contract('BSGTokenCrowdsale', addresses => {
   let crowdsale;
   let token;
+  let _openingTime;
+  let _closingTime;
 
   // initial parameters
   const _rate = new BigNumber(2);
   const _wallet = addresses[0];
   const _cap = utils.toEther(20);
-
+  
   // accounts
   const _buyer = addresses[1];
   const nonWhitelistedBuyer = addresses[2];
 
   beforeEach(async() => {
+    _openingTime = await latestTime(web3) + duration.weeks(1);
+    _closingTime = _openingTime + duration.weeks(1);
+
     crowdsale = await BSGTokenCrowdsale.new(
       _rate,
       _wallet,
-      _cap
+      _cap,
+      _openingTime,
+      _closingTime
     );
   });
 
@@ -44,8 +50,11 @@ contract('BSGTokenCrowdsale', addresses => {
     });
   });
 
-  describe('for whiteliste\'d address', () => {
-    beforeEach(async() => await crowdsale.addToWhitelist(_buyer));
+  describe('for whiteliste\'d address and with correct startTime', () => {
+    beforeEach(async() => {
+      await increaseTimeTo(_openingTime);
+      await crowdsale.addToWhitelist(_buyer)
+    });
     
     it('should allow user to buy', async() => {
       let value = utils.toEther(10);
@@ -73,10 +82,49 @@ contract('BSGTokenCrowdsale', addresses => {
   });
 
   describe('for non whiteliste\'d address', () => {
+    beforeEach(async() => {
+      await increaseTimeTo(_openingTime);
+    });
     
     it('should revert transaction', async() => {
       let value = utils.toEther(10);
 
+      try {
+        await crowdsale.buyTokens(nonWhitelistedBuyer, {value, from: _wallet});
+      } catch (error) {
+        utils.assertRevert(error);
+      }
+    });
+  });
+
+  describe('if startTime < now', () => {
+
+    beforeEach(async() => {
+      await crowdsale.addToWhitelist(_buyer)
+    });
+    
+    it('should revert transaction', async() => {
+      let value = utils.toEther(10);
+
+      try {
+        await crowdsale.buyTokens(nonWhitelistedBuyer, {value, from: _wallet});
+      } catch (error) {
+        utils.assertRevert(error);
+      }
+    });
+  });
+  
+  describe('if closingTime < now', () => {
+
+    beforeEach(async() => {
+      await crowdsale.addToWhitelist(_buyer)
+    });
+    
+    it('should revert transaction', async() => {
+      await increaseTimeTo(_closingTime + duration.minutes(1));
+  
+      let value = utils.toEther(10);
+  
       try {
         await crowdsale.buyTokens(nonWhitelistedBuyer, {value, from: _wallet});
       } catch (error) {

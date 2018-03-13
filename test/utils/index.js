@@ -1,8 +1,4 @@
 const _ = require('lodash');
-const ethjs = require('ethjs-account');
-const Promise = require('bluebird');
-const randomstring = require('randomstring');
-const Web3 = require('web3');
 
 // TODO: Replace when https://github.com/OpenZeppelin/zeppelin-solidity/issues/775 get solved.
 // import assertRevert from 'zeppelin-solidity/test/helpers/assertRevert';
@@ -31,14 +27,11 @@ const assertAddress = (a, b) => {
   }
 }
 
-const generateRandomAddress = () => ethjs.generate(randomstring.generate(50));
-
 const toEther = n => new web3.BigNumber(web3.toWei(n, 'ether'));
 
 module.exports = {
   assertAddress,
   assertEvent,
   assertRevert,
-  generateRandomAddress,
   toEther
 };
