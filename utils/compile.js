@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');
 const solc = require('solc');
-const Promise = require('bluebird');
 
 let contractsFolderPath = path.join(__dirname, '../contracts');
 let abiPath = path.join(__dirname, '../abi');
