@@ -104,10 +104,13 @@ Then when de image building process finish, create the container with this comma
 ```
 $ docker run --name=bitsign-federation-node \
              -v bitsign-federation-data:/data \
-             -e NODE_NAME=lp \
+             -e NODE_NAME=some-name \
              bitsign-federation --config config.toml
 ```
-If you want an quick run you can use `config.toml` file like above, but if you
+The `NODE_NAME` environment variable is for set an references name for the
+statistic explorer, you can choose whatever you want.
+
+Note: If you want an quick run you can use `config.toml` file like above, but if you
 don't, can replace `--config config.toml` with the configuration what do you need.
 
 
