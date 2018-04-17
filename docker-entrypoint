@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+export NODE_NAME=${NODE_NAME:-'xxyy'}
+
+cd /root/eth-net-intelligence-api
+perl -pi -e "s/federation-node-xxyy/federation-node-${NODE_NAME}/g" app.json
+pm2 start --name stats app.json
+pm2 startup
+pm2 save
+
+cd /root
+/parity/parity --base-path /data $@

@@ -3,7 +3,7 @@
 #### What is Bitsign Federation?
 
 Bitsign Federation blockchain is a special type of blockchain (PoA algorithm) that lets you use features of blockchain/smart contracts like notarization, timestamping, escrow/crowdsale contracts but with low to zero fee and costs.
-Also we've created an abstraction layer that can be used to connecto business models with blockchain but only using APIs.
+Also we've created an abstraction layer that can be used to connec to business models with blockchain but only using APIs.
 
 
 #### Explorer
@@ -87,3 +87,28 @@ For running Parity on Bitsign Federation an example command line can be:
 ```
 $ parity --config config.toml
 ```
+
+#### Building using Docker
+
+For running Prity from Docker you must clon this repository and then build the image withs this command:
+```
+$ docker build -t bitsign-fededation .
+```
+
+To persist the blockchain data you can create a named volume:
+```
+docker volume create --name=bitsign-feredation-data
+```
+
+Then when de image building process finish, create the container with this command:
+```
+$ docker run --name=bitsign-federation-node \
+             -v bitsign-federation-data:/data \
+             -e NODE_NAME=lp \
+             bitsign-federation --config config.toml
+```
+If you want an quick run you can use config.toml file like above, but if you
+don't, can replace --config config.toml with the configuration what do you need.
+
+
+
