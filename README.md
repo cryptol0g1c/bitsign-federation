@@ -90,7 +90,7 @@ $ parity --config config.toml
 
 #### Building using Docker
 
-For running Prity from Docker, you must clon this repository and then build the image with this command:
+To Parity from a Docker container, you must clon this repository and then build the image with this command:
 ```
 $ docker build -t bitsign-federation .
 ```
@@ -100,7 +100,7 @@ To persist the blockchain data you can create a named volume:
 docker volume create --name=bitsign-federation-data
 ```
 
-Then when de image building process finish, create the container with this command:
+Then when the image building process finish, create the container with this command:
 ```
 $ docker run --name=bitsign-federation-node \
              -v bitsign-federation-data:/data \
@@ -110,8 +110,7 @@ $ docker run --name=bitsign-federation-node \
 The `NODE_NAME` environment variable is for set an references name for the
 statistic explorer, you can choose whatever you want.
 
-Note: If you want an quick run you can use `config.toml` file like above, but if you
-don't, can replace `--config config.toml` with the configuration what do you need.
+Note: If you want a quick run you can use `config.toml` file, or you can replace `--config config.toml` with the configuration you need.
 
 
 
