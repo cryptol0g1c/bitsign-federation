@@ -3,7 +3,7 @@
 #### What is Bitsign Federation?
 
 Bitsign Federation blockchain is a special type of blockchain (PoA algorithm) that lets you use features of blockchain/smart contracts like notarization, timestamping, escrow/crowdsale contracts but with low to zero fee and costs.
-Also we've created an abstraction layer that can be used to connec to business models with blockchain but only using APIs.
+Also we've created an abstraction layer on top of our EVM based blockchain that can be used to integrate business models with blockchain and smart contract features using only RESTful APIs.
 
 
 #### Explorer
