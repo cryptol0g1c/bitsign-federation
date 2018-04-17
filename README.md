@@ -92,12 +92,12 @@ $ parity --config config.toml
 
 For running Prity from Docker, you must clon this repository and then build the image with this command:
 ```
-$ docker build -t bitsign-fededation .
+$ docker build -t bitsign-federation .
 ```
 
 To persist the blockchain data you can create a named volume:
 ```
-docker volume create --name=bitsign-feredation-data
+docker volume create --name=bitsign-federation-data
 ```
 
 Then when de image building process finish, create the container with this command:
