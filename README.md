@@ -90,7 +90,7 @@ $ parity --config config.toml
 
 #### Building using Docker
 
-For running Prity from Docker you must clon this repository and then build the image withs this command:
+For running Prity from Docker, you must clon this repository and then build the image with this command:
 ```
 $ docker build -t bitsign-fededation .
 ```
@@ -107,8 +107,8 @@ $ docker run --name=bitsign-federation-node \
              -e NODE_NAME=lp \
              bitsign-federation --config config.toml
 ```
-If you want an quick run you can use config.toml file like above, but if you
-don't, can replace --config config.toml with the configuration what do you need.
+If you want an quick run you can use `config.toml` file like above, but if you
+don't, can replace `--config config.toml` with the configuration what do you need.
 
 
 
