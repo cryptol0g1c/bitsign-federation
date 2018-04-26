@@ -97,11 +97,11 @@ docker run --detach \
             cryptologic/bitsign-node:latest
 ```
 
-The **NODE_NAME** environment variable is a reference name for the statistics explorer, you can choose whatever you want.
+The *NODE_NAME* environment variable is a reference name for the statistics explorer, you can choose whatever you want.
 
 ##### Using Docker Compose
 
-Edit *.env* file and set the environment variables **TAG** and **NODE_NAME**, then run *docker-compose*:
+Edit the `.env` file and set the environment variables *TAG* and *NODE_NAME*, then run `docker-compose`:
 
 ```
 nano .env
