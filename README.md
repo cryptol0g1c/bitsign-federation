@@ -76,41 +76,34 @@ enode://399eb9b379410a66c80899cf03bec59bce930cd6f8a8440e6c8601c881f68d994f054f29
 Parity software can be downloaded [here](https://github.com/paritytech/parity/releases/tag/v1.9.2) (version 1.9.x+ recommended)
 
 #### Configuration file
+
 For a quick run you can use the simple yet working config file to start Parity below:
 [config.toml](https://github.com/cryptol0g1c/bitsign-federation/blob/master/config.toml)
 
-
-
-#### Command line 
+#### Command line
 
 For running Parity on Bitsign Federation an example command line can be:
 ```
 $ parity --config config.toml
 ```
 
-#### Building using Docker
+#### Running a Bitsign node using Docker
 
-To Parity from a Docker container, you must clon this repository and then build the image with this command:
 ```
-$ docker build -t bitsign-federation .
-```
-
-To persist the blockchain data you can create a named volume:
-```
-docker volume create --name=bitsign-federation-data
+docker run --detach \
+            --name bitsign-node \
+            -e NODE_NAME=some-name \
+            --restart=unless-stopped \
+            cryptologic/bitsign-node:latest
 ```
 
-Then when the image building process finish, create the container with this command:
+The **NODE_NAME** environment variable is a reference name for the statistics explorer, you can choose whatever you want.
+
+##### Using Docker Compose
+
+Edit *.env* file and set the environment variables **TAG** and ***NODE_NAME**, then run *docker-compose*:
+
 ```
-$ docker run --name=bitsign-federation-node \
-             -v bitsign-federation-data:/data \
-             -e NODE_NAME=some-name \
-             bitsign-federation --config config.toml
+nano .env
+docker-compose up -d
 ```
-The `NODE_NAME` environment variable is for set an references name for the
-statistic explorer, you can choose whatever you want.
-
-Note: If you want a quick run you can use `config.toml` file, or you can replace `--config config.toml` with the configuration you need.
-
-
-
