@@ -11,4 +11,4 @@ pm2 startup
 pm2 save
 
 cd /root
-/parity/parity --base-path /data $@
+/parity/parity --config /root/config.toml --base-path /data $@
