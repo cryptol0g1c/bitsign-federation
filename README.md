@@ -101,7 +101,7 @@ The **NODE_NAME** environment variable is a reference name for the statistics ex
 
 ##### Using Docker Compose
 
-Edit *.env* file and set the environment variables **TAG** and ***NODE_NAME**, then run *docker-compose*:
+Edit *.env* file and set the environment variables **TAG** and **NODE_NAME**, then run *docker-compose*:
 
 ```
 nano .env
