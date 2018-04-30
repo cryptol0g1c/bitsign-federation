@@ -6,6 +6,7 @@ apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc
 
 [mining]
 reseal_on_txs = "none"
+reseal_max_period = 60000
 
 [misc]
 log_file = "parity.log"
