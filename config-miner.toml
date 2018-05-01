@@ -9,11 +9,6 @@ password = ["password.txt"]
 force = false
 disable = true #Nodes does not normally need Wallet UI
 
-[network]
-port = 30303
-bootnodes = []
-discovery = true
-
 [rpc]
 apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", "parity_accounts"] #RPC functionality can be restricted
 
