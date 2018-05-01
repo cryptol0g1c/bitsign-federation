@@ -1,0 +1,38 @@
+[parity]
+chain = "genesis.json" 
+
+[account]
+unlock = ["ETH_MINER_ACCOUNT"]
+password = ["password.txt"]
+
+[ui]
+force = false
+disable = true #Nodes does not normally need Wallet UI
+
+[network]
+port = 30303
+bootnodes = []
+discovery = true
+
+[rpc]
+apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", "parity_accounts"] #RPC functionality can be restricted
+
+[mining]
+author = "ETH_MINER_ACCOUNT"
+engine_signer = "ETH_MINER_ACCOUNT"
+reseal_max_period = 30000
+
+[footprint] # This config is needed for block explorers
+tracing = "on"
+fat_db = "on"
+pruning = "archive"
+
+[network]
+port = 30303
+reserved_peers = "nodes.txt"
+discovery = true
+
+[misc]
+logging = "own_tx=trace"
+log_file = "bitsign-miner-node.log"
+color = true
