@@ -21,18 +21,18 @@ contract('NoterizeTx', addresses => {
   it('should not update the notarize status if sender is not the buyer or bsg_node', async() => {
     try {
       await instance.updateStatus('status', hash, id, {from: seller});
-      assert.ok(false, 'It should have failed because a seller cannot update a status.');
+      assert(false, 'It should have failed because a seller cannot update a status.');
     } catch(error) {
-      assert(error.message.search("revert"));
+      assert(error.message.includes("revert"));
     }
   });
 
   it('should not update the notarize shipping if sender is not the buyer or bsg_node', async() => {
     try {
       await instance.updateShipping('shipping', hash, id, {from: seller});
-      assert.ok(false, 'It should have failed because a seller cannot update a shipping.');
+      assert(false, 'It should have failed because a seller cannot update a shipping.');
     } catch(error) {
-      assert(error.message.search("revert"));
+      assert(error.message.includes("revert"));
     }
   });
 
