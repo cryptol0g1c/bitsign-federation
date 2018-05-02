@@ -1,5 +1,8 @@
 [parity]
 chain = "genesis.json"
+base_path = "./"
+db_path = "./chains"
+keys_path = "./keys"
 
 [ui]
 force = false
