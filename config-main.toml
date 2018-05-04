@@ -1,5 +1,5 @@
 [parity]
-chain = "genesis.json" 
+chain = "genesis.json"
 identity = "bitsign-node"
 
 [account]
@@ -13,6 +13,11 @@ disable = true
 author = "ETH_MINER_ACCOUNT"
 engine_signer = "ETH_MINER_ACCOUNT"
 reseal_max_period = 30000
+
+[footprint]
+tracing = "on"
+fat_db = "on"
+pruning = "archive"
 
 [network]
 reserved_peers = "nodes.txt"

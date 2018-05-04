@@ -1,22 +1,15 @@
 [parity]
 chain = "genesis.json"
+base_path = "./base-path"
+identity = "bitsign-node"
 
-[ui]
-force = false
-disable = true #Nodes does not normally need Wallet UI
-
-[rpc]
-apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", "parity_accounts"]
-
-[mining]
-reseal_max_period = 60000
+[network]
+discovery = true
+reserved_peers = "nodes.txt"
 
 [misc]
 logging = "own_tx=trace"
 log_file = "bitsign-node.log"
 color = true
 
-[network]
-port = 30303
-reserved_peers = "nodes.txt"
-discovery = true
+
