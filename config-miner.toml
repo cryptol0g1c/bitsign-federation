@@ -20,5 +20,5 @@ discovery = true
 
 [misc]
 logging = "own_tx=trace"
-log_file = "bitsign-miner-node.log"
+log_file = "parity.log"
 color = true

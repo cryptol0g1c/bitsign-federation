@@ -9,7 +9,7 @@ reserved_peers = "nodes.txt"
 
 [misc]
 logging = "own_tx=trace"
-log_file = "bitsign-node.log"
+log_file = "parity.log"
 color = true
 
 

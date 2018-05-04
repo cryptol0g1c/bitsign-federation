@@ -3,3 +3,7 @@ build
 parity.log
 coverage
 coverage.json
+password.txt
+base-path/
+nohup.out
+bitsign-node.log
