@@ -58,7 +58,7 @@ If you want to create your own transaction and send it from your account please 
             "password": "<your_password>"
         }
 
-### [Get transactions by user [GET /api/v2/transactions?token={token}&hash={hash}]](https://bitsign.docs.apiary.io/#reference/0/raw-transactions-endpoints/get-transactions-by-user)
+### [Get transactions by user [GET /api/v2/transactions?token={token}&hash={hash}]](https://bitsign.docs.apiary.io/#reference/0/transaction-endpoints/get-transactions-by-user)
 This endpoint returns the transactions executed by the user. JWT token is a required parameter, but the tx hash is an optional parameter.
 
 + Parameters
