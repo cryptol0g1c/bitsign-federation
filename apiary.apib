@@ -216,6 +216,34 @@ We will be releasing Bitsign tx library to facilitate this process soon.
             "error": null
         }
 
+### Get transactions by user [GET /api/v2/transactions?token={token}&hash={hash}]
+This endpoint returns the transactions executed by the user. JWT token is a required parameter, but the tx hash is an optional
+parameter.
+
++ Parameters
+    + token: <user_token> (string) - User token.
+    + hash: <hash> (string) - Transaction hash.
+
++ Response 200 (application/json)
+
+    {
+        "success": true,
+        "data": [
+            {
+                "_id": "5a5ccafb6e04ee60282f3c0b",
+                "__v": 0,
+                "transaction": {
+                    "blockNumber": 26198,
+                    "hash": "0x295a9ebc3becf2bd508e8fbe16e7d61456aaf0f333faeafbfdc137c44a1fa78b"
+                },
+                "created": {
+                    "by": "5a36ebc6e36eaa130e301e51",
+                    "date": "2018-01-15T15:38:35.580Z"
+                }
+            }
+        ],
+        "error": null
+    }
 
 ## Smart Contract Endpoints [/eth/contract]
 ### Deploy new Smart Contract [PUT]
@@ -558,3 +586,29 @@ Altough this method will generally cost gas, there is no limitation about it whe
             "data": {},
             "error": null
         }
+
+### Get deployed contracts by user [GET /api/v2/contracts?token={token}]
+This endpoint returns the contracts deployed by the user.
+
++ Parameters
+    + token: <user_token> (string) - User token.
+
++ Response 200 (application/json)
+
+    {
+        "success": true,
+        "data": [
+            {
+                "address": "0xb42B83621125b8f523dC3ca197168439e139744D",
+                "contractExplorerUrl": "http://explorer.bitsign.io/account/0xb42B83621125b8f523dC3ca197168439e139744D",
+                "date": {
+                    "created": "2018-03-15T01:13:21.932Z"
+                },
+                "encodedAbi": "0000000000000000000000000593ce5dc23005d15bdf39be68e84ee83fd6b3be",
+                "type": "Notarize",
+                "txHash": "0xba1eb2c8ea051b66a24fa300b7c0eec0e7dc4d65552859e0221963658c1d504b",
+                "txExplorerUrl": "http://explorer.bitsign.io/tx/0xba1eb2c8ea051b66a24fa300b7c0eec0e7dc4d65552859e0221963658c1d504b"
+            }
+        ],
+        "error": null
+    }
