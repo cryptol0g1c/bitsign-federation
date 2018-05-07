@@ -187,35 +187,6 @@ If you want to create your own transaction and send it from your account please 
             "error": null
         }
 
-## Raw Transactions Endpoints [/eth/signedRawTx]
-
-### SendRawTransaction [POST]
-If you don't trust or don't want to use the **keypair provided by Bitsign**, you can always call this endpoint that will publish your **offline
-signed** raw [transaction](https://web3js.readthedocs.io/en/1.0/web3-eth.html#sendsignedtransaction). Bitsign node will only handle gas cost and transaction publication,
-but you have to **craft the entire transaction** on your end.
-We will be releasing Bitsign tx library to facilitate this process soon.
-
-+ Attributes
-    + token: ey..yk (string) - User token.
-    + env: production (string) - Environment to deploy the smart contract.
-    + tx: 0x..m3 (string) - Signed data.
-
-+ Request (application/json)
-
-        {
-            "token": "",
-            "env": "",
-            "tx": ""
-        }
-
-+ Response 200 (application/json)
-
-        {
-            "success": true,
-            "data": {},
-            "error": null
-        }
-
 ### Get transactions by user [GET /api/v2/transactions?token={token}&hash={hash}]
 This endpoint returns the transactions executed by the user. JWT token is a required parameter, but the tx hash is an optional
 parameter.
@@ -244,6 +215,35 @@ parameter.
         ],
         "error": null
     }
+
+## Raw Transactions Endpoints [/eth/signedRawTx]
+
+### SendRawTransaction [POST]
+If you don't trust or don't want to use the **keypair provided by Bitsign**, you can always call this endpoint that will publish your **offline
+signed** raw [transaction](https://web3js.readthedocs.io/en/1.0/web3-eth.html#sendsignedtransaction). Bitsign node will only handle gas cost and transaction publication,
+but you have to **craft the entire transaction** on your end.
+We will be releasing Bitsign tx library to facilitate this process soon.
+
++ Attributes
+    + token: ey..yk (string) - User token.
+    + env: production (string) - Environment to deploy the smart contract.
+    + tx: 0x..m3 (string) - Signed data.
+
++ Request (application/json)
+
+        {
+            "token": "",
+            "env": "",
+            "tx": ""
+        }
+
++ Response 200 (application/json)
+
+        {
+            "success": true,
+            "data": {},
+            "error": null
+        }
 
 ## Smart Contract Endpoints [/eth/contract]
 ### Deploy new Smart Contract [PUT]

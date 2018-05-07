@@ -58,6 +58,14 @@ If you want to create your own transaction and send it from your account please 
             "password": "<your_password>"
         }
 
+### [Get transactions by user [GET /api/v2/transactions?token={token}&hash={hash}]](https://bitsign.docs.apiary.io/#reference/0/raw-transactions-endpoints/get-transactions-by-user)
+This endpoint returns the transactions executed by the user. JWT token is a required parameter, but the tx hash is an optional parameter.
+
++ Parameters
+
+    + token: <user_token> - User token.
+    + hash: <hash> (optional) - Transaction hash.
+
 ## Raw Transactions Endpoints
 ### [SendRawTransaction [POST /eth/signedRawTx]](https://bitsign.docs.apiary.io/#reference/0/raw-transactions-endpoints/sendrawtransaction)
 If you don't trust or don't want to use the **keypair provided by Bitsign**, you can always call this endpoint that will publish your **offline
@@ -166,3 +174,10 @@ Although this method will generally cost gas, there is no limitation about it wh
             },
             "password": "<your_password>"
         }
+
+### [Get deployed contracts by user [GET /api/v2/contracts?token={token}]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/get-deployed-contracts-by-user)
+This endpoint returns the contracts deployed by the user.
+
++ Parameters
+
+    + token: <user_token> (string) - User token.
