@@ -21,6 +21,8 @@ RUN git clone https://github.com/cryptol0g1c/eth-net-intelligence-api.git \
     && cd eth-net-intelligence-api \
     && npm install
 
+COPY ./config-main.toml ./
+COPY ./config-miner.toml ./
 COPY ./config.toml ./
 COPY ./nodes.txt ./
 COPY ./genesis.json ./
