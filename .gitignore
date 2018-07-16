@@ -7,3 +7,4 @@ password.txt
 base-path/
 nohup.out
 bitsign-node.log
+package-lock.json

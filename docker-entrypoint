@@ -2,7 +2,8 @@
 
 set -e
 
-export NODE_NAME=${NODE_NAME:-'xxyy'}
+NODE_NAME=${NODE_NAME:-"xxyy"}
+NODE_TYPE=${NODE_TYPE:-"default"}
 
 cd /root/eth-net-intelligence-api
 perl -pi -e "s/federation-node-xxyy/federation-node-${NODE_NAME}/g" app.json
@@ -10,5 +11,13 @@ pm2 start --name stats app.json
 pm2 startup
 pm2 save
 
+echo "[PARITY] Node type: $NODE_TYPE"
+
+if [ $NODE_TYPE = "default" ]; then
+  NODE_TYPE=""
+else
+  NODE_TYPE="-$NODE_TYPE"
+fi
+
 cd /root
-/parity/parity --config /root/config.toml --base-path /data $@
+/parity/parity --config /root/config$NODE_TYPE.toml --base-path /data $@
