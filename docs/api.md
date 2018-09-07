@@ -106,14 +106,14 @@ In order to initialize Escrow contract the user must send _seller (address), _bu
 #####  NotarizeTX
 ###### Constructor
 In order to initialize NotarizeTx contract the user must send the following values:
-buyer (address),
-seller (address),
-id  (bytes32),
-date (string),
-value (uint),
-hash (bytes32),
-status (string),
-shipping (string)
+- buyer (address)
+- seller (address)
+- id  (bytes32)
+- date (string)
+- value (uint)
+- hash (bytes32)
+- status (string)
+- shipping (string)
 ###### Methods
 * updateStatus: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx status. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
 * updateShipping: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx shipping. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
@@ -121,7 +121,7 @@ shipping (string)
 + Request (application/json)
 
         {
-            "token": "",
+            "token": "<your_token>",
             "env": "production",
             "args": {
                 "_buyer": "",
@@ -132,6 +132,21 @@ shipping (string)
             "value": "0",
             "password": "<your_password>"
         }
+
+#####  ERC20 [PUT /erc20]
+This smart contract allows to create a new erc20 token crowdsale.
+###### Constructor
+In order to initialize ERC"= contract the user must send the following values:
+- name (string)            The name of the token.
+- symbol (string)          The abreviation of the token.
+- decimals (int)           The quantity of decimals which a token can be splitted.
+- rate (int)               The rate of the token.
+- wallet (address)         The address that will hold the ethers after the ERC20 finish.
+- cap (int)                The top quantity of ethers that can be buyed.
+- openingTime (date)       The estimated opening time of the erc20 crowdsale. Format HH:mm dd/MM/yyyy.
+- closingTime (date)       The estimated closing time of the erc20 crowdsale. Format HH:mm dd/MM/yyyy.
+###### Methods
+
 
 ### [Contract Usage [GET /eth/contract/doc?token={token}&type={type}]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/contract-usage)
 This endpoint returns smart contract's ABI and functions to use its functionality.
