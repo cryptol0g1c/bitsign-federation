@@ -133,21 +133,6 @@ In order to initialize NotarizeTx contract the user must send the following valu
             "password": "<your_password>"
         }
 
-#####  ERC20 [PUT /erc20]
-This smart contract allows to create a new erc20 token crowdsale.
-###### Constructor
-In order to initialize ERC"= contract the user must send the following values:
-- name (string)            The name of the token.
-- symbol (string)          The abreviation of the token.
-- decimals (int)           The quantity of decimals which a token can be splitted.
-- rate (int)               The rate of the token.
-- wallet (address)         The address that will hold the ethers after the ERC20 finish.
-- cap (int)                The top quantity of ethers that can be buyed.
-- openingTime (date)       The estimated opening time of the erc20 crowdsale. Format HH:mm dd/MM/yyyy.
-- closingTime (date)       The estimated closing time of the erc20 crowdsale. Format HH:mm dd/MM/yyyy.
-###### Methods
-
-
 ### [Contract Usage [GET /eth/contract/doc?token={token}&type={type}]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/contract-usage)
 This endpoint returns smart contract's ABI and functions to use its functionality.
 
@@ -196,3 +181,50 @@ This endpoint returns the contracts deployed by the user.
 + Parameters
 
     + token: <user_token> (string) - User token.
+
+## Perform a Crowdsale 
+
+###  [Deploy new Crowdsale Smart Contract [PUT /erc20]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/deploy-new-crowdsale-smart-contract)
+#### ERC20
+This smart contract allows to create a new erc20 crowdsale.
+###### Constructor
+In order to initialize ERC20 crowdsale contract the user must send the following values:
+- name (string)            The name of the token.
+- symbol (string)          The abreviation of the token.
+- decimals (int)           The quantity of decimals which a token can be splitted.
+- rate (int)               The rate of the token.
+- wallet (address)         The address that will hold the ethers after the ERC20 finish.
+- cap (int)                The top quantity of ethers that can be buyed.
+- openingTime (date)       The estimated opening time of the erc20 crowdsale. Format HH:mm dd/MM/yyyy.
+- closingTime (date)       The estimated closing time of the erc20 crowdsale. Format HH:mm dd/MM/yyyy.
+###### Methods
+####### view methods [POST /erc20]
+To perform a view method user must send following values:
+- type (string)            The contract type. [GenericTokenCrowdsale, GenericToken].
+- method (string)          The name the method you want to execute.
+- args (object)            The arguments required by the function.
+######## GenericTokenCrowdsale methods:
+* hasClosed: This method ouputs true if crowdsale has finished, else returns false.
+* rate: This method returns the exchange rate of the token.
+* cap: This method returns the maxium amount of ether that will be raised in the crowdsale.
+* weiRaised:  This method returns the amount of wei raised up to the moment
+* openingTime: This method returns the crowdsale opening time.
+* closingTime: This method returns the crowdsale closing time.
+* capReached:  This method returns true if the cap has been reached, elsewere returns false.
+* wallet: This method returns the address that will hold the ethers after the ERC20 finish.
+######## GenericToken methods:
+* mintingFinished: This method returns true if minting is no more aviliable, elsewere returns false.
+* approve: 
+####### write methods [PATCH /erc20]
+To perform a write method user must send following values:
+- address (address)   The address of the ERC20.
+- method (string)     The name the method you want to execute.
+- args (object)       The arguments required by the function.
+- value (int)         The value in ethers. Mostly used when the user want to buy tokens.
+######## 
+* buyTokens: 
+* token.mint: Function to mint tokens. The sender address need to have mint permission, and mintFinished need to be setted to false. Returns a boolean that indicates if the operation was successful. 
+parameters:    
+    - _to - The address that will receive the minted tokens.
+    - _amount - The amount of tokens to mint.
+* token.finishMinting: Function to stop minting new tokens, only can be performed by owner. Returns true if the operation was successful. 
