@@ -216,9 +216,9 @@ To perform a view method user must send following values:
 * closingTime: This method returns the crowdsale closing time.
 * capReached:  This method returns true if the cap has been reached, elsewere returns false.
 * wallet: This method returns the address that will hold the ethers after the ERC20 finish.
+* token: This method returns the contract address of token being sold.
 ###### GenericToken Methods:
-    * mintingFinished: This method returns true if minting is no more aviliable, elsewere returns false.
-    * approve: 
+* mintingFinished: This method returns true if minting is no more aviliable, elsewere returns false.
 ##### write methods [PATCH /erc20]
 To perform a write method user must send following values:
 - address (address)   The address of the ERC20.
@@ -226,9 +226,6 @@ To perform a write method user must send following values:
 - args (object)       The arguments required by the function.
 - value (int)         The value in ethers. Mostly used when the user want to buy tokens.
 ###### Methods:
-* buyTokens: 
-* token.mint: Function to mint tokens. The sender address need to have mint permission, and mintFinished need to be setted to false. Returns a boolean that indicates if the operation was successful. 
-parameters:    
-    - _to - The address that will receive the minted tokens.
-    - _amount - The amount of tokens to mint.
-* token.finishMinting: Function to stop minting new tokens, only can be performed by owner. Returns true if the operation was successful. 
+* buyTokens: Payable function for token purchase.
+parameter:
+    - beneficiary Address performing the token purchase.
