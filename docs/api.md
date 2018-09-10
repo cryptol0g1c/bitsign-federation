@@ -189,9 +189,9 @@ This endpoint returns the contracts deployed by the user.
 This smart contract allows to create a new erc20 crowdsale. By this, user will deploy at same time:
 - ERC20 Mintable Token Contract: Simple ERC20 Token example, with mintable token creation. That function allows users with the MinterRole to call the mint() function and mint tokens to users. Minting can also be finished, locking the mint() function's behavior.
 - Crowdsale Contract: Allows user allocate tokens to network participants in various ways, mostly in exchange for Ether. Crowdsale have diferent properties:
-    - Minted Crowdsale: The Crowdsale mints tokens when a purchase is made.
-    - Capped Crowdsale: Adds a cap to your crowdsale, invalidating any purchases that would exceed that cap.
-    - Timed Crowdsale:  adds an openingTime and closingTime to user's crowdsale.
+    - Minted: The Crowdsale mints tokens when a purchase is made.
+    - Capped: Adds a cap to your crowdsale, invalidating any purchases that would exceed that cap.
+    - Timed: Adds an openingTime and closingTime to user's crowdsale.
 ##### Constructor
 In order to initialize ERC20 crowdsale contract the user must send the following values:
 - name (string)            The name of the token.
@@ -202,7 +202,7 @@ In order to initialize ERC20 crowdsale contract the user must send the following
 - cap (int)                The top quantity of ethers that can be buyed.
 - openingTime (date)       The estimated opening time of the erc20 crowdsale. Format HH:mm dd/MM/yyyy.
 - closingTime (date)       The estimated closing time of the erc20 crowdsale. Format HH:mm dd/MM/yyyy.
-##### view methods [POST /erc20]
+##### View methods [POST /erc20]
 To perform a view method user must send following values:
 - type (string)            The contract type. [GenericTokenCrowdsale, GenericToken].
 - method (string)          The name the method you want to execute.
@@ -214,18 +214,20 @@ To perform a view method user must send following values:
 * weiRaised:  This method returns the amount of wei raised up to the moment
 * openingTime: This method returns the crowdsale opening time.
 * closingTime: This method returns the crowdsale closing time.
-* capReached:  This method returns true if the cap has been reached, elsewere returns false.
+* isOpen: This method returns true if the crowdsale is open, false otherwise.
+* capReached:  This method returns whether the cap was reached.
 * wallet: This method returns the address that will hold the ethers after the ERC20 finish.
 * token: This method returns the contract address of token being sold.
 ###### GenericToken Methods:
+* balanceOf: Gets the balance of the specified address.
+parameter:
+    - owner (address)       The address to query the the balance of.
 * mintingFinished: This method returns true if minting is no more aviliable, elsewere returns false.
-##### write methods [PATCH /erc20]
+##### buy method [PATCH /erc20]
+Payable function for token purchase.
 To perform a write method user must send following values:
 - address (address)   The address of the ERC20.
-- method (string)     The name the method you want to execute.
-- args (object)       The arguments required by the function.
+- method (string)     The name the method you want to execute. In this case the method is buyTokens. 
+- args (object)       The arguments required by the function. In this case:
+    - beneficiary: Address performing the token purchase.
 - value (int)         The value in ethers. Mostly used when the user want to buy tokens.
-###### Methods:
-* buyTokens: Payable function for token purchase.
-parameter:
-    - beneficiary Address performing the token purchase.
