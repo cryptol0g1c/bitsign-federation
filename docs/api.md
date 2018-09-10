@@ -185,8 +185,13 @@ This endpoint returns the contracts deployed by the user.
 ## Perform a Crowdsale 
 
 ###  [Deploy new Crowdsale Smart Contract [PUT /erc20]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/deploy-new-crowdsale-smart-contract)
-#### ERC20
-This smart contract allows to create a new erc20 crowdsale.
+#### ERC20 Token Crowdsale
+This smart contract allows to create a new erc20 crowdsale. By this, user will deploy at same time:
+- ERC20 Mintable Token Contract: Simple ERC20 Token example, with mintable token creation. That function allows users with the MinterRole to call the mint() function and mint tokens to users. Minting can also be finished, locking the mint() function's behavior.
+- Crowdsale Contract: Allows user allocate tokens to network participants in various ways, mostly in exchange for Ether. Crowdsale have diferent properties:
+    - Minted Crowdsale: The Crowdsale mints tokens when a purchase is made.
+    - Capped Crowdsale: Adds a cap to your crowdsale, invalidating any purchases that would exceed that cap.
+    - Timed Crowdsale:  adds an openingTime and closingTime to user's crowdsale.
 ###### Constructor
 In order to initialize ERC20 crowdsale contract the user must send the following values:
 - name (string)            The name of the token.
