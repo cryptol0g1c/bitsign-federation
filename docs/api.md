@@ -182,17 +182,15 @@ This endpoint returns the contracts deployed by the user.
 
     + token: <user_token> (string) - User token.
 
-## Perform a Crowdsale 
-
-###  [Deploy new Crowdsale Smart Contract [PUT /erc20]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/deploy-new-crowdsale-smart-contract)
-#### ERC20 Token Crowdsale
+## Crowdsale 
+### Deploy new ERC20 Token Crowdsale Smart Contract [PUT /erc20]
 This smart contract allows to create a new erc20 crowdsale. By this, user will deploy at same time:
 - ERC20 Mintable Token Contract: Simple ERC20 Token example, with mintable token creation. That function allows users with the MinterRole to call the mint() function and mint tokens to users. Minting can also be finished, locking the mint() function's behavior.
 - Crowdsale Contract: Allows user allocate tokens to network participants in various ways, mostly in exchange for Ether. Crowdsale have diferent properties:
     - Minted: The Crowdsale mints tokens when a purchase is made.
     - Capped: Adds a cap to your crowdsale, invalidating any purchases that would exceed that cap.
     - Timed: Adds an openingTime and closingTime to user's crowdsale.
-##### Constructor
+#### Constructor
 In order to initialize ERC20 crowdsale contract the user must send the following values:
 - name (string)            The name of the token.
 - symbol (string)          The abreviation of the token.
@@ -202,12 +200,12 @@ In order to initialize ERC20 crowdsale contract the user must send the following
 - cap (int)                The top quantity of ethers that can be buyed.
 - openingTime (date)       The estimated opening time of the erc20 crowdsale. Format HH:mm dd/MM/yyyy.
 - closingTime (date)       The estimated closing time of the erc20 crowdsale. Format HH:mm dd/MM/yyyy.
-##### View methods [POST /erc20]
+### View methods [POST /erc20]
 To perform a view method user must send following values:
 - type (string)            The contract type. [GenericTokenCrowdsale, GenericToken].
 - method (string)          The name the method you want to execute.
 - args (object)            The arguments required by the function.
-###### GenericTokenCrowdsale Methods:
+#### GenericTokenCrowdsale Methods:
 * hasClosed: This method ouputs true if crowdsale has finished, else returns false.
 * rate: This method returns the exchange rate of the token.
 * cap: This method returns the maxium amount of ether that will be raised in the crowdsale.
@@ -218,12 +216,12 @@ To perform a view method user must send following values:
 * capReached:  This method returns whether the cap was reached.
 * wallet: This method returns the address that will hold the ethers after the ERC20 finish.
 * token: This method returns the contract address of token being sold.
-###### GenericToken Methods:
+#### GenericToken Methods:
 * balanceOf: Gets the balance of the specified address.
 parameter:
     - owner (address)       The address to query the the balance of.
 * mintingFinished: This method returns true if minting is no more aviliable, elsewere returns false.
-##### buy method [PATCH /erc20]
+### buy method [PATCH /erc20]
 Payable function for token purchase.
 To perform a write method user must send following values:
 - address (address)   The address of the ERC20.
