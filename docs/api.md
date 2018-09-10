@@ -202,13 +202,13 @@ In order to initialize ERC20 crowdsale contract the user must send the following
 - cap (int)                The top quantity of ethers that can be buyed.
 - openingTime (date)       The estimated opening time of the erc20 crowdsale. Format HH:mm dd/MM/yyyy.
 - closingTime (date)       The estimated closing time of the erc20 crowdsale. Format HH:mm dd/MM/yyyy.
-###### Methods
-####### view methods [POST /erc20]
+##### Methods
+###### view methods [POST /erc20]
 To perform a view method user must send following values:
 - type (string)            The contract type. [GenericTokenCrowdsale, GenericToken].
 - method (string)          The name the method you want to execute.
 - args (object)            The arguments required by the function.
-######## GenericTokenCrowdsale methods:
+    - GenericTokenCrowdsale methods:
 * hasClosed: This method ouputs true if crowdsale has finished, else returns false.
 * rate: This method returns the exchange rate of the token.
 * cap: This method returns the maxium amount of ether that will be raised in the crowdsale.
@@ -217,16 +217,16 @@ To perform a view method user must send following values:
 * closingTime: This method returns the crowdsale closing time.
 * capReached:  This method returns true if the cap has been reached, elsewere returns false.
 * wallet: This method returns the address that will hold the ethers after the ERC20 finish.
-######## GenericToken methods:
+- GenericToken methods:
 * mintingFinished: This method returns true if minting is no more aviliable, elsewere returns false.
 * approve: 
-####### write methods [PATCH /erc20]
+###### write methods [PATCH /erc20]
 To perform a write method user must send following values:
 - address (address)   The address of the ERC20.
 - method (string)     The name the method you want to execute.
 - args (object)       The arguments required by the function.
 - value (int)         The value in ethers. Mostly used when the user want to buy tokens.
-######## 
+    - Write methods:
 * buyTokens: 
 * token.mint: Function to mint tokens. The sender address need to have mint permission, and mintFinished need to be setted to false. Returns a boolean that indicates if the operation was successful. 
 parameters:    
