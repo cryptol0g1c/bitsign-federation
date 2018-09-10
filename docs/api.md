@@ -192,7 +192,7 @@ This smart contract allows to create a new erc20 crowdsale. By this, user will d
     - Minted Crowdsale: The Crowdsale mints tokens when a purchase is made.
     - Capped Crowdsale: Adds a cap to your crowdsale, invalidating any purchases that would exceed that cap.
     - Timed Crowdsale:  adds an openingTime and closingTime to user's crowdsale.
-###### Constructor
+##### Constructor
 In order to initialize ERC20 crowdsale contract the user must send the following values:
 - name (string)            The name of the token.
 - symbol (string)          The abreviation of the token.
@@ -202,34 +202,33 @@ In order to initialize ERC20 crowdsale contract the user must send the following
 - cap (int)                The top quantity of ethers that can be buyed.
 - openingTime (date)       The estimated opening time of the erc20 crowdsale. Format HH:mm dd/MM/yyyy.
 - closingTime (date)       The estimated closing time of the erc20 crowdsale. Format HH:mm dd/MM/yyyy.
-##### Methods
-###### view methods [POST /erc20]
+##### view methods [POST /erc20]
 To perform a view method user must send following values:
-    - type (string)            The contract type. [GenericTokenCrowdsale, GenericToken].
-    - method (string)          The name the method you want to execute.
-    - args (object)            The arguments required by the function.
-- GenericTokenCrowdsale methods:
-    * hasClosed: This method ouputs true if crowdsale has finished, else returns false.
-    * rate: This method returns the exchange rate of the token.
-    * cap: This method returns the maxium amount of ether that will be raised in the crowdsale.
-    * weiRaised:  This method returns the amount of wei raised up to the moment
-    * openingTime: This method returns the crowdsale opening time.
-    * closingTime: This method returns the crowdsale closing time.
-    * capReached:  This method returns true if the cap has been reached, elsewere returns false.
-    * wallet: This method returns the address that will hold the ethers after the ERC20 finish.
-- GenericToken methods:
+- type (string)            The contract type. [GenericTokenCrowdsale, GenericToken].
+- method (string)          The name the method you want to execute.
+- args (object)            The arguments required by the function.
+###### GenericTokenCrowdsale Methods:
+* hasClosed: This method ouputs true if crowdsale has finished, else returns false.
+* rate: This method returns the exchange rate of the token.
+* cap: This method returns the maxium amount of ether that will be raised in the crowdsale.
+* weiRaised:  This method returns the amount of wei raised up to the moment
+* openingTime: This method returns the crowdsale opening time.
+* closingTime: This method returns the crowdsale closing time.
+* capReached:  This method returns true if the cap has been reached, elsewere returns false.
+* wallet: This method returns the address that will hold the ethers after the ERC20 finish.
+###### GenericToken Methods:
     * mintingFinished: This method returns true if minting is no more aviliable, elsewere returns false.
     * approve: 
-###### write methods [PATCH /erc20]
+##### write methods [PATCH /erc20]
 To perform a write method user must send following values:
-    - address (address)   The address of the ERC20.
-    - method (string)     The name the method you want to execute.
-    - args (object)       The arguments required by the function.
-    - value (int)         The value in ethers. Mostly used when the user want to buy tokens.
-- Write methods:
-    * buyTokens: 
-    * token.mint: Function to mint tokens. The sender address need to have mint permission, and mintFinished need to be setted to false. Returns a boolean that indicates if the operation was successful. 
-    parameters:    
-        - _to - The address that will receive the minted tokens.
-        - _amount - The amount of tokens to mint.
-    * token.finishMinting: Function to stop minting new tokens, only can be performed by owner. Returns true if the operation was successful. 
+- address (address)   The address of the ERC20.
+- method (string)     The name the method you want to execute.
+- args (object)       The arguments required by the function.
+- value (int)         The value in ethers. Mostly used when the user want to buy tokens.
+###### Methods:
+* buyTokens: 
+* token.mint: Function to mint tokens. The sender address need to have mint permission, and mintFinished need to be setted to false. Returns a boolean that indicates if the operation was successful. 
+parameters:    
+    - _to - The address that will receive the minted tokens.
+    - _amount - The amount of tokens to mint.
+* token.finishMinting: Function to stop minting new tokens, only can be performed by owner. Returns true if the operation was successful. 
