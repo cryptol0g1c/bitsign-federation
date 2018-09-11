@@ -246,16 +246,16 @@ A list of possible methods to call is provided down.
 
 | Method | Description | Args |
 | ------ | ------ | ------ |
-| hasClosed| This method ouputs true if crowdsale has finished, else returns false.|- |
-| rate| This method returns the exchange rate of the token.|- |
-| cap| This method returns the maxium amount of ether that will be raised in the crowdsale.|- |
-| weiRaised|  This method returns the amount of wei raised up to the moment|- |
-| openingTime| This method returns the crowdsale opening time.|- |
-| closingTime| This method returns the crowdsale closing time.|- |
-| isOpen| This method returns true if the crowdsale is open, false otherwise.|- |
-| capReached|  This method returns whether the cap was reached.|- |
-| wallet| This method returns the address that will hold the ethers after the ERC20 finish.|- |
-| token| This method returns the contract address of token being sold.|- |
+| token | This method returns the contract address of token being sold. | - |
+| wallet | This method returns the address that will hold the ethers after the ERC20 finish. | - |
+| rate | This method returns the exchange rate of the token. | - |
+| weiRaised |  This method returns the amount of wei raised up to the moment. | - |
+| cap | This method returns the maxium amount of ether that will be raised in the crowdsale. | - |
+| capReached |  This method returns whether the cap was reached. | - |
+| openingTime | This method returns the crowdsale opening time. | - |
+| closingTime | This method returns the crowdsale closing time. | - |
+| isOpen | This method returns true if the crowdsale is open, false otherwise. | - |
+| hasClosed | This method ouputs true if crowdsale has finished, else returns false. | - |
 
 _Request example (application/json):_
 
@@ -269,12 +269,15 @@ _Request example (application/json):_
 
 #### Generic Token Methods **[POST /erc20/genericToken]**:
 
-There are two possible methods to call with this endpoint, listed down.
+There are several methods to call with this endpoint, listed down.
 
 | Method | Description | Args |
 | ------ | ------ | ------ |
-| balanceOf | Gets the balance of the specified address. | owner (address): The address to query the the balance of.|
-| mintingFinished | This method returns true if minting is no more aviliable, elsewere returns false. | -|
+| totalSupply | Retuns total number of tokens in existence. | - |
+| balanceOf | Gets the balance of the specified address. | _owner (address):_ The address to query the the balance of. |
+| allowance | Function to check the amount of tokens that an owner allowed to a spender. Returns a uint256 specifying the amount of tokens still available for the spender.| _owner (address):_ The address which owns the funds.<br> _spender (address):_ The address which will spend the funds. |
+| mintingFinished | This method returns true if minting is no more aviliable, elsewere returns false. | - |
+| isMinter | Returns true if a given addres has mint permission, elsewere returns false | _account (address):_ Address to check minter permission | 
 
 _Request example (application/json):_
 ```
@@ -307,6 +310,12 @@ A list of possible methods to call is provided down.
 
 | Method | Description | Args |
 | ------ | ------ | ------ |
+| buyTokens | Perform token purchase | _beneficiary (address):_ Address performing the token purchase |
+| token.transfer | Transfer token for a specified address. | __to (address):_ The address to transfer to.<br>__value (uint):_ The amount to be transferred, in wei. |
+| token.transferFrom | Transfer tokens from one address to another. | __from(address):_ address The address which you want to send tokens from <br> __to(address):_ address The address which you want to transfer to <br> __value(uint):_ uint256 the amount of tokens to be transferred |
+| token.approve | Approve the passed address to spend the specified amount of tokens on behalf of msg.sender. | __spender(address):_ The address which will spend the funds. <br> __value(uint):_ The amount of tokens to be spent. |
+| token.increaseApproval | Increase the amount of tokens that an owner allowed to a spender. | __spender(address):_ The address which will spend the funds. <br> __addedValue(uint):_ The amount of tokens to increase the allowance by. |
+| token.decreaseApproval | Decrease the amount of tokens that an owner allowed to a spender. | __spender(address):_ The address which will spend the funds. <br> __subtractedValue (uint):_ The amount of tokens to decrease the allowance by. |
 
 
 _Request example (application/json):_
