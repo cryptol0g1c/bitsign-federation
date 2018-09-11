@@ -183,32 +183,34 @@ This endpoint returns the contracts deployed by the user.
     + token: <user_token> (string) - User token.
 
 ## Crowdsale 
+
 ### Deploy new ERC20 Token Crowdsale Smart Contract **[PUT /erc20]**
+
 This endpoint allows to create a new erc20 crowdsale. By this, user will deploy at same time:
+
 - ERC20 Mintable Token Contract: Simple ERC20 Token example, with mintable token creation. That function allows users with the MinterRole to call the mint() function and mint tokens to users. Minting can also be finished, locking the mint() function's behavior.
 - Crowdsale Contract: Allows user allocate tokens to network participants in various ways, mostly in exchange for Ether. Crowdsale have diferent properties:
     - Minted: The Crowdsale mints tokens when a purchase is made.
     - Capped: Adds a cap to your crowdsale, invalidating any purchases that would exceed that cap.
     - Timed: Adds an openingTime and closingTime to user's crowdsale.
 
+##### Required values
+
 To perform a deploy user must send following values:
-- **env (string):** Enviroment to perform the method
-
+- **env (string):** Enviroment to perform the method.
 - **method (string):** The name the method you want to execute.
-- **args (object):** The arguments required by the function.
+- **args (object):** The arguments required by the function. In this case, the constructor arguments, listed below:
 
-#### Constructor
-In order to initialize ERC20 crowdsale contract the user must send the following values:
-- **name (string)**: The name of the token.
-- **symbol (string)**: The abreviation of the token.
-- **decimals (int)**: The quantity of decimals which a token can be splitted.
-- **rate (int)**: The rate of the token.
-- **wallet (address)**: The address that will hold the ethers after the ERC20 finish.
-- **cap (int)**: The top quantity of ethers that can be buyed.
-- **openingTime (date)**: The estimated opening time of the erc20 crowdsale.
-- **closingTime (date)**: The estimated closing time of the erc20 crowdsale.
+    - **_name (string)**: The name of the token.
+    - **_symbol (string)**: The abreviation of the token.
+    - **_decimals (int)**: The quantity of decimals which a token can be splitted.
+    - **_rate (int)**: The rate of the token.
+    - **_wallet (address)**: The address that will hold the ethers after the ERC20 finish.
+    - **_cap (int)**: The top quantity of ethers that can be buyed.
+    - **_openingTime (date)**: The estimated opening time of the erc20 crowdsale.
+    - **_closingTime (date)**: The estimated closing time of the erc20 crowdsale.
 
-**Request example (application/json):**
+_Request example (application/json):_
 ```
 {	
     "env" : "production",
@@ -226,28 +228,37 @@ In order to initialize ERC20 crowdsale contract the user must send the following
 }
 ```
 
-### View methods
-To perform a view method user must send following values:
-- **env (string):** Enviroment to perform the method
-- **address (address):** Address of deployed contract
-- **method (string):** The name the method you want to execute.
-- **args (object):** The arguments required by the function.
+### View contract methods
+This section explains how the user to read the state from the blockchain using erc20 contract methods. These will not alter blockchain state and therefore wont cost gas.
 
-#### Generic Token Crowdsale Methods **[POST /erc20/genericTokenCrowdsale]**:
-| Method | Description |
-| ------ | ------ |
-| hasClosed| This method ouputs true if crowdsale has finished, else returns false.|
-| rate| This method returns the exchange rate of the token.|
-| cap| This method returns the maxium amount of ether that will be raised in the crowdsale.|
-| weiRaised|  This method returns the amount of wei raised up to the moment|
-| openingTime| This method returns the crowdsale opening time.|
-| closingTime| This method returns the crowdsale closing time.|
-| isOpen| This method returns true if the crowdsale is open, false otherwise.|
-| capReached|  This method returns whether the cap was reached.|
-| wallet| This method returns the address that will hold the ethers after the ERC20 finish.|
-| token| This method returns the contract address of token being sold.|
+##### Required values
 
-**Request example (application/json):**
+There are 2 possible endpoints, one for call token contract, and the another for crowdsale contract. To perform a view method user must send following values:
+- _env (string):_ Enviroment to perform the method
+- _address (address):_ Address of deployed contract
+- _method (string):_ The name the method you want to execute.
+- _args (object):_ The arguments required by the function.
+
+
+#### Generic Token Crowdsale Methods **[POST /erc20/genericTokenCrowdsale]**
+
+A list of possible methods to call is provided down.
+
+| Method | Description | Args |
+| ------ | ------ | ------ |
+| hasClosed| This method ouputs true if crowdsale has finished, else returns false.|- |
+| rate| This method returns the exchange rate of the token.|- |
+| cap| This method returns the maxium amount of ether that will be raised in the crowdsale.|- |
+| weiRaised|  This method returns the amount of wei raised up to the moment|- |
+| openingTime| This method returns the crowdsale opening time.|- |
+| closingTime| This method returns the crowdsale closing time.|- |
+| isOpen| This method returns true if the crowdsale is open, false otherwise.|- |
+| capReached|  This method returns whether the cap was reached.|- |
+| wallet| This method returns the address that will hold the ethers after the ERC20 finish.|- |
+| token| This method returns the contract address of token being sold.|- |
+
+_Request example (application/json):_
+
 ```
 {
   "env" : "production",
@@ -255,13 +266,17 @@ To perform a view method user must send following values:
   "method" : "openingTime"
 }
 ``` 
+
 #### Generic Token Methods **[POST /erc20/genericToken]**:
-| Method | Description | Arg |
+
+There are two possible methods to call with this endpoint, listed down.
+
+| Method | Description | Args |
 | ------ | ------ | ------ |
 | balanceOf | Gets the balance of the specified address. | owner (address): The address to query the the balance of.|
-| mintingFinished | This method returns true if minting is no more aviliable, elsewere returns false. | |
+| mintingFinished | This method returns true if minting is no more aviliable, elsewere returns false. | -|
 
-**Request example (application/json):**
+_Request example (application/json):_
 ```
 {
   "env" : "production",
@@ -273,17 +288,28 @@ To perform a view method user must send following values:
 }
 ```
 
-### buy method **[PATCH /erc20]**
-Payable function for token purchase.
-To perform a write method user must send following values:
-- env (string)             enviroment to perform the method
-- address (address)   The address of the ERC20.
-- method (string)     The name the method you want to execute. In this case the method is buyTokens. 
-- args (object)       The arguments required by the function. In this case:
-    - beneficiary: Address performing the token purchase.
-- value (int)         The value in ethers. Mostly used when the user want to buy tokens.
+### Write methods **[PATCH /erc20]**
+Endpoint for execute a write method over an ERC20 crowdsale. These methods change the state of blockchain, so requires gas usage by sender address. Elsewere, transaction will fail. 
 
-**Request example (application/json):**
+##### Required values
+
+To perform a write method user must provide following values:
+
+- _env (string):_       Enviroment to perform the method
+- _address (address):_  The address of the ERC20.
+- _method (string):_    The name the method you want to execute. 
+- _args (object):_      The arguments required by the function.
+- _value (int):_        The value in ethers. Mostly used when the user want to buy tokens.
+
+#### Available methods
+
+A list of possible methods to call is provided down.
+
+| Method | Description | Args |
+| ------ | ------ | ------ |
+
+
+_Request example (application/json):_
 ```
 {
   "env" : "production",
@@ -299,7 +325,7 @@ To perform a write method user must send following values:
 ### retrieve deployed ERC20 **[GET /erc20]**
 This endpoint allows user to retrieve a list of deployed contrats by user
 
-**Request example (application/json):**
+_Request example (application/json):_
 ```
 {
     	"email" : "user@example.com"
