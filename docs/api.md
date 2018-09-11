@@ -192,25 +192,25 @@ This endpoint allows to create a new erc20 crowdsale. By this, user will deploy 
 - Crowdsale Contract: Allows user allocate tokens to network participants in various ways, mostly in exchange for Ether. Crowdsale have diferent properties:
     - Minted: The Crowdsale mints tokens when a purchase is made.
     - Capped: Adds a cap to your crowdsale, invalidating any purchases that would exceed that cap.
-    - Timed: Adds an openingTime and closingTime to user's crowdsale.
+    - Timed: Adds an openingTime and closingTime to user crowdsale.
 
 ##### Required values
 
 To perform a deploy user must send following values:
-- **env (string):** Enviroment to perform the method.
-- **method (string):** The name the method you want to execute.
-- **args (object):** The arguments required by the function. In this case, the constructor arguments, listed below:
+- **env (string):&nbsp;** Enviroment to perform the method.
+- **email (string):&nbsp;** The user email.
+- **args (object):&nbsp;** The arguments required by the function. In this case, the constructor arguments, listed below:
 
-    - **_name (string)**: The name of the token.
-    - **_symbol (string)**: The abreviation of the token.
-    - **_decimals (int)**: The quantity of decimals which a token can be splitted.
-    - **_rate (int)**: The rate of the token.
-    - **_wallet (address)**: The address that will hold the ethers after the ERC20 finish.
-    - **_cap (int)**: The top quantity of ethers that can be buyed.
-    - **_openingTime (date)**: The estimated opening time of the erc20 crowdsale.
-    - **_closingTime (date)**: The estimated closing time of the erc20 crowdsale.
+    - **_name (string):&nbsp;** The name of the token.
+    - **_symbol (string):&nbsp;** The abreviation of the token.
+    - **_decimals (uint):&nbsp;** The quantity of decimals which a token can be splitted.
+    - **_rate (uint):&nbsp;** The rate of the token.
+    - **_wallet (address):&nbsp;** The address that will hold the ethers after the ERC20 finish.
+    - **_cap (uint):&nbsp;** The top quantity of ethers that can be buyed.
+    - **_openingTime (date):&nbsp;** The estimated opening time of the erc20 crowdsale.
+    - **_closingTime (date):&nbsp;** The estimated closing time of the erc20 crowdsale.
 
-_Request example (application/json):_
+_Request example (application/json):&nbsp;_
 ```
 {	
     "env" : "production",
@@ -234,10 +234,10 @@ This section explains how the user to read the state from the blockchain using e
 ##### Required values
 
 There are 2 possible endpoints, one for call token contract, and the another for crowdsale contract. To perform a view method user must send following values:
-- _env (string):_ Enviroment to perform the method
-- _address (address):_ Address of deployed contract
-- _method (string):_ The name the method you want to execute.
-- _args (object):_ The arguments required by the function.
+- _env (string):&nbsp;_ Enviroment to perform the method
+- _address (address):&nbsp;_ Address of deployed contract
+- _method (string):&nbsp;_ The name the method you want to execute.
+- _args (object):&nbsp;_ The arguments required by the function.
 
 
 #### Generic Token Crowdsale Methods **[POST /erc20/genericTokenCrowdsale]**
@@ -257,7 +257,7 @@ A list of possible methods to call is provided down.
 | isOpen | This method returns true if the crowdsale is open, false otherwise. | - |
 | hasClosed | This method ouputs true if crowdsale has finished, else returns false. | - |
 
-_Request example (application/json):_
+_Request example (application/json):&nbsp;_
 
 ```
 {
@@ -274,12 +274,12 @@ There are several methods to call with this endpoint, listed down.
 | Method | Description | Args |
 | ------ | ------ | ------ |
 | totalSupply | Retuns total number of tokens in existence. | - |
-| balanceOf | Gets the balance of the specified address. | _owner (address):_ The address to query the the balance of. |
-| allowance | Function to check the amount of tokens that an owner allowed to a spender. Returns a uint256 specifying the amount of tokens still available for the spender.| _owner (address):_ The address which owns the funds.<br> _spender (address):_ The address which will spend the funds. |
+| balanceOf | Gets the balance of the specified address. | _owner (address):&nbsp;_ The address to query the the balance of. |
+| allowance | Function to check the amount of tokens that an owner allowed to a spender. Returns a uint256 specifying the amount of tokens still available for the spender.| _owner (address):&nbsp;_ The address which owns the funds.<br> _spender (address):&nbsp;_ The address which will spend the funds. |
 | mintingFinished | This method returns true if minting is no more aviliable, elsewere returns false. | - |
-| isMinter | Returns true if a given addres has mint permission, elsewere returns false | _account (address):_ Address to check minter permission | 
+| isMinter | Returns true if a given addres has mint permission, elsewere returns false | _account (address):&nbsp;_ Address to check minter permission | 
 
-_Request example (application/json):_
+_Request example (application/json):&nbsp;_
 ```
 {
   "env" : "production",
@@ -298,11 +298,11 @@ Endpoint for execute a write method over an ERC20 crowdsale. These methods chang
 
 To perform a write method user must provide following values:
 
-- _env (string):_       Enviroment to perform the method
-- _address (address):_  The address of the ERC20.
-- _method (string):_    The name the method you want to execute. 
-- _args (object):_      The arguments required by the function.
-- _value (int):_        The value in ethers. Mostly used when the user want to buy tokens.
+- _env (string):&nbsp;_       Enviroment to perform the method
+- _address (address):&nbsp;_  The address of the ERC20.
+- _method (string):&nbsp;_    The name the method you want to execute. 
+- _args (object):&nbsp;_      The arguments required by the function.
+- _value (uint):&nbsp;_        The value in ethers. Mostly used when the user want to buy tokens.
 
 #### Available methods
 
@@ -310,15 +310,15 @@ A list of possible methods to call is provided down.
 
 | Method | Description | Args |
 | ------ | ------ | ------ |
-| buyTokens | Perform token purchase | _beneficiary (address):_ Address performing the token purchase |
-| token.transfer | Transfer token for a specified address. | __to (address):_ The address to transfer to.<br>__value (uint):_ The amount to be transferred, in wei. |
-| token.transferFrom | Transfer tokens from one address to another. | __from(address):_ address The address which you want to send tokens from <br> __to(address):_ address The address which you want to transfer to <br> __value(uint):_ uint256 the amount of tokens to be transferred |
-| token.approve | Approve the passed address to spend the specified amount of tokens on behalf of msg.sender. | __spender(address):_ The address which will spend the funds. <br> __value(uint):_ The amount of tokens to be spent. |
-| token.increaseApproval | Increase the amount of tokens that an owner allowed to a spender. | __spender(address):_ The address which will spend the funds. <br> __addedValue(uint):_ The amount of tokens to increase the allowance by. |
-| token.decreaseApproval | Decrease the amount of tokens that an owner allowed to a spender. | __spender(address):_ The address which will spend the funds. <br> __subtractedValue (uint):_ The amount of tokens to decrease the allowance by. |
+| buyTokens | Perform token purchase | _beneficiary (address):&nbsp;_ Address performing the token purchase |
+| token.transfer | Transfer token for a specified address. | __to (address):&nbsp;_ The address to transfer to.<br>__value (uint):&nbsp;_ The amount to be transferred, in wei. |
+| token.transferFrom | Transfer tokens from one address to another. | __from(address):&nbsp;_ The address which you want to send tokens from <br> __to(address):&nbsp;_  The address which you want to transfer to <br> __value(uint):&nbsp;_ the amount of tokens to be transferred |
+| token.approve | Approve the passed address to spend the specified amount of tokens on behalf of msg.sender. | __spender(address):&nbsp;_ The address which will spend the funds. <br> __value(uint):&nbsp;_ The amount of tokens to be spent. |
+| token.increaseApproval | Increase the amount of tokens that an owner allowed to a spender. | __spender(address):&nbsp;_ The address which will spend the funds. <br> __addedValue(uint):&nbsp;_ The amount of tokens to increase the allowance by. |
+| token.decreaseApproval | Decrease the amount of tokens that an owner allowed to a spender. | __spender(address):&nbsp;_ The address which will spend the funds. <br> __subtractedValue (uint):&nbsp;_ The amount of tokens to decrease the allowance by. |
 
 
-_Request example (application/json):_
+_Request example (application/json):&nbsp;_
 ```
 {
   "env" : "production",
@@ -332,9 +332,22 @@ _Request example (application/json):_
 ``` 
 
 ### retrieve deployed ERC20 **[GET /erc20]**
-This endpoint allows user to retrieve a list of deployed contrats by user
+This endpoint allows user to retrieve a list of deployed contrats by user, as well as information about a specific contract instance
 
-_Request example (application/json):_
+##### Required value
+
+To perform a write method user must provide following values:
+
+- **email (string):&nbsp;** The user email.
+
+##### Optional value
+
+If this value is sent, response will show information about a specific contract instance.
+
+- **_id (string):&nbsp;** The ERC20 mongoDB's _id. This value is returned for each contract owned by user in a non _id specified query.
+
+
+_Request example (application/json):&nbsp;_
 ```
 {
     	"email" : "user@example.com"
