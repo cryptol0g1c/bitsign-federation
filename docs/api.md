@@ -199,16 +199,25 @@ This endpoint allows to create a new erc20 crowdsale. By this, user will deploy 
 To perform a deploy user must send following values:
 
 - **env (string):&nbsp;** Enviroment to perform the method.
+
 - **email (string):&nbsp;** The user email.
+
 - **args (object):&nbsp;** The arguments required by the function. In this case, the constructor arguments, listed below:
 
     - **_name (string):&nbsp;** The name of the token.
+
     - **_symbol (string):&nbsp;** The abreviation of the token.
+    
     - **_decimals (uint):&nbsp;** The quantity of decimals which a token can be splitted.
+    
     - **_rate (uint):&nbsp;** The rate of the token.
+    
     - **_wallet (address):&nbsp;** The address that will hold the ethers after the ERC20 finish.
+    
     - **_cap (uint):&nbsp;** The top quantity of ethers that can be buyed.
+    
     - **_openingTime (date):&nbsp;** The estimated opening time of the erc20 crowdsale.
+    
     - **_closingTime (date):&nbsp;** The estimated closing time of the erc20 crowdsale.
 
 _Request example (application/json):&nbsp;_
