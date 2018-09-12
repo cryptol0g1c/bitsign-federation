@@ -197,6 +197,7 @@ This endpoint allows to create a new erc20 crowdsale. By this, user will deploy 
 ##### Required values
 
 To perform a deploy user must send following values:
+
 - **env (string):&nbsp;** Enviroment to perform the method.
 - **email (string):&nbsp;** The user email.
 - **args (object):&nbsp;** The arguments required by the function. In this case, the constructor arguments, listed below:
