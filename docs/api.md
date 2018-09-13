@@ -324,11 +324,11 @@ A list of possible methods to call is provided down.
 | Method | Description | Args |
 | ------ | ------ | ------ |
 | buyTokens | Perform token purchase | _beneficiary (address):&nbsp;_ Address performing the token purchase |
-| token.transfer | Transfer token for a specified address. | _\_to (address):&nbsp;_ The address to transfer to. <br> __value (uint):&nbsp;_ The amount to be transferred, in wei. |
-| token.transferFrom | Transfer tokens from one address to another. | __from(address):&nbsp;_ The address which you want to send tokens from <br> __to(address):&nbsp;_  The address which you want to transfer to <br> __value(uint):&nbsp;_ the amount of tokens to be transferred |
-| token.approve | Approve the passed address to spend the specified amount of tokens on behalf of msg.sender. | __spender(address):&nbsp;_ The address which will spend the funds. <br> __value(uint):&nbsp;_ The amount of tokens to be spent. |
-| token.increaseApproval | Increase the amount of tokens that an owner allowed to a spender. | __spender(address):&nbsp;_ The address which will spend the funds. <br> __addedValue(uint):&nbsp;_ The amount of tokens to increase the allowance by. |
-| token.decreaseApproval | Decrease the amount of tokens that an owner allowed to a spender. | __spender(address):&nbsp;_ The address which will spend the funds. <br> __subtractedValue (uint):&nbsp;_ The amount of tokens to decrease the allowance by. |
+| token.transfer | Transfer token for a specified address. | _\_to (address):&nbsp;_ The address to transfer to. <br> _\_value (uint):&nbsp;_ The amount to be transferred, in wei. |
+| token.transferFrom | Transfer tokens from one address to another. | _\_from(address):&nbsp;_ The address which you want to send tokens from <br> _\_to(address):&nbsp;_  The address which you want to transfer to <br> _\_value(uint):&nbsp;_ the amount of tokens to be transferred |
+| token.approve | Approve the passed address to spend the specified amount of tokens on behalf of msg.sender. | _\_spender(address):&nbsp;_ The address which will spend the funds. <br> _\_value(uint):&nbsp;_ The amount of tokens to be spent. |
+| token.increaseApproval | Increase the amount of tokens that an owner allowed to a spender. | _\_spender(address):&nbsp;_ The address which will spend the funds. <br> _\_addedValue(uint):&nbsp;_ The amount of tokens to increase the allowance by. |
+| token.decreaseApproval | Decrease the amount of tokens that an owner allowed to a spender. | _\_spender(address):&nbsp;_ The address which will spend the funds. <br> _\_subtractedValue (uint):&nbsp;_ The amount of tokens to decrease the allowance by. |
 
 
 _Request example (application/json):&nbsp;_
