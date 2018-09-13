@@ -244,11 +244,14 @@ This section explains how the user to read the state from the blockchain using e
 ##### Required values
 
 There are 2 possible endpoints, one for call token contract, and the another for crowdsale contract. To perform a view method user must send following values:
-- _env (string):&nbsp;_ Enviroment to perform the method
-- _address (address):&nbsp;_ Address of deployed contract
-- _method (string):&nbsp;_ The name the method you want to execute.
-- _args (object):&nbsp;_ The arguments required by the function.
 
+- _env (string):&nbsp;_ Enviroment to perform the method
+
+- _address (address):&nbsp;_ Address of deployed contract
+
+- _method (string):&nbsp;_ The name the method you want to execute.
+
+- _args (object):&nbsp;_ The arguments required by the function.
 
 #### Generic Token Crowdsale Methods **[POST /erc20/genericTokenCrowdsale]**
 
@@ -321,7 +324,7 @@ A list of possible methods to call is provided down.
 | Method | Description | Args |
 | ------ | ------ | ------ |
 | buyTokens | Perform token purchase | _beneficiary (address):&nbsp;_ Address performing the token purchase |
-| token.transfer | Transfer token for a specified address. | __to (address):&nbsp;_ The address to transfer to.<br>__value (uint):&nbsp;_ The amount to be transferred, in wei. |
+| token.transfer | Transfer token for a specified address. | _to (address):&nbsp;_ The address to transfer to. <br> __value (uint):&nbsp;_ The amount to be transferred, in wei. |
 | token.transferFrom | Transfer tokens from one address to another. | __from(address):&nbsp;_ The address which you want to send tokens from <br> __to(address):&nbsp;_  The address which you want to transfer to <br> __value(uint):&nbsp;_ the amount of tokens to be transferred |
 | token.approve | Approve the passed address to spend the specified amount of tokens on behalf of msg.sender. | __spender(address):&nbsp;_ The address which will spend the funds. <br> __value(uint):&nbsp;_ The amount of tokens to be spent. |
 | token.increaseApproval | Increase the amount of tokens that an owner allowed to a spender. | __spender(address):&nbsp;_ The address which will spend the funds. <br> __addedValue(uint):&nbsp;_ The amount of tokens to increase the allowance by. |
