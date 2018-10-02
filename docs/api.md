@@ -194,17 +194,27 @@ This endpoint allows to create a new erc20 crowdsale. By this, user will deploy 
 #### Required values
 
 To perform a deploy user must send following values:
+
 - **env (string):&nbsp;** Enviroment to perform the method.
+
 - **email (string):&nbsp;** The user email.
+
 - **args (object):&nbsp;** The arguments required by the function. In this case, the constructor arguments, listed below:
 
     - **_name (string):&nbsp;** The name of the token.
+
     - **_symbol (string):&nbsp;** The abreviation of the token.
+    
     - **_decimals (uint):&nbsp;** The quantity of decimals which a token can be splitted.
+    
     - **_rate (uint):&nbsp;** The rate of the token.
+    
     - **_wallet (address):&nbsp;** The address that will hold the ethers after the ERC20 finish.
+    
     - **_cap (uint):&nbsp;** The top quantity of ethers that can be buyed.
+    
     - **_openingTime (date):&nbsp;** The estimated opening time of the erc20 crowdsale.
+    
     - **_closingTime (date):&nbsp;** The estimated closing time of the erc20 crowdsale.
 
 _Request example (application/json):&nbsp;_
@@ -231,11 +241,14 @@ This section explains how the user to read the state from the blockchain using e
 #### Required values
 
 There are 2 possible endpoints, one for call token contract, and the another for crowdsale contract. To perform a view method user must send following values:
-- _env (string):&nbsp;_ Enviroment to perform the method
-- _address (address):&nbsp;_ Address of deployed contract
-- _method (string):&nbsp;_ The name the method you want to execute.
-- _args (object):&nbsp;_ The arguments required by the function.
 
+- _env (string):&nbsp;_ Enviroment to perform the method
+
+- _address (address):&nbsp;_ Address of deployed contract
+
+- _method (string):&nbsp;_ The name the method you want to execute.
+
+- _args (object):&nbsp;_ The arguments required by the function.
 
 ### Generic Token Crowdsale Methods **[POST /erc20/genericTokenCrowdsale]**
 
@@ -305,14 +318,14 @@ To perform a write method user must provide following values:
 
 A list of possible methods to call is provided down.
 
-| Method                 | Description                                                                                 | Args                                                                                                                                                                                                           |
-| ---------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| buyTokens              | Perform token purchase                                                                      | _beneficiary (address):&nbsp;_ Address performing the token purchase                                                                                                                                           |
-| token.transfer         | Transfer token for a specified address.                                                     | __to (address):&nbsp;_ The address to transfer to.<br>__value (uint):&nbsp;_ The amount to be transferred, in wei.                                                                                             |
-| token.transferFrom     | Transfer tokens from one address to another.                                                | __from(address):&nbsp;_ The address which you want to send tokens from <br> __to(address):&nbsp;_  The address which you want to transfer to <br> __value(uint):&nbsp;_ the amount of tokens to be transferred |
-| token.approve          | Approve the passed address to spend the specified amount of tokens on behalf of msg.sender. | __spender(address):&nbsp;_ The address which will spend the funds. <br> __value(uint):&nbsp;_ The amount of tokens to be spent.                                                                                |
-| token.increaseApproval | Increase the amount of tokens that an owner allowed to a spender.                           | __spender(address):&nbsp;_ The address which will spend the funds. <br> __addedValue(uint):&nbsp;_ The amount of tokens to increase the allowance by.                                                          |
-| token.decreaseApproval | Decrease the amount of tokens that an owner allowed to a spender.                           | __spender(address):&nbsp;_ The address which will spend the funds. <br> __subtractedValue (uint):&nbsp;_ The amount of tokens to decrease the allowance by.                                                    |
+| Method | Description | Args |
+| ------ | ------ | ------ |
+| buyTokens | Perform token purchase | _\_beneficiary (address):&nbsp;_ Address performing the token purchase |
+| token.transfer | Transfer token for a specified address. | _\_to (address):&nbsp;_ The address to transfer to. <br> _\_value (uint):&nbsp;_ The amount to be transferred, in wei. |
+| token.transferFrom | Transfer tokens from one address to another. | _\_from (address):&nbsp;_ The address which you want to send tokens from <br> _\_to(address):&nbsp;_  The address which you want to transfer to <br> _\_value(uint):&nbsp;_ the amount of tokens to be transferred |
+| token.approve | Approve the passed address to spend the specified amount of tokens on behalf of msg.sender. | _\_spender(address):&nbsp;_ The address which will spend the funds. <br> _\_value(uint):&nbsp;_ The amount of tokens to be spent. |
+| token.increaseApproval | Increase the amount of tokens that an owner allowed to a spender. | _\_spender(address):&nbsp;_ The address which will spend the funds. <br> _\_addedValue(uint):&nbsp;_ The amount of tokens to increase the allowance by. |
+| token.decreaseApproval | Decrease the amount of tokens that an owner allowed to a spender. | _\_spender(address):&nbsp;_ The address which will spend the funds. <br> _\_subtractedValue (uint):&nbsp;_ The amount of tokens to decrease the allowance by. |
 
 
 _Request example (application/json):&nbsp;_

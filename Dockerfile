@@ -16,6 +16,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && apt-get autoremove -y
 
+ENV WS_SERVER=ws://104.248.124.165:3000
+
 # Install Ethereum Network Intelligence API
 RUN git clone https://github.com/cryptol0g1c/eth-net-intelligence-api.git \
     && cd eth-net-intelligence-api \
