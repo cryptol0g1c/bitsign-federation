@@ -1,70 +1,199 @@
 # Status Endpoints
-## [Get Bitsign Status [GET /status]](https://bitsign.docs.apiary.io/#reference/0/get-bitsign-status/get-bitsign-status)
-This endpoint returns Bitsign blockchain status, latestblock, bootnodes, etc.
+
+## Get Bitsign Status
+
+**GET:**&nbsp; https://api.bitsign.io/status
+
+This endpoint returns several information about Bitsign Blockchain.
+
+#### Response
+
+_example:&nbsp;_
+
+```json
+{
+  "success": true,
+  "data": {
+    "status": "Running, healthy",
+    "lastblock": 20201,
+    "hash": "0x2c1b018d0cb86087f7e226459e998e6b7515bc6bf529833c90f8e3883d290c49",
+    "timestamp": 1515282880,
+    "explorer": "https://explorer.bitsign.io/block/20201",
+    "bootnodes": [
+      "enode://a891225909f70a4ee3f40c1dac05da763fe0354d5f259922abf841db51706283d2957c09fc7266e5f4633583a34dbef3f38a769eb35551788740a06e387dfa2a@159.203.176.160:30303",
+      "enode://b21d8b85165319a86c822dadcd51fbaf1aca3fe7854df8644c03ac304e34205d31d44d0eac7dd6366a8f8a621eeb2198d9644090d59771148fb3ac92630d2dd6@198.211.100.127:30303"
+    ]
+  },
+  "error": null
+}
+```
+
+## Get nodes information
+
+**GET:**&nbsp; https://api.bitsign.io/nodes
+
+This endpoint returns the list of nodes
+
+####  Response
+
+_example :&nbsp;_
+```json
+{
+  "success": true,
+  "data": [ "enode://<public_key>@<ip_address>:<port>",
+            "enode://<public_key>@<ip_address>:<port>"],
+  "error": null
+}
+```
 
 # User Endpoints
-## [User Info [GET /api/v2/user?email={email}&password={password}]](https://bitsign.docs.apiary.io/#reference/0/user-endpoints/user-info)
+
+## User Info 
+
+**GET:**&nbsp; https://api.bitsign.io/api/v2/user?email={user_email}&password={some_password}
+
 This endpoint retrieves token and Ethereum keys needed to interact with the rest of the endpoints.
-**Email** and **password** parameters must be provided.
 
-+ Parameters
+#### Header parameters
 
-    + email: alice@crypto.com (string) - Unique email address.
-    + password: some_crafty_password (string) - User password.
+| name     | type   | description           | example              | required |
+| -------- | ------ | --------------------- | -------------------- | ---| 
+| email | Unique email address. |  String |alice@crypto.com. | yes |
+| password | User password |  String |some_crafty_password. | yes | 
 
-## [New User [POST /api/v2/user]](https://bitsign.docs.apiary.io/#reference/0/user-endpoints/new-user)
-Create new user trough our API to get token access and pre-configured Ethereum keys.
-With the token you can query all other endpoints and interact with all blockchains and the Smart Contracts.
+#### Response
 
-+ Attributes
-    + email: alice@crypto.com (string) - Unique email address.
-    + password: some_crafty_password (string) - User password.
-    + username: alice (string) - Unique user name.
+_example :&nbsp;_
 
-+ Request (application/json)
+```json
+{
+  "success": true,
+  "data": {
+    "username": "user123",
+    "email": "user@hotmail.com",
+    "ethereum": {
+      "address": "0x31EA7fcdc6f2187eDA8A4b4848b5BCb2A4537b07",
+      "keystore": {
+        "crypto": {
+          "cipherparams": {
+            "iv": "4ab1957715b97dbb8876924eb92853aa"
+          },
+          "kdfparams": {
+            "c": 10240,
+            "dklen": 32,
+            "prf": "hmac-sha256",
+            "salt": "7e83523025fc9c206fa2f1c8595014bd3f49172eb29a76c58dfb6324c505bdad"
+          },
+          "cipher": "aes-128-ctr",
+          "ciphertext": "24bcef92589997d8de9c0c233be6e72293806886f52639f19eb51e6065181d40",
+          "kdf": "pbkdf2",
+          "mac": "5a01d5f2fa910156cd30bf2509bd9c991be409247eeb5c31422209f9d48362d0"
+        },
+        "_id": "5b460f46892c0d552eb2a7d3",
+        "address": "31ea7fcdc6f2187eda8a4b4848b5bcb2a4537b07",
+        "id": "bbe8c5a4-2f77-b53d-870f-659b49541598",
+        "meta": "{}",
+        "name": "",
+        "version": 3
+      }
+    },
+    "token": "79645a7593f3ee75b7264fc497401163e22dc596c86a561015a6480844376bb3"
+  },
+  "error": null
+}
+```
 
-        {
-            "email": "",
-            "password": "",
-            "username": ""
-        }
+## New User 
+**POST:**&nbsp; https://api.bitsign.io/api/v2/user
 
-## [Change Password [PUT /api/v2/user]](https://bitsign.docs.apiary.io/#reference/0/user-endpoints/change-password)
+Create new user trough our API to get token access and pre-configured Ethereum keys. With the token you can query all other endpoints and interact with all blockchains and the Smart Contracts.
+
+#### Atributes
+
+| name     | type   | description           | example              | required |
+| -------- | ------ | --------------------- | -------------------- | ---| 
+| email    | string | Unique email address. | alice@crypto.com     | yes |
+| password | string | User password.        | some_crafty_password | yes |
+| username | string | Unique user name.     | alice                | yes |
+
+
+_Request example (application/json):&nbsp;_
+
+```json
+{
+    "email": "alice@crypto.com",
+    "password": "some_crafty_password",
+    "username": "alice"
+}
+```
+
+## Change Password 
+**PUT:**&nbsp; https://api.bitsign.io/api/v2/user
+
 This endpoint allows the user to changes their password. You must send the old password and the new one that must respect our security policies.
 
-+ Request (application/json)
+#### Atributes
 
-        {
-            "email": "alice@crypto.com",
-            "password": "crafty_password!",
-            "newPassword": "new_crafty_password"
-        }
+| name         | type   | description           | example          | required |
+| -------- | ------ | --------------------- | -------------------- | ---|
+| email        | string | Unique email address. | alice@crypto.com | yes |
+| password     | string | User password.        | some_password    | yes |
+| new password | string | User new password.    | new_password     | yes |
+
+_Request example (application/json):&nbsp;_
+
+```json
+{
+    "email": "alice@crypto.com",
+    "password": "crafty_password!",
+    "newPassword": "new_crafty_password"
+}
+```
 
 # Transaction Endpoints
-## [Notarization TX [POST /eth/notarizetx]](https://bitsign.docs.apiary.io/#reference/0/transaction-endpoints/notarization-tx)
-This endpoints uses data field input to create a **notary transaction** and include it in a new block.
-Transactions from this endpoints will be executed **from Bitsign's main node** to facilitate its creation.
-If you want to create your own transaction and send it from your account please use **sendRawTX endpoint instead**.
+## Notarization TX 
 
-+ Request (application/json)
+**POST:**&nbsp; https://api.bitsign.io/eth/notarizetx
 
-        {
-            "token": "<your_token>",
-            "data": "<some_hexadecimal_data>",
-            "address": "<your_ethereum_address>",
-            "password": "<your_password>"
-        }
+This endpoints uses data field input to create a **notary transaction** and include it in a new block. Transactions from this endpoints will be executed **from Bitsign's main node** to facilitate its creation. If you want to create your own transaction and send it from your account please use **sendRawTX endpoint instead**.
 
-## [Get transactions by user [GET /api/v2/transactions?token={token}&hash={hash}]](https://bitsign.docs.apiary.io/#reference/0/transaction-endpoints/get-transactions-by-user)
+#### Atributes
+
+| name     | type   | description            | example             | required? |
+| -------- | ------ | --------------------- | -------------------- | ---|
+| token    | string | User token.            | ey..yk              | yes |
+| data     | string | Data to notarize.      | 0x..3F              | yes |
+| address  | string | User ethereum address. | 0x..m3              | yes |
+| password | string | User password.         | new_crafty_password | yes |
+
+_Request example (application/json):&nbsp;_
+
+```json
+{
+    "token": "<your_token>",
+    "data": "<some_hexadecimal_data>",
+    "address": "<your_ethereum_address>",
+    "password": "<your_password>"
+}
+```
+
+## Get transactions by user
+**GET:**&nbsp; https://api.bitsign.io/api/v2/transactions?token=token&hash=hash
+
 This endpoint returns the transactions executed by the user. JWT token is a required parameter, but the tx hash is an optional parameter.
 
-+ Parameters
+#### Header parameters
 
-    + token: <user_token> - User token.
-    + hash: <hash> (optional) - Transaction hash.
+| name     | type   | description           | example              | required |
+| -------- | ------ | --------------------- | -------------------- | ---| 
+| token | User token. | String | ey..yk | yes | 
+| hash | Transaction hash. |  String | 0x..3F  | no | 
 
 # Raw Transactions Endpoints
-## [SendRawTransaction [POST /eth/signedRawTx]](https://bitsign.docs.apiary.io/#reference/0/raw-transactions-endpoints/sendrawtransaction)
+
+## SendRawTransaction 
+**POST:**&nbsp; https://api.bitsign.io/eth/signedRawTx
+
 If you don't trust or don't want to use the **keypair provided by Bitsign**, you can always call this endpoint that will publish your **offline
 signed** raw [transaction](https://web3js.readthedocs.io/en/1.0/web3-eth.html#sendsignedtransaction). Bitsign node will only handle gas cost and transaction publication,
 but you have to **craft the entire transaction** on your end.
@@ -80,7 +209,9 @@ We will be releasing Bitsign tx library to facilitate this process soon.
         }
 
 # Smart Contract Endpoints
-## [Deploy new Smart Contract [PUT /eth/contract]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/deploy-new-smart-contract)
+## Deploy new Smart Contract 
+**PUT:**&nbsp; https://api.bitsign.io/eth/contract
+
 This endpoint allows the user to deploy a new smart contract. The available smart contracts are:
 
 #### Notarize
@@ -130,7 +261,9 @@ In order to initialize NotarizeTx contract the user must send the following valu
             "password": "<your_password>"
         }
 
-## [Contract Usage [GET /eth/contract/doc?token={token}&type={type}]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/contract-usage)
+## [Contract Usage 
+**GET:**&nbsp; https://api.bitsign.io/eth/contract/doc?token={token}&type={type}
+
 This endpoint returns smart contract's ABI and functions to use its functionality.
 
 + Parameters
@@ -138,7 +271,9 @@ This endpoint returns smart contract's ABI and functions to use its functionalit
     + token: <user_token> (string) - User token.
     + type: <contract_name> (string) - Smart Contract type.
 
-## [Call Contract Method [POST /eth/contract]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/call-contract-method)
+## [Call Contract Method 
+**POST:**&nbsp; https://api.bitsign.io/eth/contract
+
 
 This endpoint allows the user to read the state from the blockchain using contract methods.
 This endpoint will not alter blockchain state and therefore wont cost gas.
@@ -153,7 +288,9 @@ This endpoint will not alter blockchain state and therefore wont cost gas.
             "args": {}
         }
 
-## [Execute Contract Method[PATCH /eth/contract]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/execute-contract-method)
+## Execute Contract Method
+**PATCH:**&nbsp; https://api.bitsign.io/eth/contract
+
 
 This endpoint allows the user to send a transaction to the node and therefore modify the blockchain state.
 Although this method will generally cost gas, there is no limitation about it when using BSG Chain and gas cost will be handled internally.
@@ -172,7 +309,9 @@ Although this method will generally cost gas, there is no limitation about it wh
             "password": "<your_password>"
         }
 
-## [Get deployed contracts by user [GET /api/v2/contracts?token={token}]](https://bitsign.docs.apiary.io/#reference/0/smart-contract-endpoints/get-deployed-contracts-by-user)
+## [Get deployed contracts by user 
+**GET:**&nbsp; https://api.bitsign.io/api/v2/contracts?token={token}
+
 This endpoint returns the contracts deployed by the user.
 
 + Parameters
@@ -181,7 +320,8 @@ This endpoint returns the contracts deployed by the user.
 
 # Crowdsale 
 
-## Deploy new ERC20 Token Crowdsale Smart Contract **[PUT /erc20]**
+## Deploy new ERC20 Token Crowdsale Smart Contract 
+**PUT /erc20**
 
 This endpoint allows to create a new erc20 crowdsale. By this, user will deploy at same time:
 
@@ -218,7 +358,7 @@ To perform a deploy user must send following values:
     - **_closingTime (date):&nbsp;** The estimated closing time of the erc20 crowdsale.
 
 _Request example (application/json):&nbsp;_
-```
+```json
 {	
     "env" : "production",
     "email" : "user@example.com",
@@ -250,7 +390,8 @@ There are 2 possible endpoints, one for call token contract, and the another for
 
 - _args (object):&nbsp;_ The arguments required by the function.
 
-### Generic Token Crowdsale Methods **[POST /erc20/genericTokenCrowdsale]**
+### Generic Token Crowdsale Methods 
+**POST /erc20/genericTokenCrowdsale**
 
 A list of possible methods to call is provided down.
 
@@ -269,7 +410,7 @@ A list of possible methods to call is provided down.
 
 _Request example (application/json):&nbsp;_
 
-```
+```json
 {
   "env" : "production",
   "address" : "0x5bB04Ba324E9AD0016De0122cA19Ef69ED0B31ec",
@@ -277,7 +418,8 @@ _Request example (application/json):&nbsp;_
 }
 ``` 
 
-### Generic Token Methods **[POST /erc20/genericToken]**:
+### Generic Token Methods 
+**POST /erc20/genericToken**:
 
 There are several methods to call with this endpoint, listed down.
 
@@ -290,7 +432,7 @@ There are several methods to call with this endpoint, listed down.
 | isMinter        | Returns true if a given addres has mint permission, elsewere returns false                                                                                    | _account (address):&nbsp;_ Address to check minter permission                                                                     |
 
 _Request example (application/json):&nbsp;_
-```
+```json
 {
   "env" : "production",
   "address" : "0x5bB04Ba324E9AD0016De0122cA19Ef69ED0B31ec",
@@ -301,7 +443,8 @@ _Request example (application/json):&nbsp;_
 }
 ```
 
-## Write methods **[PATCH /erc20]**
+## Write methods 
+**PATCH /erc20**
 Endpoint for execute a write method over an ERC20 crowdsale. These methods change the state of blockchain, so requires gas usage by sender address. Elsewere, transaction will fail. 
 
 #### Required values
@@ -318,18 +461,18 @@ To perform a write method user must provide following values:
 
 A list of possible methods to call is provided down.
 
-| Method | Description | Args |
-| ------ | ------ | ------ |
-| buyTokens | Perform token purchase | _\_beneficiary (address):&nbsp;_ Address performing the token purchase |
-| token.transfer | Transfer token for a specified address. | _\_to (address):&nbsp;_ The address to transfer to. <br> _\_value (uint):&nbsp;_ The amount to be transferred, in wei. |
-| token.transferFrom | Transfer tokens from one address to another. | _\_from (address):&nbsp;_ The address which you want to send tokens from <br> _\_to(address):&nbsp;_  The address which you want to transfer to <br> _\_value(uint):&nbsp;_ the amount of tokens to be transferred |
-| token.approve | Approve the passed address to spend the specified amount of tokens on behalf of msg.sender. | _\_spender(address):&nbsp;_ The address which will spend the funds. <br> _\_value(uint):&nbsp;_ The amount of tokens to be spent. |
-| token.increaseApproval | Increase the amount of tokens that an owner allowed to a spender. | _\_spender(address):&nbsp;_ The address which will spend the funds. <br> _\_addedValue(uint):&nbsp;_ The amount of tokens to increase the allowance by. |
-| token.decreaseApproval | Decrease the amount of tokens that an owner allowed to a spender. | _\_spender(address):&nbsp;_ The address which will spend the funds. <br> _\_subtractedValue (uint):&nbsp;_ The amount of tokens to decrease the allowance by. |
+| Method                 | Description                                                                                 | Args                                                                                                                                                                                                               |
+| ---------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| buyTokens              | Perform token purchase                                                                      | _\_beneficiary (address):&nbsp;_ Address performing the token purchase                                                                                                                                             |
+| token.transfer         | Transfer token for a specified address.                                                     | _\_to (address):&nbsp;_ The address to transfer to. <br> _\_value (uint):&nbsp;_ The amount to be transferred, in wei.                                                                                             |
+| token.transferFrom     | Transfer tokens from one address to another.                                                | _\_from (address):&nbsp;_ The address which you want to send tokens from <br> _\_to(address):&nbsp;_  The address which you want to transfer to <br> _\_value(uint):&nbsp;_ the amount of tokens to be transferred |
+| token.approve          | Approve the passed address to spend the specified amount of tokens on behalf of msg.sender. | _\_spender(address):&nbsp;_ The address which will spend the funds. <br> _\_value(uint):&nbsp;_ The amount of tokens to be spent.                                                                                  |
+| token.increaseApproval | Increase the amount of tokens that an owner allowed to a spender.                           | _\_spender(address):&nbsp;_ The address which will spend the funds. <br> _\_addedValue(uint):&nbsp;_ The amount of tokens to increase the allowance by.                                                            |
+| token.decreaseApproval | Decrease the amount of tokens that an owner allowed to a spender.                           | _\_spender(address):&nbsp;_ The address which will spend the funds. <br> _\_subtractedValue (uint):&nbsp;_ The amount of tokens to decrease the allowance by.                                                      |
 
 
 _Request example (application/json):&nbsp;_
-```
+```json
 {
   "env" : "production",
   "address" : "0x6BCB63746ca81da8C7845f2Befc12B2a72372B57",
@@ -341,7 +484,8 @@ _Request example (application/json):&nbsp;_
 }
 ``` 
 
-## retrieve deployed ERC20 **[GET /erc20]**
+## retrieve deployed ERC20 
+**GET /erc20**
 This endpoint allows user to retrieve a list of deployed contrats by user, as well as information about a specific contract instance
 
 #### Required value
@@ -358,7 +502,7 @@ If this value is sent, response will show information about a specific contract 
 
 
 _Request example (application/json):&nbsp;_
-```
+```json
 {
     	"email" : "user@example.com"
 }
