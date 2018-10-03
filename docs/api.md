@@ -4,7 +4,7 @@
 
 **GET:**&nbsp; https://api.bitsign.io/status
 
-This endpoint returns several information about Bitsign Blockchain.
+This endpoint returns several information about Bitsign Blockchain. Doesn't require any Header parameter 
 
 #### Response
 
@@ -20,8 +20,14 @@ _example:&nbsp;_
     "timestamp": 1515282880,
     "explorer": "https://explorer.bitsign.io/block/20201",
     "bootnodes": [
-      "enode://a891225909f70a4ee3f40c1dac05da763fe0354d5f259922abf841db51706283d2957c09fc7266e5f4633583a34dbef3f38a769eb35551788740a06e387dfa2a@159.203.176.160:30303",
-      "enode://b21d8b85165319a86c822dadcd51fbaf1aca3fe7854df8644c03ac304e34205d31d44d0eac7dd6366a8f8a621eeb2198d9644090d59771148fb3ac92630d2dd6@198.211.100.127:30303"
+      {
+        "enode": "enode://af49036045a5d1a03d0b92f80cd49b4a2d44cffe9f030edaadab88666326bf814cbebf66425e9be42fefd1d44faf87663a26dc5fe373f5dce2375bc5603fd2ea@172.17.0.4:33460",
+        "client": "Parity/v1.9.5-stable-ff821da-20180321/x86_64-linux-gnu/rustc1.24.1"
+      },
+      {
+        "enode": "enode://c458190c609ec59d74c4a4857feb48c10f4675ab9bd8f57c750ee57c90b4fdf3d845b82da93bec958b8bb8d014774de85c1795ba54867430ca195977828011a0@172.17.0.5:38734",
+        "client": "Parity/v1.9.5-stable-ff821da-20180321/x86_64-linux-gnu/rustc1.24.1"
+      }
     ]
   },
   "error": null
@@ -40,8 +46,8 @@ _example :&nbsp;_
 ```json
 {
   "success": true,
-  "data": [ "enode://<public_key>@<ip_address>:<port>",
-            "enode://<public_key>@<ip_address>:<port>"],
+  "data": [ "enode://8dbd67c79b74364596fac6816c1b0c188c85fb0cad46415ce310a6f9fba5cee713943bb9dfe1dd864081416fe91a9fa013f2ac21607826d79bcfe3d449e72b0d@193.70.64.150:37004",
+    "enode://af49036045a5d1a03d0b92f80cd49b4a2d44cffe9f030edaadab88666326bf814cbebf66425e9be42fefd1d44faf87663a26dc5fe373f5dce2375bc5603fd2ea@172.17.0.4:33460"],
   "error": null
 }
 ```
@@ -56,10 +62,10 @@ This endpoint retrieves token and Ethereum keys needed to interact with the rest
 
 #### Header parameters
 
-| name     | type   | description           | example              | required |
-| -------- | ------ | --------------------- | -------------------- | ---| 
-| email | Unique email address. |  String |alice@crypto.com. | yes |
-| password | User password |  String |some_crafty_password. | yes | 
+| name     | type                  | description | example          | required |
+| -------- | --------------------- | ----------- | ---------------- | -------- |
+| email    | Unique email address. | String      | alice@crypto.com | yes      |
+| password | User password         | String      | usrpwd           | yes      |
 
 #### Response
 
@@ -69,35 +75,35 @@ _example :&nbsp;_
 {
   "success": true,
   "data": {
-    "username": "user123",
-    "email": "user@hotmail.com",
+    "username": "alice",
+    "email": "alice@crypto.com",
     "ethereum": {
-      "address": "0x31EA7fcdc6f2187eDA8A4b4848b5BCb2A4537b07",
+      "address": "0x31EA7fcdc6f2187e12dac64848b5BCb2A4537b07",
       "keystore": {
         "crypto": {
           "cipherparams": {
-            "iv": "4ab1957715b97dbb8876924eb92853aa"
+            "iv": "4ab1957715b97dbb8865265eb92853aa"
           },
           "kdfparams": {
             "c": 10240,
             "dklen": 32,
             "prf": "hmac-sha256",
-            "salt": "7e83523025fc9c206fa2f1c8595014bd3f49172eb29a76c58dfb6324c505bdad"
+            "salt": "7e83523025fc9c206fa2f1c8595014bd3f49172eb29a76c58dfb2587c505bdad"
           },
           "cipher": "aes-128-ctr",
-          "ciphertext": "24bcef92589997d8de9c0c233be6e72293806886f52639f19eb51e6065181d40",
+          "ciphertext": "24bcef92589997d8de9c0c233be6e72225642586f52639f19eb51e6065181d40",
           "kdf": "pbkdf2",
-          "mac": "5a01d5f2fa910156cd30bf2509bd9c991be409247eeb5c31422209f9d48362d0"
+          "mac": "5a01d5f2fa910156cd30bf2509bd9c991be409247eeb5c31422209f9d26572d0"
         },
-        "_id": "5b460f46892c0d552eb2a7d3",
-        "address": "31ea7fcdc6f2187eda8a4b4848b5bcb2a4537b07",
-        "id": "bbe8c5a4-2f77-b53d-870f-659b49541598",
+        "_id": "5b654f46892c0d552eb2a7d1",
+        "address": "31EA7fcdc6f2187e12dac64848b5BCb2A4537b07",
+        "id": "bbe8c5a4-2f77-b53d-870f-659b49153589",
         "meta": "{}",
         "name": "",
         "version": 3
       }
     },
-    "token": "79645a7593f3ee75b7264fc497401163e22dc596c86a561015a6480844376bb3"
+    "token": "79645a7593f3ee75b7264fc497401163e22dc596c86a561015a6480158742bb3"
   },
   "error": null
 }
@@ -110,11 +116,11 @@ Create new user trough our API to get token access and pre-configured Ethereum k
 
 #### Atributes
 
-| name     | type   | description           | example              | required |
-| -------- | ------ | --------------------- | -------------------- | ---| 
-| email    | string | Unique email address. | alice@crypto.com     | yes |
-| password | string | User password.        | some_crafty_password | yes |
-| username | string | Unique user name.     | alice                | yes |
+| name     | type   | description           | example          | required |
+| -------- | ------ | --------------------- | ---------------- | -------- |
+| email    | string | Unique email address. | alice@crypto.com | yes      |
+| password | string | User password.        | usrpwd           | yes      |
+| username | string | Unique user name.     | alice            | yes      |
 
 
 _Request example (application/json):&nbsp;_
@@ -135,10 +141,10 @@ This endpoint allows the user to changes their password. You must send the old p
 #### Atributes
 
 | name         | type   | description           | example          | required |
-| -------- | ------ | --------------------- | -------------------- | ---|
-| email        | string | Unique email address. | alice@crypto.com | yes |
-| password     | string | User password.        | some_password    | yes |
-| new password | string | User new password.    | new_password     | yes |
+| ------------ | ------ | --------------------- | ---------------- | -------- |
+| email        | string | Unique email address. | alice@crypto.com | yes      |
+| password     | string | User password.        | usrpwd           | yes      |
+| new password | string | User new password.    | new_password     | yes      |
 
 _Request example (application/json):&nbsp;_
 
@@ -159,12 +165,12 @@ This endpoints uses data field input to create a **notary transaction** and incl
 
 #### Atributes
 
-| name     | type   | description            | example             | required? |
-| -------- | ------ | --------------------- | -------------------- | ---|
-| token    | string | User token.            | ey..yk              | yes |
-| data     | string | Data to notarize.      | 0x..3F              | yes |
-| address  | string | User ethereum address. | 0x..m3              | yes |
-| password | string | User password.         | new_crafty_password | yes |
+| name     | type   | description            | example | required? |
+| -------- | ------ | ---------------------- | ------- | --------- |
+| token    | string | User token.            | ey..yk  | yes       |
+| data     | string | Data to notarize.      | 0x..3F  | yes       |
+| address  | string | User ethereum address. | 0x..m3  | yes       |
+| password | string | User password.         | usrpwd  | yes       |
 
 _Request example (application/json):&nbsp;_
 
@@ -180,22 +186,64 @@ _Request example (application/json):&nbsp;_
 ## Get transactions by user
 **GET:**&nbsp; https://api.bitsign.io/api/v2/transactions?token=token&hash=hash
 
-This endpoint returns the transactions executed by the user. JWT token is a required parameter, but the tx hash is an optional parameter.
+This endpoint returns the transactions executed by the user. JWT token is a required parameter, but the tx hash is an optional parameter. 
 
 #### Header parameters
 
-| name     | type   | description           | example              | required |
-| -------- | ------ | --------------------- | -------------------- | ---| 
-| token | User token. | String | ey..yk | yes | 
-| hash | Transaction hash. |  String | 0x..3F  | no | 
+| name  | type              | description | example | required |
+| ----- | ----------------- | ----------- | ------- | -------- |
+| token | User token.       | String      | 65..a5  | yes      |
+| hash  | Transaction hash. | String      | 0x..a4  | no       |
+
+#### Response
+
+Passing tx hash as a parameter will return information of the corresponding transaction if exist, elsewere will return the list of all transactions executed by the user.
+
+_example :&nbsp;_
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "created": {
+        "by": "5b460f46892c0d552eb2d1a8",
+        "date": "2018-07-12T14:41:06.074Z"
+      },
+      "transaction": {
+        "blockNumber": 441763,
+        "hash": "0x666cb025d4e8813e29a9955c37eb86586a3f150d8e50202b5da4040afa9c85a4",
+        "data": "0x42a46be94ae2242bdc13620cb065e64391059b8f909e27208293f462f3dd51669811446b3f8227c72bf6a1cf2628584429578b5d41756fbd02b40b45bfaf6de9"
+      },
+      "_id": "5b476882892c0d552eb2a6a4",
+      "__v": 0
+    },
+    {
+      "created": {
+        "by": "5b460f46892c0d552eb2d1a8",
+        "date": "2018-07-17T14:24:20.847Z"
+      },
+      "transaction": {
+        "blockNumber": 459169,
+        "hash": "0x0894280fb0574bb025726f5fdf69cb5ae72785cc186c77936870b22e40b6e69c",
+        "data": "0x79645a7593f3ee75b7264fc497401163e22dc596c86a561015a6480844376aa3"
+      },
+      "_id": "5b4dfc14892c0d552eb2a654",
+      "__v": 0
+    }
+  ],
+  "error": null
+}
+```
 
 # Raw Transactions Endpoints
 
 ## SendRawTransaction 
+
 **POST:**&nbsp; https://api.bitsign.io/eth/signedRawTx
 
 If you don't trust or don't want to use the **keypair provided by Bitsign**, you can always call this endpoint that will publish your **offline
-signed** raw [transaction](https://web3js.readthedocs.io/en/1.0/web3-eth.html#sendsignedtransaction). Bitsign node will only handle gas cost and transaction publication,
+signed** raw [transaction](https://web3js.readthedocs.io/en/1.0/web3-eth.html#sendsignedtransaction).&nbsp;Bitsign node will only handle gas cost and transaction publication,
 but you have to **craft the entire transaction** on your end.
 We will be releasing Bitsign tx library to facilitate this process soon.
 
@@ -209,31 +257,49 @@ We will be releasing Bitsign tx library to facilitate this process soon.
         }
 
 # Smart Contract Endpoints
+
 ## Deploy new Smart Contract 
+
 **PUT:**&nbsp; https://api.bitsign.io/eth/contract
 
 This endpoint allows the user to deploy a new smart contract. The available smart contracts are:
 
 #### Notarize
+
 This smart contract allows the user to notarize documents.
+
 ##### Constructor
+
 In order to initialize Notarize contract the user must send an address, that will be set as the owner of the contract. The owner will be the only one that is able to notarize.
+
 ##### Methods
+
 * notarize: This method receive as a parameter a bytes32 that will be the evidence to be notarized. The owner of the contract will be the only one that is capable of execute this method. If the sender is not the owner, the tx will be reverted. After the evidence is notarized the Notary event will be raised with two parameters: the evidence and the address.
 
 #### Escrow
+
 This smart contract allows the user to deposit funds in the smart contract and define a buyer and a seller. Each actor can release the funds to the other part based on pre established conditions. Also there is BSG arbiter which act as an impartial third party that can release the payment to one party in case the other part breaks the initial conditions.
+
 ##### Constructor
+
 In order to initialize Escrow contract the user must send _seller (address), _buyer (address) and _endTime (uint). The sender of the transaction will be the arbiter of the contract. The arbiter act as an impartial third party. Also the value should be passed in order to set funds on the contract.
+
 ##### Methods
+
 * pay: This method can be executed by the buyer or the arbiter. This method will transfer the balance of the contract to the seller address. After that, it will raise the Payout event with two parameters: balance and seller address.
+
 * refund: This method can be executed by the seller or the arbiter. This method will transfer the balance of the contract to the buyer address. After that, it will raise the Refund event with two parameters: balance and buyer address.
+
 * getBalance: This method will return the balance of the contract. It can be executed by any member of the contract.
+
 * kill: This method can be executed by the arbiter only. It will destruct the contract and send the balance of the contract to its address.
 
 ####  NotarizeTX
+
 ##### Constructor
+
 In order to initialize NotarizeTx contract the user must send the following values:
+
 - buyer (address)
 - seller (address)
 - id  (bytes32)
@@ -242,8 +308,11 @@ In order to initialize NotarizeTx contract the user must send the following valu
 - hash (bytes32)
 - status (string)
 - shipping (string)
+
 ##### Methods
+
 * updateStatus: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx status. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
+
 * updateShipping: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx shipping. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
 
 + Request (application/json)
@@ -262,6 +331,7 @@ In order to initialize NotarizeTx contract the user must send the following valu
         }
 
 ## [Contract Usage 
+
 **GET:**&nbsp; https://api.bitsign.io/eth/contract/doc?token={token}&type={type}
 
 This endpoint returns smart contract's ABI and functions to use its functionality.
