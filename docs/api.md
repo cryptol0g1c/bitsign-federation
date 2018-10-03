@@ -1,12 +1,14 @@
-# Status Endpoints
+# api
 
-## Get Bitsign Status
+## Status Endpoints
+
+### Get Bitsign Status
 
 **GET:**&nbsp; https://api.bitsign.io/status
 
 This endpoint returns several information about Bitsign Blockchain. Doesn't require any Header parameter 
 
-#### Response
+##### Response
 
 _example:&nbsp;_
 
@@ -34,13 +36,13 @@ _example:&nbsp;_
 }
 ```
 
-## Get nodes information
+### Get nodes information
 
 **GET:**&nbsp; https://api.bitsign.io/nodes
 
 This endpoint returns the list of nodes
 
-####  Response
+#####  Response
 
 _example :&nbsp;_
 ```json
@@ -52,22 +54,22 @@ _example :&nbsp;_
 }
 ```
 
-# User Endpoints
+## User Endpoints
 
-## User Info 
+### User Info 
 
 **GET:**&nbsp; https://api.bitsign.io/api/v2/user?email={user_email}&password={some_password}
 
 This endpoint retrieves token and Ethereum keys needed to interact with the rest of the endpoints.
 
-#### Header parameters
+##### Header parameters
 
 | name     | type   | description           | example          | required |
 | -------- | ------ | --------------------- | ---------------- | -------- |
 | email    | String | Unique email address. | alice@crypto.com | yes      |
 | password | String | User password.        | usrpwd           | yes      |
 
-#### Response
+##### Response
 
 _example :&nbsp;_
 
@@ -109,12 +111,12 @@ _example :&nbsp;_
 }
 ```
 
-## New User 
+### New User 
 **POST:**&nbsp; https://api.bitsign.io/api/v2/user
 
 Create new user trough our API to get token access and pre-configured Ethereum keys. With the token you can query all other endpoints and interact with all blockchains and the Smart Contracts.
 
-#### Body atributes
+##### Body atributes
 
 | name     | type   | description           | example          | required |
 | -------- | ------ | --------------------- | ---------------- | -------- |
@@ -133,12 +135,12 @@ _Request example (application/json):&nbsp;_
 }
 ```
 
-## Change Password 
+### Change Password 
 **PUT:**&nbsp; https://api.bitsign.io/api/v2/user
 
 This endpoint allows the user to changes their password. You must send the old password and the new one that must respect our security policies.
 
-#### Body atributes
+##### Body atributes
 
 | name         | type   | description           | example          | required |
 | ------------ | ------ | --------------------- | ---------------- | -------- |
@@ -156,14 +158,14 @@ _Request example (application/json):&nbsp;_
 }
 ```
 
-# Transaction Endpoints
-## Notarization TX 
+## Transaction Endpoints
+### Notarization TX 
 
 **POST:**&nbsp; https://api.bitsign.io/eth/notarizetx
 
 This endpoints uses data field input to create a **notary transaction** and include it in a new block. Transactions from this endpoints will be executed **from Bitsign's main node** to facilitate its creation. If you want to create your own transaction and send it from your account please use **sendRawTX endpoint instead**.
 
-#### Body atributes
+##### Body atributes
 
 | name     | type   | description            | example | required? |
 | -------- | ------ | ---------------------- | ------- | --------- |
@@ -183,19 +185,19 @@ _Request example (application/json):&nbsp;_
 }
 ```
 
-## Get transactions by user
+### Get transactions by user
 **GET:**&nbsp; https://api.bitsign.io/api/v2/transactions?token=token&hash=hash
 
 This endpoint returns the transactions executed by the user. JWT token is a required parameter, but the tx hash is an optional parameter. 
 
-#### Header parameters
+##### Header parameters
 
 | name  | type              | description | example | required |
 | ----- | ----------------- | ----------- | ------- | -------- |
 | token | User token.       | String      | 65..a5  | yes      |
 | hash  | Transaction hash. | String      | 0x..a4  | no       |
 
-#### Response
+##### Response
 
 Passing tx hash as a parameter will return information of the corresponding transaction if exist, elsewere will return the list of all transactions executed by the user.
 
@@ -236,9 +238,9 @@ _example :&nbsp;_
 }
 ```
 
-# Raw Transactions Endpoints
+## Raw Transactions Endpoints
 
-## SendRawTransaction 
+### SendRawTransaction 
 
 **POST:**&nbsp; https://api.bitsign.io/eth/signedRawTx
 
@@ -247,7 +249,7 @@ signed** raw [transaction](https://web3js.readthedocs.io/en/1.0/web3-eth.html#se
 but you have to **craft the entire transaction** on your end.
 We will be releasing Bitsign tx library to facilitate this process soon.
 
-#### Body atributes
+##### Body atributes
 
 | name  | type   | description                               | example    | required? |
 | ----- | ------ | ----------------------------------------- | ---------- | --------- |
@@ -255,7 +257,7 @@ We will be releasing Bitsign tx library to facilitate this process soon.
 | env   | string | Environment to deploy the smart contract. | production | yes       |
 | tx    | string | Signed data.                              | 0x..m3     | yes       |
 
-#### Request
+##### Request
 
 _example :&nbsp;_
 
@@ -267,7 +269,7 @@ _example :&nbsp;_
 }
 ```
 
-#### Response
+##### Response
 
 _example :&nbsp;_
 
@@ -293,15 +295,15 @@ _example :&nbsp;_
 ```
 
 
-# Smart Contract Endpoints
+## Smart Contract Endpoints
 
-## Deploy new Smart Contract 
+### Deploy new Smart Contract 
 
 **PUT:**&nbsp; https://api.bitsign.io/eth/contract
 
 This endpoint allows the user to deploy a new smart contract.
 
-#### Body atributes
+##### Body atributes
 
 | name  | type   | description                                       | example         | required? |
 | ----- | ------ | ------------------------------------------------- | --------------- | --------- |
@@ -311,16 +313,16 @@ This endpoint allows the user to deploy a new smart contract.
 | type  | string | Contract type to deploy.                          | Escrow          | yes       |
 | value | string | Value in ethers to send to the smart contract.    | 0               | yes       |
 
-### Notarize
+#### Notarize
 
 This smart contract allows the user to notarize documents. In order to initialize Notarize contract the user must send an address, that will be set as the owner of the contract. The owner will be the only one that is able to notarize.
 
-#### Constructor
+##### Constructor
 | name  | type    | description                                                     | example |
 | ----- | ------- | --------------------------------------------------------------- | ------- |
 | _user | address | Ethereum address that will be set as the owner of the contract. | 0x..m3  |
 
-#### Request
+##### Request
 
 _example :&nbsp;_
 
@@ -336,7 +338,7 @@ _example :&nbsp;_
 }
 ```
 
-#### Response
+##### Response
 
 _example :&nbsp;_
 
@@ -368,11 +370,11 @@ _example :&nbsp;_
 }
 ```
 
-### Escrow
+#### Escrow
 
 This smart contract allows the user to deposit funds in the smart contract and define a buyer and a seller. Each actor can release the funds to the other part based on pre established conditions. Also there is BSG arbiter which act as an impartial third party that can release the payment to one party in case the other part breaks the initial conditions.The sender of the transaction will be the arbiter of the contract.
 
-#### Constructor
+##### Constructor
 
 | name     | type    | description                                       | example |
 | -------- | ------- | ------------------------------------------------- | ------- |
@@ -380,7 +382,7 @@ This smart contract allows the user to deposit funds in the smart contract and d
 | _seller  | address | Ethereum address that will act as the buyer.      | 0x..m3  |
 | _endTime | uint    | estimated end time of the proccess, in unix time. | 0x..m3  |
 
-#### Request
+##### Request
 
 the value of the selling proccess should be passed in order to set funds on the contract.
 
@@ -400,7 +402,7 @@ _example :&nbsp;_
 }
 ```
 
-#### Response
+##### Response
 
 _example :&nbsp;_
 
@@ -432,11 +434,11 @@ _example :&nbsp;_
 }
 ```
 
-###  NotarizeTX
+####  NotarizeTX
 
 This smart contract allows the user to notarize transactions.
 
-#### Constructor
+##### Constructor
 
 | name      | type    | description                                   | example     |
 | --------- | ------- | --------------------------------------------- | ----------- |
@@ -449,7 +451,7 @@ This smart contract allows the user to notarize transactions.
 | _status   | string  | State of transaction proccess                 | "purchased" |
 | _shipping | string  | Shipping progress                             | "send"      |
 
-#### Request
+##### Request
 
 the value of the selling proccess should be passed in order to set funds on the contract.
 
@@ -475,7 +477,7 @@ _example :&nbsp;_
 }
 ```
 
-#### Response
+##### Response
 
 _example :&nbsp;_
 
@@ -507,20 +509,20 @@ _example :&nbsp;_
 }
 ```
 
-## Contract Usage 
+### Contract Usage 
 
 **GET:**&nbsp; https://api.bitsign.io/eth/contract/doc?token={token}&type={type}
 
 This endpoint returns smart contract's ABI and functions to use its functionality.
 
-#### Header parameters
+##### Header parameters
 
 | name  | type   | description          | example | required |
 | ----- | ------ | -------------------- | ------- | -------- |
 | token | String | User token.          | ey..yk  | yes      |
 | type  | String | Smart Contract type. | Notary  | yes      |
 
-#### Response
+##### Response
 
 _example :&nbsp;_
 
@@ -597,14 +599,14 @@ _example :&nbsp;_
   "error": null
 }
 ```
-## Call Contract Method 
+### Call Contract Method 
 **POST:**&nbsp; https://api.bitsign.io/eth/contract
 
 
 This endpoint allows the user to read the state from the blockchain using contract methods.
 This endpoint will not alter blockchain state and therefore wont cost gas.
 
-#### Body atributes
+##### Body atributes
 
 | name  | type   | description                               | example    | required? |
 | ----- | ------ | ----------------------------------------- | ---------- | --------- |
@@ -613,7 +615,7 @@ This endpoint will not alter blockchain state and therefore wont cost gas.
 | env   | string | Environment to deploy the smart contract. | production | yes       |
 | method    | string | Method of the contract                   | getBalance     | yes       |
 | Args | object | Arguments of the method, if required | {} | yes |
-#### Request
+##### Request
 
 _example :&nbsp;_
 
@@ -627,7 +629,7 @@ _example :&nbsp;_
 }
 ```
 
-#### Response
+##### Response
 
 _example :&nbsp;_
 
@@ -639,15 +641,15 @@ _example :&nbsp;_
 }
 ```
 
-### Aviliable methods
+#### Aviliable methods
 
-#### Notarize methods
+##### Notarize methods
 
 | name     | description                               | args    |
 | -----  | ----------------------------------------- | ---------- |
 | getProof | Given some data, returns the address wich performed notarize(_data) method | - *_data:*&nbsp; (bytes32) Notarized data. |
 
-### Escrow methods
+#### Escrow methods
 
 | name     | description                               | args    |
 | -----  | ----------------------------------------- | ---------- |
@@ -658,13 +660,13 @@ _example :&nbsp;_
 | endTime  | estimated end time of the proccess, in unix time. | - |
 | getBalance |  This method will return the balance of the contract. | - |
 
-### Notarize tx methods
+#### Notarize tx methods
 
 | name     | description                               | args    |
 | -----  | ----------------------------------------- | ---------- |
 | BSG_NODE  |Ethereum address allowed to execute whrite metods, wich is the contract creator. | - |
 
-## Execute Contract Method
+### Execute Contract Method
 **PATCH:**&nbsp; https://api.bitsign.io/eth/contract
 
 
@@ -672,7 +674,7 @@ This endpoint allows the user to send a transaction to the node and therefore mo
 Although this method will generally cost gas, there is no limitation about it when using BSG Chain and gas cost will be handled internally.
 
 
-#### Body atributes
+##### Body atributes
 
 | name  | type   | description                               | example    | required? |
 | ----- | ------ | ----------------------------------------- | ---------- | --------- |
@@ -682,7 +684,7 @@ Although this method will generally cost gas, there is no limitation about it wh
 | method    | string | Method of the contract                   | getBalance     | yes       |
 | Args | object | Arguments of the method, if required | {} | yes |
 
-#### Request
+##### Request
 
 _example :&nbsp;_
 
@@ -696,7 +698,7 @@ _example :&nbsp;_
 }
 ```
 
-#### Response
+##### Response
 
 _example :&nbsp;_
 
@@ -708,15 +710,15 @@ _example :&nbsp;_
 }
 ```
 
-### Aviliable methods
+#### Aviliable methods
 
-#### Notarize methods
+##### Notarize methods
 
 | name     | description                               | args    |
 | -----  | ----------------------------------------- | ---------- |
 | notarize | This method receive as a parameter a bytes32 that will be the evidence to be notarized. The owner of the contract will be the only one that is capable of execute this method. If the sender is not the owner, the tx will be reverted. After the evidence is notarized the Notary event will be raised with two parameters: the evidence and the address. | *_data:*&nbsp; data to sign. |
 
-#### Escrow methods
+##### Escrow methods
 
 | name     | description                               | args    |
 | -----  | ----------------------------------------- | ---------- |
@@ -724,24 +726,24 @@ _example :&nbsp;_
 | refund | This method can be executed by the seller or the arbiter. This method will transfer the balance of the contract to the buyer address. After that, it will raise the Refund event with two parameters: balance and buyer address. | - | 
 | kill | This method can be executed by the arbiter only. It will destruct the contract and send the balance of the contract to its address. | - |
 
-#### Notarize Tx methods
+##### Notarize Tx methods
 | name     | description                               | args    |
 | -----  | ----------------------------------------- | ---------- |
 | updateStatus | This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed.  The main purpose of this method is to update the tx status. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32) | *_status:*&nbsp;(string): Status to update. <br> *_hash:*&nbsp;(bytes32) hash of the tx. <br> *_id:*&nbsp;(bytes32) Id of the tx. |
 
 | updateShipping | This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The main purpose of this method is to update the tx shipping. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32). | *_shipping:*&nbsp;(string): Shipping to update. <br> *_hash:*&nbsp;(bytes32) hash of the tx. <br> *_id:*&nbsp;(bytes32) Id of the tx. | 
 
-## [Get deployed contracts by user 
+### [Get deployed contracts by user 
 **GET:**&nbsp; https://api.bitsign.io/api/v2/contracts?token={token}
 
 This endpoint returns the contracts deployed by the user.
-#### Header parameters
+##### Header parameters
 
 | name     | type   | description           | example          | required |
 | -------- | ------ | --------------------- | ---------------- | -------- |
 | token | String | User token.          | ey..yk  | yes      |
 
-#### Response
+##### Response
 
 _example :&nbsp;_
 
@@ -765,9 +767,9 @@ _example :&nbsp;_
 }
 ```
 
-# Crowdsale 
+## Crowdsale 
 
-## Deploy new ERC20 Token Crowdsale Smart Contract 
+### Deploy new ERC20 Token Crowdsale Smart Contract 
 **PUT:**&nbsp; https://api.bitsign.io/erc20
 
 This endpoint allows to create a new erc20 crowdsale. By this, user will deploy at same time:
@@ -778,7 +780,7 @@ This endpoint allows to create a new erc20 crowdsale. By this, user will deploy 
     - Capped: Adds a cap to your crowdsale, invalidating any purchases that would exceed that cap.
     - Timed: Adds an openingTime and closingTime to user crowdsale.
 
-#### Required values
+##### Required values
 
 To perform a deploy user must send following values:
 
@@ -822,10 +824,10 @@ _Request example (application/json):&nbsp;_
 }
 ```
 
-## View contract methods
+### View contract methods
 This section explains how the user to read the state from the blockchain using erc20 contract methods. These will not alter blockchain state and therefore wont cost gas.
 
-#### Required values
+##### Required values
 
 There are 2 possible endpoints, one for call token contract, and the another for crowdsale contract. To perform a view method user must send following values:
 
@@ -837,7 +839,7 @@ There are 2 possible endpoints, one for call token contract, and the another for
 
 - _args (object):&nbsp;_ The arguments required by the function.
 
-### Generic Token Crowdsale Methods 
+#### Generic Token Crowdsale Methods 
 **POST:** &nbsp; https://api.bitsign.io/erc20/genericTokenCrowdsale
 
 A list of possible methods to call is provided down.
@@ -865,7 +867,7 @@ _Request example (application/json):&nbsp;_
 }
 ``` 
 
-### Generic Token Methods 
+#### Generic Token Methods 
 **POST:** &nbsp; https://api.bitsign.io/erc20/genericToken
 
 There are several methods to call with this endpoint, listed down.
@@ -890,11 +892,11 @@ _Request example (application/json):&nbsp;_
 }
 ```
 
-## Write methods 
+### Write methods 
 **PATCH:** &nbsp; https://api.bitsign.io/erc20
 Endpoint for execute a write method over an ERC20 crowdsale. These methods change the state of blockchain, so requires gas usage by sender address. Elsewere, transaction will fail. 
 
-#### Required values
+##### Required values
 
 To perform a write method user must provide following values:
 
@@ -904,7 +906,7 @@ To perform a write method user must provide following values:
 - _args (object):&nbsp;_      The arguments required by the function.
 - _value (uint):&nbsp;_        The value in ethers. Mostly used when the user want to buy tokens.
 
-### Available methods
+#### Available methods
 
 A list of possible methods to call is provided down.
 
@@ -931,17 +933,17 @@ _Request example (application/json):&nbsp;_
 }
 ``` 
 
-## retrieve deployed ERC20 
+### retrieve deployed ERC20 
 **GET:** &nbsp; https://api.bitsign.io/erc20
 This endpoint allows user to retrieve a list of deployed contrats by user, as well as information about a specific contract instance
 
-#### Required value
+##### Required value
 
 To perform a write method user must provide following values:
 
 - **email (string):&nbsp;** The user email.
 
-#### Optional value
+##### Optional value
 
 If this value is sent, response will show information about a specific contract instance.
 
