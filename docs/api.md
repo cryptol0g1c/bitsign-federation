@@ -62,10 +62,10 @@ This endpoint retrieves token and Ethereum keys needed to interact with the rest
 
 #### Header parameters
 
-| name     | type                  | description | example          | required |
-| -------- | --------------------- | ----------- | ---------------- | -------- |
-| email    | Unique email address. | String      | alice@crypto.com | yes      |
-| password | User password         | String      | usrpwd           | yes      |
+| name     | type   | description           | example          | required |
+| -------- | ------ | --------------------- | ---------------- | -------- |
+| email    | String | Unique email address. | alice@crypto.com | yes      |
+| password | String | User password.        | usrpwd           | yes      |
 
 #### Response
 
@@ -114,7 +114,7 @@ _example :&nbsp;_
 
 Create new user trough our API to get token access and pre-configured Ethereum keys. With the token you can query all other endpoints and interact with all blockchains and the Smart Contracts.
 
-#### Atributes
+#### Body atributes
 
 | name     | type   | description           | example          | required |
 | -------- | ------ | --------------------- | ---------------- | -------- |
@@ -138,7 +138,7 @@ _Request example (application/json):&nbsp;_
 
 This endpoint allows the user to changes their password. You must send the old password and the new one that must respect our security policies.
 
-#### Atributes
+#### Body atributes
 
 | name         | type   | description           | example          | required |
 | ------------ | ------ | --------------------- | ---------------- | -------- |
@@ -163,7 +163,7 @@ _Request example (application/json):&nbsp;_
 
 This endpoints uses data field input to create a **notary transaction** and include it in a new block. Transactions from this endpoints will be executed **from Bitsign's main node** to facilitate its creation. If you want to create your own transaction and send it from your account please use **sendRawTX endpoint instead**.
 
-#### Atributes
+#### Body atributes
 
 | name     | type   | description            | example | required? |
 | -------- | ------ | ---------------------- | ------- | --------- |
@@ -247,14 +247,51 @@ signed** raw [transaction](https://web3js.readthedocs.io/en/1.0/web3-eth.html#se
 but you have to **craft the entire transaction** on your end.
 We will be releasing Bitsign tx library to facilitate this process soon.
 
+#### Body atributes
 
-+ Request (application/json)
+| name  | type   | description                               | example    | required? |
+| ----- | ------ | ----------------------------------------- | ---------- | --------- |
+| token | string | User token.                               | ey..yk     | yes       |
+| env   | string | Environment to deploy the smart contract. | production | yes       |
+| tx    | string | Signed data.                              | 0x..m3     | yes       |
 
-        {
-            "token": "",
-            "env": "",
-            "tx": ""
-        }
+#### Request
+
+_example :&nbsp;_
+
+```json
+{
+  "token": "65287a7593f3ee75b7264fc497401163e22dc596c86a561015a6480844365ade",
+  "env": "production",
+  "tx": "0x65a2d5df2ed2f5e1d848ed214df65a2d5df2ed2f5e1d848ed214df65a2d5df2e"
+}
+```
+
+#### Response
+
+_example :&nbsp;_
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "_id": "5a5ccafb6e04ee60282f3c0b",
+      "__v": 0,
+      "transaction": {
+        "blockNumber": 26198,
+        "hash": "0x295a9ebc3becf2bd508e8fbe16e7d61456aaf0f333faeafbfdc137c44a1fa78b"
+      },
+      "created": {
+        "by": "5a36ebc6e36eaa130e301e51",
+        "date": "2018-01-15T15:38:35.580Z"
+      }
+    }
+  ],
+  "error": null
+}
+```
+
 
 # Smart Contract Endpoints
 
@@ -262,29 +299,310 @@ We will be releasing Bitsign tx library to facilitate this process soon.
 
 **PUT:**&nbsp; https://api.bitsign.io/eth/contract
 
-This endpoint allows the user to deploy a new smart contract. The available smart contracts are:
+This endpoint allows the user to deploy a new smart contract.
 
-#### Notarize
+#### Body atributes
 
-This smart contract allows the user to notarize documents.
+| name  | type   | description                                       | example         | required? |
+| ----- | ------ | ------------------------------------------------- | --------------- | --------- |
+| token | string | User token.                                       | ey..yk          | yes       |
+| env   | string | Environment to deploy the smart contract.         | production      | yes       |
+| args  | object | Constructor arguments for each specified contract | descrided below | yes       |
+| type  | string | Contract type to deploy.                          | Escrow          | yes       |
+| value | string | Value in ethers to send to the smart contract.    | 0               | yes       |
 
-##### Constructor
+### Notarize
 
-In order to initialize Notarize contract the user must send an address, that will be set as the owner of the contract. The owner will be the only one that is able to notarize.
+This smart contract allows the user to notarize documents. In order to initialize Notarize contract the user must send an address, that will be set as the owner of the contract. The owner will be the only one that is able to notarize.
 
-##### Methods
+#### Constructor
+| name  | type    | description                                                     | example |
+| ----- | ------- | --------------------------------------------------------------- | ------- |
+| _user | address | Ethereum address that will be set as the owner of the contract. | 0x..m3  |
+
+#### Request
+
+_example :&nbsp;_
+
+```json
+{
+  "token": "65287a7593f3ee75b7264fc497401163e22dc596c86a561015a6480844365ade",
+  "env": "production",
+  "args": {
+    "_user": "0x21EA7fcdc6f2187e12dac64848b5BCb2A4537b07",
+  },
+  "type": "Notarize",
+  "value": "0"
+}
+```
+
+#### Response
+
+_example :&nbsp;_
+
+```json
+{
+  "success": true,
+  "data": {
+    "date": {
+      "created": "2018-10-03T13:02:41.062Z"
+    },
+    "owner": {
+      "email": "user@mail.com",
+      "address": "0x21EA7fcdc6f2187e12dac64848b5BCb2A4537b07"
+    },
+    "abi": [ {"..."} ],
+    "events": [],
+    "_id": "5bb4bdf1623ac07205d867c4",
+    "type": "Notarize",
+    "gas": 214506,
+    "bytecode": "0x...29",
+    "address": "0x154cD78cB526700c6547F7Ccd531858AFf485d4a",
+    "encodedAbi": "0000000000000000000000006a5df2cdc6f2187eda8a4b4848b5bcb2a4537b07",
+    "txHash": "0x528ff7a09bcc8ded727f405c568352fd865a2dfaa353e31ea2b6e096dd2ba938",
+    "__v": 0,
+    "contractExplorerUrl": "http://explorer.bitsign.io/account/0x154cD78cB526700c6547F7Ccd531858AFf485d4a",
+    "txExplorerUrl": "http://explorer.bitsign.io/tx/0x528ff7a09bcc8ded727f405c568352fd865a2dfaa353e31ea2b6e096dd2ba938"
+  },
+  "error": null
+}
+```
+
+### Escrow
+
+This smart contract allows the user to deposit funds in the smart contract and define a buyer and a seller. Each actor can release the funds to the other part based on pre established conditions. Also there is BSG arbiter which act as an impartial third party that can release the payment to one party in case the other part breaks the initial conditions.The sender of the transaction will be the arbiter of the contract.
+
+#### Constructor
+
+| name     | type    | description                                       | example |
+| -------- | ------- | ------------------------------------------------- | ------- |
+| _seller  | address | Ethereum address that will act as the seller.     | 0x..m3  |
+| _seller  | address | Ethereum address that will act as the buyer.      | 0x..m3  |
+| _endTime | uint    | estimated end time of the proccess, in unix time. | 0x..m3  |
+
+#### Request
+
+the value of the selling proccess should be passed in order to set funds on the contract.
+
+_example :&nbsp;_
+
+```json
+{
+  "token": "65287a7593f3ee75b7264fc497401163e22dc596c86a561015a6480844365ade",
+  "env": "production",
+  "args": {
+    "_seller": "0x21EA7fcdc6f2187e12dac64848b5BCb2A4537b07",
+    "_buyer": "0x21EA7fcdc6f2187e12dac64848b5BCb2A4537b07",
+    "_endTime": "1539573172",
+  },
+  "type": "Escrow",
+  "value": "1"
+}
+```
+
+#### Response
+
+_example :&nbsp;_
+
+```json
+{
+  "success": true,
+  "data": {
+    "date": {
+      "created": "2018-10-03T13:32:20.344Z"
+    },
+    "owner": {
+      "email": "user@mail.com",
+      "address": "0x21EA7fcdc6f2187eDA8A4b4848b5BCb2A4537a54"
+    },
+    "abi": [{"..."} ],
+    "events": [],
+    "_id": "5bb4c4e4623ac0720a54d7cd",
+    "type": "Escrow",
+    "gas": 379849,
+    "bytecode": "0x...29",
+    "address": "0xE2FA4c7FdcD36d9247B2DDa79af415764ad36B18",
+    "encodedAbi": "000000000000000000000000987cd4e646c9d9981ee94c24a57841abb55f99e700000000000000000000000044751576b07eee07de3d8d5bfb9c8dd77add1744000000000000000000000000000000000000000000000000000000005b67ed4",
+    "txHash": "0xe4103be516ceb4ffc6fadf7e0d652874be4ced404922fe0c0b14c53eaef9f8a3",
+    "__v": 0,
+    "contractExplorerUrl": "http://explorer.bitsign.io/account/0xE2FA4c7FdcD36d9247B2DDa79af415764ad36B18",
+    "txExplorerUrl": "http://explorer.bitsign.io/tx/0xe4103be516ceb4ffc6fadf7e0d652874be4ced404922fe0c0b14c53eaef9f8a3"
+  },
+  "error": null
+}
+```
+
+###  NotarizeTX
+
+This smart contract allows the user to notarize transactions.
+
+#### Constructor
+
+| name      | type    | description                                   | example     |
+| --------- | ------- | --------------------------------------------- | ----------- |
+| _buyer    | address | Ethereum address that will act as the buyer.  | 0x..m3      |
+| _seller   | address | Ethereum address that will act as the seller. | 0x..m3      |
+| _id       | bytes32 | unique id of the transaction.                 | da..65      |
+| _date     | string  | Date of transaction perform                   | "11/09/18"  |
+| _value    | uint    | Value of the transaction                      | 452         |
+| _hash     | bytes32 | Hash of transaction, could act as a integrity | df..26      |
+| _status   | string  | State of transaction proccess                 | "purchased" |
+| _shipping | string  | Shipping progress                             | "send"      |
+
+#### Request
+
+the value of the selling proccess should be passed in order to set funds on the contract.
+
+_example :&nbsp;_
+
+```json
+{
+  "token": "65258a6254d3ee75b7264fc497401163e22dc596c86a654d15a6480844376aa4",
+  "env": "production",
+  "args": {
+    "_buyer": "0x534cd4e646c9d9981ee94c24a33221abb55f99e7",
+	"_seller": "0x44751576b07eee07de3d8d5bfb9c8dd77add1744",
+	"_id": "0x08551a53",
+	"_date": "5/5/18",
+	"_value": "2",
+	"_hash":"0x9b5d1a613fa5f2524ab36b13103706e31fca06b229d87e9915b29fc20c1d76490",
+	"_status": "purchased",
+	"_shipping": "send"
+  },
+  "type": "NotarizeTx",
+  "value": "0",
+  "password": "user1234"
+}
+```
+
+#### Response
+
+_example :&nbsp;_
+
+```json
+{
+  "success": true,
+  "data": {
+    "date": {
+      "created": "2018-10-03T14:19:10.887Z"
+    },
+    "owner": {
+      "email": "user@mail.com",
+      "address": "0x25EA7fcdc6f2187eDA8254d848b5BCb2A4537b07"
+    },
+    "abi": [ {"..."} ],
+    "events": [],
+    "_id": "5bb4cfde623ac07205d867d4",
+    "type": "NotarizeTx",
+    "gas": 545091,
+    "bytecode": "0x...29",
+    "address": "0x2796bfA32e88eE558E3eB7a83E51FF1b55E225ad",
+    "encodedAbi": "00...00",
+    "txHash": "0x251sd9dcd5c7e44c96becd803ea286a66931821b506c3633c0f0f3c24e7b325a",
+    "__v": 0,
+    "contractExplorerUrl": "http://explorer.bitsign.io/account/0x2796bfA32e88eE558E3eB7a83E51FF1b55E225ad",
+    "txExplorerUrl": "http://explorer.bitsign.io/tx/0x251sd9dcd5c7e44c96becd803ea286a66931821b506c3633c0f0f3c24e7b325a"
+  },
+  "error": null
+}
+```
+
+## Contract Usage 
+
+**GET:**&nbsp; https://api.bitsign.io/eth/contract/doc?token={token}&type={type}
+
+This endpoint returns smart contract's ABI and functions to use its functionality.
+
+#### Header parameters
+
+| name  | type   | description          | example | required |
+| ----- | ------ | -------------------- | ------- | -------- |
+| token | String | User token.          | ey..yk  | yes      |
+| type  | String | Smart Contract type. | Notary  | yes      |
+
+#### Response
+
+_example :&nbsp;_
+
+```json
+{
+  "success": true,
+  "data": [
+     {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "_data",
+            "type": "bytes32"
+          }
+        ],
+        "name": "getProof",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function",
+        "signature": "0x1b80bb3a"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_data",
+            "type": "bytes32"
+          }
+        ],
+        "name": "notarize",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "signature": "0xcbef362f"
+      },
+      {
+        "inputs": [
+          {
+            "name": "_user",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "constructor",
+        "signature": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "name": "_data",
+            "type": "bytes32"
+          },
+          {
+            "indexed": false,
+            "name": "_address",
+            "type": "address"
+          }
+        ],
+        "name": "Notary",
+        "type": "event",
+        "signature": "0x6daf688db5c79fe10fee0cf2f31d8bc8fbe535418562899c198aa744173011f6"
+      }
+  ],
+  "error": null
+}
+```
+
+#### Notarize methods
 
 * notarize: This method receive as a parameter a bytes32 that will be the evidence to be notarized. The owner of the contract will be the only one that is capable of execute this method. If the sender is not the owner, the tx will be reverted. After the evidence is notarized the Notary event will be raised with two parameters: the evidence and the address.
 
-#### Escrow
-
-This smart contract allows the user to deposit funds in the smart contract and define a buyer and a seller. Each actor can release the funds to the other part based on pre established conditions. Also there is BSG arbiter which act as an impartial third party that can release the payment to one party in case the other part breaks the initial conditions.
-
-##### Constructor
-
-In order to initialize Escrow contract the user must send _seller (address), _buyer (address) and _endTime (uint). The sender of the transaction will be the arbiter of the contract. The arbiter act as an impartial third party. Also the value should be passed in order to set funds on the contract.
-
-##### Methods
+#### Escrow methods
 
 * pay: This method can be executed by the buyer or the arbiter. This method will transfer the balance of the contract to the seller address. After that, it will raise the Payout event with two parameters: balance and seller address.
 
@@ -294,69 +612,57 @@ In order to initialize Escrow contract the user must send _seller (address), _bu
 
 * kill: This method can be executed by the arbiter only. It will destruct the contract and send the balance of the contract to its address.
 
-####  NotarizeTX
-
-##### Constructor
-
-In order to initialize NotarizeTx contract the user must send the following values:
-
-- buyer (address)
-- seller (address)
-- id  (bytes32)
-- date (string)
-- value (uint)
-- hash (bytes32)
-- status (string)
-- shipping (string)
-
-##### Methods
+#### Notarize tx methods
 
 * updateStatus: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx status. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
 
 * updateShipping: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx shipping. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
 
-+ Request (application/json)
-
-        {
-            "token": "<your_token>",
-            "env": "production",
-            "args": {
-                "_buyer": "",
-                "_seller": "",
-                "_endTime": 314159
-            },
-            "type": "Escrow",
-            "value": "0",
-            "password": "<your_password>"
-        }
-
-## [Contract Usage 
-
-**GET:**&nbsp; https://api.bitsign.io/eth/contract/doc?token={token}&type={type}
-
-This endpoint returns smart contract's ABI and functions to use its functionality.
-
-+ Parameters
-
-    + token: <user_token> (string) - User token.
-    + type: <contract_name> (string) - Smart Contract type.
-
-## [Call Contract Method 
+## Call Contract Method 
 **POST:**&nbsp; https://api.bitsign.io/eth/contract
 
 
 This endpoint allows the user to read the state from the blockchain using contract methods.
 This endpoint will not alter blockchain state and therefore wont cost gas.
 
-+ Request (application/json)
+#### Body atributes
 
-        {
-            "token": "",
-            "address": "",
-            "env": "",
-            "method": "",
-            "args": {}
-        }
+| name  | type   | description                               | example    | required? |
+| ----- | ------ | ----------------------------------------- | ---------- | --------- |
+| token | string | User token.                               | ey..yk     | yes       |
+| address | string | Address of the contract | 0x..e7 | yes |
+| env   | string | Environment to deploy the smart contract. | production | yes       |
+| method    | string | Method of the contract                   | getBalance     | yes       |
+| Args | object | Arguments of the method, if required | {} | yes |
+#### Request
+
+_example :&nbsp;_
+
+```json
+{
+    "token": "65287a7593f3ee75b7264fc497401163e22dc596c86a561015a6480844365ade",
+    "address": "0x534cd4e646c9d9981ee94c24a33221abb55f99e7",
+    "env": "production",
+    "method": "getBalance",
+    "args": {}
+}
+```
+
+#### Response
+
+_example :&nbsp;_
+
+```json
+{
+    "success": true,
+    "data": "10",
+    "error": null
+}
+```
+
+#### Aviliable methods
+
+* getBalance: This method will return the balance of the contract. It can be executed by any member of the contract.
 
 ## Execute Contract Method
 **PATCH:**&nbsp; https://api.bitsign.io/eth/contract
@@ -378,6 +684,24 @@ Although this method will generally cost gas, there is no limitation about it wh
             },
             "password": "<your_password>"
         }
+
+### Notarize methods
+
+* notarize: This method receive as a parameter a bytes32 that will be the evidence to be notarized. The owner of the contract will be the only one that is capable of execute this method. If the sender is not the owner, the tx will be reverted. After the evidence is notarized the Notary event will be raised with two parameters: the evidence and the address.
+
+### Escrow methods
+
+* pay: This method can be executed by the buyer or the arbiter. This method will transfer the balance of the contract to the seller address. After that, it will raise the Payout event with two parameters: balance and seller address.
+
+* refund: This method can be executed by the seller or the arbiter. This method will transfer the balance of the contract to the buyer address. After that, it will raise the Refund event with two parameters: balance and buyer address.
+
+* kill: This method can be executed by the arbiter only. It will destruct the contract and send the balance of the contract to its address.
+
+### Notarize tx methods
+
+* updateStatus: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx status. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
+
+* updateShipping: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx shipping. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
 
 ## [Get deployed contracts by user 
 **GET:**&nbsp; https://api.bitsign.io/api/v2/contracts?token={token}
@@ -409,7 +733,7 @@ To perform a deploy user must send following values:
 
 - **email (string):&nbsp;** The user email.
 
-- **args (object):&nbsp;** The arguments required by the function. In this case, the constructor arguments, listed below:
+- **args (object):&nbsp;** The arguments required are the constructor arguments of the crowdsale contract, listed below:
 
     - **_name (string):&nbsp;** The name of the token.
 
