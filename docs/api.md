@@ -597,27 +597,6 @@ _example :&nbsp;_
   "error": null
 }
 ```
-
-#### Notarize methods
-
-* notarize: This method receive as a parameter a bytes32 that will be the evidence to be notarized. The owner of the contract will be the only one that is capable of execute this method. If the sender is not the owner, the tx will be reverted. After the evidence is notarized the Notary event will be raised with two parameters: the evidence and the address.
-
-#### Escrow methods
-
-* pay: This method can be executed by the buyer or the arbiter. This method will transfer the balance of the contract to the seller address. After that, it will raise the Payout event with two parameters: balance and seller address.
-
-* refund: This method can be executed by the seller or the arbiter. This method will transfer the balance of the contract to the buyer address. After that, it will raise the Refund event with two parameters: balance and buyer address.
-
-* getBalance: This method will return the balance of the contract. It can be executed by any member of the contract.
-
-* kill: This method can be executed by the arbiter only. It will destruct the contract and send the balance of the contract to its address.
-
-#### Notarize tx methods
-
-* updateStatus: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx status. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
-
-* updateShipping: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx shipping. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
-
 ## Call Contract Method 
 **POST:**&nbsp; https://api.bitsign.io/eth/contract
 
@@ -660,9 +639,30 @@ _example :&nbsp;_
 }
 ```
 
-#### Aviliable methods
+### Aviliable methods
 
-* getBalance: This method will return the balance of the contract. It can be executed by any member of the contract.
+#### Notarize methods
+
+| name     | description                               | args    |
+| -----  | ----------------------------------------- | ---------- |
+| getProof | Given some data, returns the address wich performed notarize(_data) method | - *_data:*&nbsp; (bytes32) Notarized data. |
+
+### Escrow methods
+
+| name     | description                               | args    |
+| -----  | ----------------------------------------- | ---------- |
+| buyer  | Ethereum address that will act as the buyer. | - |
+| seller  | Ethereum address that will act as the seller. | - |
+| arbiter  | Ethereum address that will act as the arbiter, wich is the contract creator. | - |
+| value  | Value sended in constructor | - |
+| endTime  | estimated end time of the proccess, in unix time. | - |
+| getBalance |  This method will return the balance of the contract. | - |
+
+### Notarize tx methods
+
+| name     | description                               | args    |
+| -----  | ----------------------------------------- | ---------- |
+| BSG_NODE  |Ethereum address allowed to execute whrite metods, wich is the contract creator. | - |
 
 ## Execute Contract Method
 **PATCH:**&nbsp; https://api.bitsign.io/eth/contract
@@ -672,50 +672,103 @@ This endpoint allows the user to send a transaction to the node and therefore mo
 Although this method will generally cost gas, there is no limitation about it when using BSG Chain and gas cost will be handled internally.
 
 
-+ Request (application/json)
+#### Body atributes
 
-        {
-            "token": "",
-            "address": "<contract_address>",
-            "env": "production",
-            "method": "pay",
-            "args": {
+| name  | type   | description                               | example    | required? |
+| ----- | ------ | ----------------------------------------- | ---------- | --------- |
+| token | string | User token.                               | ey..yk     | yes       |
+| address | string | Address of the contract | 0x..e7 | yes |
+| env   | string | Environment to deploy the smart contract. | production | yes       |
+| method    | string | Method of the contract                   | getBalance     | yes       |
+| Args | object | Arguments of the method, if required | {} | yes |
 
-            },
-            "password": "<your_password>"
-        }
+#### Request
 
-### Notarize methods
+_example :&nbsp;_
 
-* notarize: This method receive as a parameter a bytes32 that will be the evidence to be notarized. The owner of the contract will be the only one that is capable of execute this method. If the sender is not the owner, the tx will be reverted. After the evidence is notarized the Notary event will be raised with two parameters: the evidence and the address.
+```json
+{
+    "token": "",
+    "address": "<contract_address>",
+    "env": "production",
+    "method": "kill",
+    "args": { }
+}
+```
 
-### Escrow methods
+#### Response
 
-* pay: This method can be executed by the buyer or the arbiter. This method will transfer the balance of the contract to the seller address. After that, it will raise the Payout event with two parameters: balance and seller address.
+_example :&nbsp;_
 
-* refund: This method can be executed by the seller or the arbiter. This method will transfer the balance of the contract to the buyer address. After that, it will raise the Refund event with two parameters: balance and buyer address.
+```json
+{
+  "success": true,
+  "data": {},
+  "error": null
+}
+```
 
-* kill: This method can be executed by the arbiter only. It will destruct the contract and send the balance of the contract to its address.
+### Aviliable methods
 
-### Notarize tx methods
+#### Notarize methods
 
-* updateStatus: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx status. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
+| name     | description                               | args    |
+| -----  | ----------------------------------------- | ---------- |
+| notarize | This method receive as a parameter a bytes32 that will be the evidence to be notarized. The owner of the contract will be the only one that is capable of execute this method. If the sender is not the owner, the tx will be reverted. After the evidence is notarized the Notary event will be raised with two parameters: the evidence and the address. | *_data:*&nbsp; data to sign. |
 
-* updateShipping: This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The parameters of this method are status (string), hash (bytes32) and id (bytes32). The main purpose of this method is to update the tx shipping. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32).
+#### Escrow methods
+
+| name     | description                               | args    |
+| -----  | ----------------------------------------- | ---------- |
+| pay | This method can be executed by the buyer or the arbiter. This method will transfer the balance of the contract to the seller address. After that, it will raise the Payout event with two parameters: balance and seller address. | - |
+| refund | This method can be executed by the seller or the arbiter. This method will transfer the balance of the contract to the buyer address. After that, it will raise the Refund event with two parameters: balance and buyer address. | - | 
+| kill | This method can be executed by the arbiter only. It will destruct the contract and send the balance of the contract to its address. | - |
+
+#### Notarize Tx methods
+| name     | description                               | args    |
+| -----  | ----------------------------------------- | ---------- |
+| updateStatus | This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed.  The main purpose of this method is to update the tx status. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32) | *_status:*&nbsp;(string): Status to update. <br> *_hash:*&nbsp;(bytes32) hash of the tx. <br> *_id:*&nbsp;(bytes32) Id of the tx. |
+
+| updateShipping | This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The main purpose of this method is to update the tx shipping. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32). | *_shipping:*&nbsp;(string): Shipping to update. <br> *_hash:*&nbsp;(bytes32) hash of the tx. <br> *_id:*&nbsp;(bytes32) Id of the tx. | 
 
 ## [Get deployed contracts by user 
 **GET:**&nbsp; https://api.bitsign.io/api/v2/contracts?token={token}
 
 This endpoint returns the contracts deployed by the user.
+#### Header parameters
 
-+ Parameters
+| name     | type   | description           | example          | required |
+| -------- | ------ | --------------------- | ---------------- | -------- |
+| token | String | User token.          | ey..yk  | yes      |
 
-    + token: <user_token> (string) - User token.
+#### Response
+
+_example :&nbsp;_
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "address": "0xb42B83621125b8f523dC3ca197168439e139744D",
+      "contractExplorerUrl": "http://explorer.bitsign.io/account/0xb42B83621125b8f523dC3ca197168439e139744D",
+      "date": {
+        "created": "2018-03-15T01:13:21.932Z"
+      },
+      "encodedAbi": "0000000000000000000000000593ce5dc23005d15bdf39be68e84ee83fd6b3be",
+      "type": "Notarize",
+      "txHash": "0xba1eb2c8ea051b66a24fa300b7c0eec0e7dc4d65552859e0221963658c1d504b",
+      "txExplorerUrl": "http://explorer.bitsign.io/tx/0xba1eb2c8ea051b66a24fa300b7c0eec0e7dc4d65552859e0221963658c1d504b"
+    }
+  ],
+  "error": null
+}
+```
 
 # Crowdsale 
 
 ## Deploy new ERC20 Token Crowdsale Smart Contract 
-**PUT /erc20**
+**PUT:**&nbsp; https://api.bitsign.io/erc20
 
 This endpoint allows to create a new erc20 crowdsale. By this, user will deploy at same time:
 
@@ -785,7 +838,7 @@ There are 2 possible endpoints, one for call token contract, and the another for
 - _args (object):&nbsp;_ The arguments required by the function.
 
 ### Generic Token Crowdsale Methods 
-**POST /erc20/genericTokenCrowdsale**
+**POST:** &nbsp; https://api.bitsign.io/erc20/genericTokenCrowdsale
 
 A list of possible methods to call is provided down.
 
@@ -813,7 +866,7 @@ _Request example (application/json):&nbsp;_
 ``` 
 
 ### Generic Token Methods 
-**POST /erc20/genericToken**:
+**POST:** &nbsp; https://api.bitsign.io/erc20/genericToken
 
 There are several methods to call with this endpoint, listed down.
 
@@ -838,7 +891,7 @@ _Request example (application/json):&nbsp;_
 ```
 
 ## Write methods 
-**PATCH /erc20**
+**PATCH:** &nbsp; https://api.bitsign.io/erc20
 Endpoint for execute a write method over an ERC20 crowdsale. These methods change the state of blockchain, so requires gas usage by sender address. Elsewere, transaction will fail. 
 
 #### Required values
@@ -879,7 +932,7 @@ _Request example (application/json):&nbsp;_
 ``` 
 
 ## retrieve deployed ERC20 
-**GET /erc20**
+**GET:** &nbsp; https://api.bitsign.io/erc20
 This endpoint allows user to retrieve a list of deployed contrats by user, as well as information about a specific contract instance
 
 #### Required value
