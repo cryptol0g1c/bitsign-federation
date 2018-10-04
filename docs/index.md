@@ -10,6 +10,7 @@ Also we've created an abstraction layer that can be used to connect business mod
 Developers, organizations and companies can work on BSG BLOCKCHAIN and build smart contracts and decentralized applications, but safer, faster, and more efficiently than in many others public blockchains.
 
 ## Explorer
+
 Bitsign Federation block explorer can be found [here](https://explorer.bitsign.io)
 
 ## Statistics
@@ -17,9 +18,13 @@ Statistic explorer can be found [here](https://stats.bitsign.io)
 
 ## Configuration
 
-To connect to Bitsign Federation Blockchain you need to use **genesis.json** for settings and initial conditions.
+### Prerequisites
 
-File can be downloaded from [here](https://github.com/cryptol0g1c/bitsign-federation/blob/master/genesis.json)
+#### Genesis.json file
+
+To connect to Bitsign Federation Blockchain you need to use the **genesis.json** file. This file set the settings and initial conditions of the chain.
+
+File can be downloaded from [here](https://github.com/cryptol0g1c/bitsign-federation/blob/master/genesis.json) or you can copy the code from below an save it in a file genesis.json:
 
 ```json
 {
@@ -63,20 +68,41 @@ File can be downloaded from [here](https://github.com/cryptol0g1c/bitsign-federa
 }
 ```
 
-Also public nodes need to be queried to sync Federation blockchain to update to its latest state.
-You can use:
+#### Public nodes nodes.txt file
 
-## Federation Nodes
+- Also public nodes need to be queried to sync Federation blockchain to update to its latest state.
+File can be downloaded from [here](https://github.com/cryptol0g1c/bitsign-federation/blob/master/nodes.txt) or you can copy the nodes listed below an save them in a nodes.txt file :
+
 ```
 main enode://a891225909f70a4ee3f40c1dac05da763fe0354d5f259922abf841db51706283d2957c09fc7266e5f4633583a34dbef3f38a769eb35551788740a06e387dfa2a@159.203.176.160:30303
 nyc enode://b21d8b85165319a86c822dadcd51fbaf1aca3fe7854df8644c03ac304e34205d31d44d0eac7dd6366a8f8a621eeb2198d9644090d59771148fb3ac92630d2dd6@198.211.100.127:30303
 eua enode://399eb9b379410a66c80899cf03bec59bce930cd6f8a8440e6c8601c881f68d994f054f297e931304c090bacbfca29d45063d624e45c7deb74b4b76993c14658a@159.203.178.88:30303
 ```
 
-## Running Parity
+
+#### Parity
 
 Parity software can be downloaded [here](https://github.com/paritytech/parity/releases/tag/v1.7.9) (version 1.7.9 stable required)
 
-## Configuration file
+#### Configuration file
+
 For a quick run you can use the simple yet working config file to start Parity below:
 [federation-config.toml](https://github.com/cryptol0g1c/bitsign-federation/blob/master/federation-config.toml)
+
+```toml
+[parity]
+chain = "genesis.json"
+base_path = "./base-path"
+identity = "bitsign-node"
+
+[network]
+discovery = true
+reserved_peers = "nodes.txt"
+
+[misc]
+logging = "own_tx=trace"
+log_file = "parity.log"
+color = true
+```
+
+### 
