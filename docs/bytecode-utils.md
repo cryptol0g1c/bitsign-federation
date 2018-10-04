@@ -33,7 +33,7 @@ _example:&nbsp;_
 ```json
 {
   "match": true,
-  "msg": 'bytecode and metadata match exactly'
+  "msg": "bytecode and metadata match exactly"
 }
 ```
 
@@ -44,10 +44,10 @@ This method compiles a contract and process the output for later usage.
 
 | name         | type    | description                                             | required?                 |
 | ------------ | ------- | ------------------------------------------------------- | ------------------------- |
-| solcVersion | String | Compiler version | no <br> Default: 'latest'|
-| contractCode | String |Code of the conctract to compile | yes |
-| contractName | String | Name of the contract. | yes |
-| optimized | Numeric | 1 if the contract compilation is optimized, elsewere 0. |  Default: 1 |
+| solcVersion  | String  | Compiler version                                        | no <br> Default: 'latest' |
+| contractCode | String  | Code of the conctract to compile                        | yes                       |
+| contractName | String  | Name of the contract.                                   | yes                       |
+| optimized    | Numeric | 1 if the contract compilation is optimized, elsewere 0. | Default: 1                |
 
 #### Returns
 
@@ -76,9 +76,9 @@ Return the contract bytecode from a deployed contract.
 
 #### Parameters
 
-| name         | type    | description                                             | required?                 |
-| ------------ | ------- | ------------------------------------------------------- | ------------------------- |
-| address | String | Address of the deployed contract | yes |
+| name    | type   | description                      | required? |
+| ------- | ------ | -------------------------------- | --------- |
+| address | String | Address of the deployed contract | yes       |
 
 #### Returns
 **Type:**&nbsp;String
@@ -87,7 +87,10 @@ Return the contract bytecode from a deployed contract.
 Return a solc compiler instance from the passed version.
 
 #### Parameters
-* version - String
+
+| name    | type   | description                                    | required? |
+| ------- | ------ | ---------------------------------------------- | --------- |
+| version | String | Version of the required solc compiler instance | yes       |
 
 #### Returns
 **Type:**&nbsp;Solc instance
@@ -96,11 +99,22 @@ Return a solc compiler instance from the passed version.
 Return a solc compiler instance from the passed version.
 
 #### Parameters
-* _bytecode - String
-* _parameterTypes - Array
+
+| name         | type    | description                                             | required?                 |
+| ------------ | ------- | ------------------------------------------------------- | ------------------------- |
+| _bytecode | String |  | yes |
+| _parameterTypes | Array |  | yes |
 
 #### Returns
 **Type:**&nbsp;object
+
+```json
+{ 
+    "compiled": "0x60..29", //The bytecode set as parameter
+    "metadata": "00..29", //Metadata hash
+    "swarmHash": "dd792ef406ad68e2d292b0510152c174f8dabdb6969b8e5954062fa16b4d6836" //  
+}
+```
 
 ### flatten
 Make usage of truffle-flattener library to insert all imported contracts into one single file. Useful to verify and/or compare bytecode.
