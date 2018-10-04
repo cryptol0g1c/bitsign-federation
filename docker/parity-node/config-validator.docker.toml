@@ -1,0 +1,31 @@
+[parity]
+chain = "genesis.json"
+identity = "bitsign-validator"
+no_persistent_txqueue = true
+
+[account]
+unlock = ["$UNLOCK"]
+password = ["$PASS_PATH"]
+
+[ui]
+disable = true
+
+[rpc]
+interface = "all"
+
+[network]
+discovery = true
+reserved_peers = "$NODES_PATH"
+
+[mining]
+author = "$AUTHOR"
+engine_signer = "$ENGINE_SIGNER"
+reseal_max_period = 30000
+
+[misc]
+logging = "external_tx=debug,network=info,own_tx=debug,poa=info,txqueue=debug"
+log_file = "parity-validator.log"
+color = true
+
+
+

@@ -1,0 +1,26 @@
+[parity]
+chain = "genesis.json"
+identity = "bitsign-main"
+no_persistent_txqueue = true
+
+[ui]
+disable = true
+
+[network]
+discovery = true
+reserved_peers = "$NODES_PATH"
+
+[rpc]
+interface = "all"
+cors = ["*"]
+hosts = ["all"]
+
+[footprint]
+tracing = "on"
+fat_db = "on"
+pruning = "archive"
+
+[misc]
+logging = "external_tx=debug,network=info,own_tx=debug,poa=info,txqueue=debug"
+log_file = "parity-main.log"
+color = true
