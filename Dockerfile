@@ -1,4 +1,4 @@
-FROM parity/parity:stable
+FROM parity/parity:v1.11.11
 
 VOLUME ["/data" ]
 
@@ -9,7 +9,7 @@ RUN apt-get update \
     && apt-get install -y curl git perl wget \
     && wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - \
     && apt-get upgrade -y \
-    && curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - \
+    && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g pm2 \
     && apt-get clean \
