@@ -2,13 +2,17 @@ BitsignJS
 =====
 
 ## Installation
+
 Using npm:
+
 ```
 npm install bitsignjs
 ```
 
 ## APIs
+
 First of all you must instantiate the api with your token:
+
 ```
   const bitsignjs = require('bitsignjs');
 
@@ -16,6 +20,7 @@ First of all you must instantiate the api with your token:
 ```
 
 ## contracts
+
 ### api.contracts.deploy
 
 ```
@@ -104,6 +109,6 @@ You must send:
 
 ```
   const bitsignjs = require('bitsignjs');
-
+  
   bitsignjs.signedRawTx(signedTx).then(data => console.log(data))
 ```

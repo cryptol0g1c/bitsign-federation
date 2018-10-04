@@ -159,6 +159,7 @@ _Request example (application/json):&nbsp;_
 ```
 
 ## Transaction Endpoints
+
 ### Notarization TX 
 
 **POST:**&nbsp; https://api.bitsign.io/eth/notarizetx
