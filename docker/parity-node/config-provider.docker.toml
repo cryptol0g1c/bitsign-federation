@@ -1,0 +1,34 @@
+[parity]
+chain = "genesis.json"
+identity = "bitsign-provider"
+no_persistent_txqueue = true
+
+[dapps]
+disable = true
+
+[ui]
+disable = true
+
+[network]
+port = $NETWORK_PORT
+discovery = true
+reserved_peers = "$NODES_PATH"
+
+[rpc]
+interface = "all"
+cors = ["all"]
+hosts = ["all"]
+apis = ["safe"]
+
+[websockets]
+interface = "all"
+
+[footprint]
+tracing = "on"
+fat_db = "on"
+pruning = "archive"
+
+[misc]
+logging = "external_tx=debug,network=info,own_tx=debug,txqueue=debug"
+log_file = "parity-rpc.log"
+color = true

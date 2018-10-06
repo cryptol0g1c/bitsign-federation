@@ -1,0 +1,36 @@
+#!/bin/sh
+
+set -e
+
+# Set default values for ENV's variables
+export UNLOCK=${UNLOCK:-'0x0a0f29a9b479d91f6d112b203c7d9db0cb4cdb84'}
+export AUTHOR=${AUTHOR:-'0x0a0f29a9b479d91f6d112b203c7d9db0cb4cdb84'}
+export ENGINE_SIGNER=${ENGINE_SIGNER:-'0x0a0f29a9b479d91f6d112b203c7d9db0cb4cdb84'}
+export NETWORK_PORT=${NETWORK_PORT:-'30303'}
+export PASS_PATH=${PASS_PATH:-'/bitsign/password.txt'}
+export KEY_PATH=${KEY_PATH:-''}
+export NODES_PATH=${NODES_PATH:-'/bitsign/nodes/nodes.txt'}
+
+# Process config files
+envsubst '${NODES_PATH}' < /bitsign/config/config-main.docker.toml > /bitsign/config-main.toml
+envsubst '${UNLOCK} ${AUTHOR} ${ENGINE_SIGNER} ${PASS_PATH} ${NODES_PATH}' < /bitsign/config/config-validator.docker.toml > /bitsign/config-validator.toml
+envsubst '${NETWORK_PORT} ${NODES_PATH}' < /bitsign/config/config-provider.docker.toml > /bitsign/config-provider.toml
+envsubst '${NODES_PATH}' < /bitsign/config/config-local.docker.toml > /bitsign/config-local.toml
+
+
+# Import key
+if [ ! -z $KEY_PATH ]; then
+  /parity/parity account import $KEY_PATH --chain ./genesis.json --keys-path ./base-path/keys
+fi
+
+# Process node type
+NODE_TYPE=${NODE_TYPE:-"default"}
+if [ $NODE_TYPE = "default" ]; then
+  NODE_TYPE=""
+else
+  NODE_TYPE="-$NODE_TYPE"
+fi
+
+# Run parity
+chown bitsign:bitsign -R /bitsign
+/parity/parity --config ./config$NODE_TYPE.toml --base-path ./base-path $@
