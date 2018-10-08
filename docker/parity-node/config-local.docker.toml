@@ -1,0 +1,25 @@
+[parity]
+chain = "genesis.json"
+identity = "bitsign-local"
+no_persistent_txqueue = true
+
+[dapps]
+disable = true
+
+[ui]
+disable = true
+
+[network]
+discovery = true
+reserved_peers = "$NODES_PATH"
+
+[rpc]
+interface = "all"
+
+[websockets]
+interface = "all"
+
+[misc]
+logging = "network=info,poa=debug,txqueue=debug"
+log_file = "parity-local.log"
+color = true
