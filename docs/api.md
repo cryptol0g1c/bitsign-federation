@@ -69,6 +69,8 @@ This endpoint retrieves token and Ethereum keys needed to interact with the rest
 | email    | String | Unique email address. | alice@crypto.com | yes      |
 | password | String | User password.        | usrpwd           | yes      |
 
+
+
 ##### Response
 
 _example :&nbsp;_
@@ -118,11 +120,11 @@ Create new user trough our API to get token access and pre-configured Ethereum k
 
 ##### Body atributes
 
-| name     | type   | description           | example          | required |
-| -------- | ------ | --------------------- | ---------------- | -------- |
-| email    | string | Unique email address. | alice@crypto.com | yes      |
-| password | string | User password.        | usrpwd           | yes      |
-| username | string | Unique user name.     | alice            | yes      |
+| name     | type   | description           | required |
+| -------- | ------ | --------------------- | -------- |
+| email    | string | Unique email address. | yes      |
+| password | string | User password.        | yes      |
+| username | string | Unique user name.     | yes      |
 
 
 _Request example (application/json):&nbsp;_
@@ -135,6 +137,25 @@ _Request example (application/json):&nbsp;_
 }
 ```
 
+##### Response
+
+_example :&nbsp;_
+
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "bbe8c5a4-2f77-b53d-870f-659b49153589",
+    "username": "alice",
+    "email": "alice@crypto.com",
+    "etherAddress": "0x31EA7fcdc6f2187e12dac64848b5BCb2A4537b07",
+    "etherPrivKey": "0x5a01d5f2fa910156cd30bf2509bd9c991be409247eeb5c31422209f9d26572d0",
+    "token": "79645a7593f3ee75b7264fc497401163e22dc596c86a561015a6480158742bb3"
+  },
+  "error": null
+}
+```
+
 ### Change Password 
 **PUT:**&nbsp; https://api.bitsign.io/api/v2/user
 
@@ -142,19 +163,36 @@ This endpoint allows the user to changes their password. You must send the old p
 
 ##### Body atributes
 
-| name         | type   | description           | example          | required |
-| ------------ | ------ | --------------------- | ---------------- | -------- |
-| email        | string | Unique email address. | alice@crypto.com | yes      |
-| password     | string | User password.        | usrpwd           | yes      |
-| new password | string | User new password.    | new_password     | yes      |
+| name         | type   | description           | required |
+| ------------ | ------ | --------------------- | -------- |
+| email        | string | Unique email address. | yes      |
+| password     | string | User password.        | yes      |
+| new password | string | User new password.    | yes      |
 
 _Request example (application/json):&nbsp;_
 
 ```json
 {
     "email": "alice@crypto.com",
-    "password": "crafty_password!",
+    "password": "crafty_password",
     "newPassword": "new_crafty_password"
+}
+```
+
+##### Response
+
+_example :&nbsp;_
+
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "bbe8c5a4-2f77-b53d-870f-659b49153589",
+    "username": "alice",
+    "email": "alice@crypto.com",
+    "token": "79645a7593f3ee75b7264fc497401163e22dc596c86a561015a6480158742bb3"
+  },
+  "error": null
 }
 ```
 
@@ -168,21 +206,37 @@ This endpoints uses data field input to create a **notary transaction** and incl
 
 ##### Body atributes
 
-| name     | type   | description            | example | required? |
-| -------- | ------ | ---------------------- | ------- | --------- |
-| token    | string | User token.            | ey..yk  | yes       |
-| data     | string | Data to notarize.      | 0x..3F  | yes       |
-| address  | string | User ethereum address. | 0x..m3  | yes       |
-| password | string | User password.         | usrpwd  | yes       |
+| name    | type   | description            | required? |
+| ------- | ------ | ---------------------- | --------- |
+| token   | string | User token.            | yes       |
+| data    | string | Data to notarize.      | yes       |
+| address | string | User ethereum address. | yes       |
 
 _Request example (application/json):&nbsp;_
 
 ```json
 {
-    "token": "<your_token>",
-    "data": "<some_hexadecimal_data>",
-    "address": "<your_ethereum_address>",
-    "password": "<your_password>"
+    "token": "65287a7593f3ee75b7264fc497401163e22dc596c86a561015a6480844365ade",
+    "data": "0x666cb025d4e8813e29a9955c37eb86586a3f150d8e50202b5da4040afa9c85a4",
+    "address": "0x21EA7fcdc6f2187e12dac64848b5BCb2A4537b07",
+}
+```
+
+##### Response
+
+_example :&nbsp;_
+
+```json
+{
+  "success": true,
+  "data": {
+    "blockHash": "0x65287a7593f3ee75b7264fc497401163e22dc596c86a561015a6480844365ade",
+    "blockNumber": 1958,
+    "gasUsed": 21136,
+    "transactionHash": "0x666cb025d4e8813e29a9955c37eb86586a3f150d8e50202b5da4040afa9c85a4",
+    "explorerUrl": "https://explorer.bitsign.io/tx/0x666cb025d4e8813e29a9955c37eb86586a3f150d8e50202b5da4040afa9c85a4"
+  },
+  "error": null
 }
 ```
 
@@ -193,10 +247,10 @@ This endpoint returns the transactions executed by the user. JWT token is a requ
 
 ##### Header parameters
 
-| name  | type              | description | example | required |
-| ----- | ----------------- | ----------- | ------- | -------- |
-| token | User token.       | String      | 65..a5  | yes      |
-| hash  | Transaction hash. | String      | 0x..a4  | no       |
+| name  | type              | description | required |
+| ----- | ----------------- | ----------- | -------- |
+| token | User token.       | String      | yes      |
+| hash  | Transaction hash. | String      | no       |
 
 ##### Response
 
@@ -252,11 +306,11 @@ We will be releasing Bitsign tx library to facilitate this process soon.
 
 ##### Body atributes
 
-| name  | type   | description                               | example    | required? |
-| ----- | ------ | ----------------------------------------- | ---------- | --------- |
-| token | string | User token.                               | ey..yk     | yes       |
-| env   | string | Environment to deploy the smart contract. | production | yes       |
-| tx    | string | Signed data.                              | 0x..m3     | yes       |
+| name  | type   | description                               | required? |
+| ----- | ------ | ----------------------------------------- | --------- |
+| token | string | User token.                               | yes       |
+| env   | string | Environment to deploy the smart contract. | yes       |
+| tx    | string | Signed data.                              | yes       |
 
 ##### Request
 
@@ -306,22 +360,22 @@ This endpoint allows the user to deploy a new smart contract.
 
 ##### Body atributes
 
-| name  | type   | description                                       | example         | required? |
-| ----- | ------ | ------------------------------------------------- | --------------- | --------- |
-| token | string | User token.                                       | ey..yk          | yes       |
-| env   | string | Environment to deploy the smart contract.         | production      | yes       |
-| args  | object | Constructor arguments for each specified contract | descrided below | yes       |
-| type  | string | Contract type to deploy.                          | Escrow          | yes       |
-| value | string | Value in ethers to send to the smart contract.    | 0               | yes       |
+| name  | type   | description                                       | required? |
+| ----- | ------ | ------------------------------------------------- | --------- |
+| token | string | User token.                                       | yes       |
+| env   | string | Environment to deploy the smart contract.         | yes       |
+| args  | object | Constructor arguments for each specified contract | yes       |
+| type  | string | Contract type to deploy.                          | yes       |
+| value | string | Value in ethers to send to the smart contract.    | yes       |
 
 #### Notarize
 
 This smart contract allows the user to notarize documents. In order to initialize Notarize contract the user must send an address, that will be set as the owner of the contract. The owner will be the only one that is able to notarize.
 
 ##### Constructor
-| name  | type    | description                                                     | example |
-| ----- | ------- | --------------------------------------------------------------- | ------- |
-| _user | address | Ethereum address that will be set as the owner of the contract. | 0x..m3  |
+| name  | type    | description                                                     |
+| ----- | ------- | --------------------------------------------------------------- |
+| _user | address | Ethereum address that will be set as the owner of the contract. |
 
 ##### Request
 
@@ -441,16 +495,16 @@ This smart contract allows the user to notarize transactions.
 
 ##### Constructor
 
-| name      | type    | description                                   | example     |
-| --------- | ------- | --------------------------------------------- | ----------- |
-| _buyer    | address | Ethereum address that will act as the buyer.  | 0x..m3      |
-| _seller   | address | Ethereum address that will act as the seller. | 0x..m3      |
-| _id       | bytes32 | unique id of the transaction.                 | da..65      |
-| _date     | string  | Date of transaction perform                   | "11/09/18"  |
-| _value    | uint    | Value of the transaction                      | 452         |
-| _hash     | bytes32 | Hash of transaction, could act as a integrity | df..26      |
-| _status   | string  | State of transaction proccess                 | "purchased" |
-| _shipping | string  | Shipping progress                             | "send"      |
+| name      | type    | description                                   |
+| --------- | ------- | --------------------------------------------- |
+| _buyer    | address | Ethereum address that will act as the buyer.  |
+| _seller   | address | Ethereum address that will act as the seller. |
+| _id       | bytes32 | unique id of the transaction.                 |
+| _date     | string  | Date of transaction perform                   |
+| _value    | uint    | Value of the transaction                      |
+| _hash     | bytes32 | Hash of transaction, could act as a integrity |
+| _status   | string  | State of transaction proccess                 |
+| _shipping | string  | Shipping progress                             |
 
 ##### Request
 
@@ -518,10 +572,10 @@ This endpoint returns smart contract's ABI and functions to use its functionalit
 
 ##### Header parameters
 
-| name  | type   | description          | example | required |
-| ----- | ------ | -------------------- | ------- | -------- |
-| token | String | User token.          | ey..yk  | yes      |
-| type  | String | Smart Contract type. | Notary  | yes      |
+| name  | type   | description          | required |
+| ----- | ------ | -------------------- | -------- |
+| token | String | User token.          | yes      |
+| type  | String | Smart Contract type. | yes      |
 
 ##### Response
 
@@ -609,13 +663,13 @@ This endpoint will not alter blockchain state and therefore wont cost gas.
 
 ##### Body atributes
 
-| name  | type   | description                               | example    | required? |
-| ----- | ------ | ----------------------------------------- | ---------- | --------- |
-| token | string | User token.                               | ey..yk     | yes       |
-| address | string | Address of the contract | 0x..e7 | yes |
-| env   | string | Environment to deploy the smart contract. | production | yes       |
-| method    | string | Method of the contract                   | getBalance     | yes       |
-| Args | object | Arguments of the method, if required | {} | yes |
+| name    | type   | description                               | required? |
+| ------- | ------ | ----------------------------------------- | --------- |
+| token   | string | User token.                               | yes       |
+| address | string | Address of the contract                   | yes       |
+| env     | string | Environment to deploy the smart contract. | yes       |
+| method  | string | Method of the contract                    | yes       |
+| Args    | object | Arguments of the method, if required      | yes       |
 ##### Request
 
 _example :&nbsp;_
@@ -646,26 +700,26 @@ _example :&nbsp;_
 
 ##### Notarize methods
 
-| name     | description                               | args    |
-| -----  | ----------------------------------------- | ---------- |
+| name     | description                                                                | args                                       |
+| -------- | -------------------------------------------------------------------------- | ------------------------------------------ |
 | getProof | Given some data, returns the address wich performed notarize(_data) method | - *_data:*&nbsp; (bytes32) Notarized data. |
 
 #### Escrow methods
 
-| name     | description                               | args    |
-| -----  | ----------------------------------------- | ---------- |
-| buyer  | Ethereum address that will act as the buyer. | - |
-| seller  | Ethereum address that will act as the seller. | - |
-| arbiter  | Ethereum address that will act as the arbiter, wich is the contract creator. | - |
-| value  | Value sended in constructor | - |
-| endTime  | estimated end time of the proccess, in unix time. | - |
-| getBalance |  This method will return the balance of the contract. | - |
+| name       | description                                                                  | args |
+| ---------- | ---------------------------------------------------------------------------- | ---- |
+| buyer      | Ethereum address that will act as the buyer.                                 | -    |
+| seller     | Ethereum address that will act as the seller.                                | -    |
+| arbiter    | Ethereum address that will act as the arbiter, wich is the contract creator. | -    |
+| value      | Value sended in constructor                                                  | -    |
+| endTime    | estimated end time of the proccess, in unix time.                            | -    |
+| getBalance | This method will return the balance of the contract.                         | -    |
 
 #### Notarize tx methods
 
-| name     | description                               | args    |
-| -----  | ----------------------------------------- | ---------- |
-| BSG_NODE  |Ethereum address allowed to execute whrite metods, wich is the contract creator. | - |
+| name     | description                                                                      | args |
+| -------- | -------------------------------------------------------------------------------- | ---- |
+| BSG_NODE | Ethereum address allowed to execute whrite metods, wich is the contract creator. | -    |
 
 ### Execute Contract Method
 **PATCH:**&nbsp; https://api.bitsign.io/eth/contract
@@ -677,13 +731,13 @@ Although this method will generally cost gas, there is no limitation about it wh
 
 ##### Body atributes
 
-| name  | type   | description                               | example    | required? |
-| ----- | ------ | ----------------------------------------- | ---------- | --------- |
-| token | string | User token.                               | ey..yk     | yes       |
-| address | string | Address of the contract | 0x..e7 | yes |
-| env   | string | Environment to deploy the smart contract. | production | yes       |
-| method    | string | Method of the contract                   | getBalance     | yes       |
-| Args | object | Arguments of the method, if required | {} | yes |
+| name    | type   | description                               | required? |
+| ------- | ------ | ----------------------------------------- | --------- |
+| token   | string | User token.                               | yes       |
+| address | string | Address of the contract                   | yes       |
+| env     | string | Environment to deploy the smart contract. | yes       |
+| method  | string | Method of the contract                    | yes       |
+| Args    | object | Arguments of the method, if required      | yes       |
 
 ##### Request
 
@@ -691,8 +745,8 @@ _example :&nbsp;_
 
 ```json
 {
-    "token": "",
-    "address": "<contract_address>",
+    "token": "65287a7593f3ee75b7264fc497401163e22dc596c86a561015a6480844365ade",
+    "address": "0x534cd4e646c9d9981ee94c24a33221abb55f99e7",
     "env": "production",
     "method": "kill",
     "args": { }
@@ -715,21 +769,21 @@ _example :&nbsp;_
 
 ##### Notarize methods
 
-| name     | description                               | args    |
-| -----  | ----------------------------------------- | ---------- |
+| name     | description                                                                                                                                                                                                                                                                                                                                                | args                         |
+| -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
 | notarize | This method receive as a parameter a bytes32 that will be the evidence to be notarized. The owner of the contract will be the only one that is capable of execute this method. If the sender is not the owner, the tx will be reverted. After the evidence is notarized the Notary event will be raised with two parameters: the evidence and the address. | *_data:*&nbsp; data to sign. |
 
 ##### Escrow methods
 
-| name     | description                               | args    |
-| -----  | ----------------------------------------- | ---------- |
-| pay | This method can be executed by the buyer or the arbiter. This method will transfer the balance of the contract to the seller address. After that, it will raise the Payout event with two parameters: balance and seller address. | - |
-| refund | This method can be executed by the seller or the arbiter. This method will transfer the balance of the contract to the buyer address. After that, it will raise the Refund event with two parameters: balance and buyer address. | - | 
-| kill | This method can be executed by the arbiter only. It will destruct the contract and send the balance of the contract to its address. | - |
+| name   | description                                                                                                                                                                                                                       | args |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---- |
+| pay    | This method can be executed by the buyer or the arbiter. This method will transfer the balance of the contract to the seller address. After that, it will raise the Payout event with two parameters: balance and seller address. | -    |
+| refund | This method can be executed by the seller or the arbiter. This method will transfer the balance of the contract to the buyer address. After that, it will raise the Refund event with two parameters: balance and buyer address.  | -    |
+| kill   | This method can be executed by the arbiter only. It will destruct the contract and send the balance of the contract to its address.                                                                                               | -    |
 
 ##### Notarize Tx methods
-| name     | description                               | args    |
-| -----  | ----------------------------------------- | ---------- |
+| name         | description                                                                                                                                                                                                                                                                                                                       | args                                                                                                                              |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | updateStatus | This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed.  The main purpose of this method is to update the tx status. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32) | *_status:*&nbsp;(string): Status to update. <br> *_hash:*&nbsp;(bytes32) hash of the tx. <br> *_id:*&nbsp;(bytes32) Id of the tx. |
 
 | updateShipping | This method can be executed by the buyer or the BSG node. Also it checks that the id passed is the same as one that user sent when deployed. The main purpose of this method is to update the tx shipping. After the method notarize the new tx, it raise the NotaryEvt event with the parameters: hash (bytes32) and id (bytes32). | *_shipping:*&nbsp;(string): Shipping to update. <br> *_hash:*&nbsp;(bytes32) hash of the tx. <br> *_id:*&nbsp;(bytes32) Id of the tx. | 
@@ -740,9 +794,9 @@ _example :&nbsp;_
 This endpoint returns the contracts deployed by the user.
 ##### Header parameters
 
-| name     | type   | description           | example          | required |
-| -------- | ------ | --------------------- | ---------------- | -------- |
-| token | String | User token.          | ey..yk  | yes      |
+| name  | type   | description | example | required |
+| ----- | ------ | ----------- | ------- | -------- |
+| token | String | User token. | ey..yk  | yes      |
 
 ##### Response
 
@@ -781,33 +835,30 @@ This endpoint allows to create a new erc20 crowdsale. By this, user will deploy 
     - Capped: Adds a cap to your crowdsale, invalidating any purchases that would exceed that cap.
     - Timed: Adds an openingTime and closingTime to user crowdsale.
 
-##### Required values
+For more information about this, visit the Token Crowdsale contracts section.
 
-To perform a deploy user must send following values:
+##### Body atributes
 
-- **env (string):&nbsp;** Enviroment to perform the method.
+| name  | type   | description                                                                                   | required? |
+| ----- | ------ | --------------------------------------------------------------------------------------------- | --------- |
+| env   | string | Enviroment to perform the method.                                                             | yes       |
+| email | string | The user email.                                                                               | yes       |
+| args  | object | The arguments required are the constructor arguments of the crowdsale contract, listed below. | yes       |
 
-- **email (string):&nbsp;** The user email.
+##### Constructor
 
-- **args (object):&nbsp;** The arguments required are the constructor arguments of the crowdsale contract, listed below:
+| name        | type    | description                                                   |
+| ----------- | ------- | ------------------------------------------------------------- |
+| name        | string  | The name of the token.                                        |
+| symbol      | string  | The abreviation of the token.                                 |
+| decimals    | uint    | The quantity of decimals which a token can be splitted.       |
+| rate        | uint    | The rate of the token.                                        |
+| wallet      | address | The address that will hold the ethers after the ERC20 finish. |
+| cap         | uint    | The top quantity of ethers that can be buyed.                 |
+| openingTime | date    | The estimated opening time of the erc20 crowdsale.            |
+| closingTime | date    | The estimated closing time of the erc20 crowdsale.            |
 
-    - **_name (string):&nbsp;** The name of the token.
-
-    - **_symbol (string):&nbsp;** The abreviation of the token.
-    
-    - **_decimals (uint):&nbsp;** The quantity of decimals which a token can be splitted.
-    
-    - **_rate (uint):&nbsp;** The rate of the token.
-    
-    - **_wallet (address):&nbsp;** The address that will hold the ethers after the ERC20 finish.
-    
-    - **_cap (uint):&nbsp;** The top quantity of ethers that can be buyed.
-    
-    - **_openingTime (date):&nbsp;** The estimated opening time of the erc20 crowdsale.
-    
-    - **_closingTime (date):&nbsp;** The estimated closing time of the erc20 crowdsale.
-
-_Request example (application/json):&nbsp;_
+_Request example:_
 ```json
 {	
     "env" : "production",
@@ -825,6 +876,49 @@ _Request example (application/json):&nbsp;_
 }
 ```
 
+##### Response
+
+_example :&nbsp;_
+
+```json
+Juanma Laburo, [08.10.18 10:30]
+{
+  "success": true,
+  "data": {
+    "token": {
+      "date": {
+        "created": "2018-10-08T13:29:21.554Z"
+      },
+      "abi": [{"abi, see "}],
+      "gas": 525545,
+      "bytecode": "",
+      "address": "0x270A291141947458D34f17AF24A0D79Dc8dAB85d",
+"encodedAbi": "0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000e4d54942142b328229aaee8c55e92600da4f680f000000000000000000000000de276ab4b4bb4b3fac891bb63a63a4789b98d4dc0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000005bbc19b0000000000000000000000000000000000000000000000000000000005bafdcb0",
+      "txHash": "0x9b0e855d5857f2a35933659e0e22a976f46ba27b3910cc5766e6719281eb94e2",
+      "args": {
+        "_token": "0xDE276aB4B4bB4b3FaC891BB63A63A4789B98d4dc",
+        "_openingTime": 1539054000,
+        "_closingTime": 1539226800,
+        "_rate": 1,
+        "_wallet": "0xe4D54942142b328229aAEE8c55e92600aD4F680F",
+        "_cap": 1
+      }
+    },
+    "date": {
+      "created": "2018-10-08T13:29:31.291Z"
+    },
+    "owner": {
+      "email": "user@hotmail.com"
+    },
+    "_id": "5bbb5bbb1f56a40b9d66957c",
+    "description": "descripcion",
+    "securityType": "Acciones",
+    "species": "Securities",
+    "__v": 0
+  },
+  "error": null
+```
+
 ### View contract methods
 This section explains how the user to read the state from the blockchain using erc20 contract methods. These will not alter blockchain state and therefore wont cost gas.
 
@@ -832,13 +926,14 @@ This section explains how the user to read the state from the blockchain using e
 
 There are 2 possible endpoints, one for call token contract, and the another for crowdsale contract. To perform a view method user must send following values:
 
-- _env (string):&nbsp;_ Enviroment to perform the method
+##### Body atributes
 
-- _address (address):&nbsp;_ Address of deployed contract
-
-- _method (string):&nbsp;_ The name the method you want to execute.
-
-- _args (object):&nbsp;_ The arguments required by the function.
+| name     | type    | description                              | required? |
+| -------- | ------- | ---------------------------------------- | --------- |
+| env     | string  | Enviroment to perform the method.        | yes       |
+| address | address | Address of deployed contract.            | yes       |
+| method  | string  | The name the method you want to execute. | yes       |
+| args    | object  | The arguments required by the function.  | no        |
 
 #### Generic Token Crowdsale Methods 
 **POST:** &nbsp; https://api.bitsign.io/erc20/genericTokenCrowdsale
@@ -864,9 +959,21 @@ _Request example (application/json):&nbsp;_
 {
   "env" : "production",
   "address" : "0x5bB04Ba324E9AD0016De0122cA19Ef69ED0B31ec",
-  "method" : "openingTime"
+  "method" : "token"
 }
 ``` 
+
+##### Response
+
+_example :&nbsp;_
+
+```json
+{
+  "success": true,
+  "data": "0x788E6cFb34db7933BF65099b69715Ee98828834F",
+  "error": null
+}
+```
 
 #### Generic Token Methods 
 **POST:** &nbsp; https://api.bitsign.io/erc20/genericToken
@@ -893,19 +1000,34 @@ _Request example (application/json):&nbsp;_
 }
 ```
 
+##### Response
+
+_example :&nbsp;_
+
+```json
+{
+  "success": true,
+  "data": "0",
+  "error": null
+}
+```
+
 ### Write methods 
+
 **PATCH:** &nbsp; https://api.bitsign.io/erc20
 Endpoint for execute a write method over an ERC20 crowdsale. These methods change the state of blockchain, so requires gas usage by sender address. Elsewere, transaction will fail. 
 
-##### Required values
+##### Body atributes
 
 To perform a write method user must provide following values:
 
-- _env (string):&nbsp;_       Enviroment to perform the method
-- _address (address):&nbsp;_  The address of the ERC20.
-- _method (string):&nbsp;_    The name the method you want to execute. 
-- _args (object):&nbsp;_      The arguments required by the function.
-- _value (uint):&nbsp;_        The value in ethers. Mostly used when the user want to buy tokens.
+| name     | type    | description                              | required? |
+| -------- | ------- | ---------------------------------------- | --------- |
+| _env | string |       Enviroment to perform the method. | yes |
+| _address | address |  The address of the ERC20. | yes |
+| _method | string |    The name the method you want to execute.  | yes |
+| _args | object |      The arguments required by the function. | yes |
+| _value | uint |        The value in ethers. Mostly used when the user want to buy tokens. | yes |
 
 #### Available methods
 
@@ -921,7 +1043,8 @@ A list of possible methods to call is provided down.
 | token.decreaseApproval | Decrease the amount of tokens that an owner allowed to a spender.                           | _\_spender(address):&nbsp;_ The address which will spend the funds. <br> _\_subtractedValue (uint):&nbsp;_ The amount of tokens to decrease the allowance by.                                                      |
 
 
-_Request example (application/json):&nbsp;_
+_Request_:
+
 ```json
 {
   "env" : "production",
@@ -938,17 +1061,12 @@ _Request example (application/json):&nbsp;_
 **GET:** &nbsp; https://api.bitsign.io/erc20
 This endpoint allows user to retrieve a list of deployed contrats by user, as well as information about a specific contract instance
 
-##### Required value
+##### Body atributes
 
-To perform a write method user must provide following values:
-
-- **email (string):&nbsp;** The user email.
-
-##### Optional value
-
-If this value is sent, response will show information about a specific contract instance.
-
-- **_id (string):&nbsp;** The ERC20 mongoDB's _id. This value is returned for each contract owned by user in a non _id specified query.
+| name  | type   | description                                                                                   | required? |
+| ----- | ------ | --------------------------------------------------------------------------------------------- | --------- |
+| email |string | The user email. | yes |
+| id | string | The ERC20 mongoDB's _id. This value is returned for each contract owned by user in a non _id specified query. | no |
 
 
 _Request example (application/json):&nbsp;_
