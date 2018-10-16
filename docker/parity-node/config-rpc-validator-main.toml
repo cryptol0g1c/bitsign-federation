@@ -1,0 +1,39 @@
+[parity]
+chain = "genesis.json"
+identity = "bitsign-rpc-validator-main"
+no_persistent_txqueue = true
+
+[account]
+unlock = ["$UNLOCK"]
+password = ["$PASS_PATH"]
+
+[ui]
+disable = true
+
+[network]
+discovery = true
+reserved_peers = "$NODES_PATH"
+
+[rpc]
+interface = "all"
+cors = ["*"]
+hosts = ["all"]
+apis = ["safe"]
+
+[websockets]
+interface = "all"
+
+[mining]
+author = "$AUTHOR"
+engine_signer = "$ENGINE_SIGNER"
+reseal_max_period = 30000
+
+[footprint]
+tracing = "on"
+fat_db = "on"
+pruning = "archive"
+
+[misc]
+logging = "external_tx=debug,network=info,own_tx=debug,poa=info,txqueue=debug"
+log_file = "parity-main.log"
+color = true
