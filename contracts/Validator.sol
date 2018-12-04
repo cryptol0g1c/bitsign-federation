@@ -1,4 +1,4 @@
-pragma solidity ^0.4.13;
+pragma solidity 0.4.25;
 
 contract Validator {
   address[] private _validatorArr;
@@ -13,12 +13,12 @@ contract Validator {
     _;
   }
   /**
-    Function modifier that let's add or remove validar based on current msg.sender status
+    Function modifier that let's add or remove validator based on current msg.sender status
    */
   modifier isValidator {
     bool found = false;
     for (uint i = 0; i < _validatorArr.length; i++) {
-      if (_validatorArr[i] == msg.sender) 
+      if (_validatorArr[i] == msg.sender)
         found = true;
     }
     if (!found)
@@ -26,12 +26,12 @@ contract Validator {
     _;
   }
 
-  function Validator() public {
+  constructor() public {
     _validatorArr = _pendingArr;
   }
 
   // Called on every block to update node validator list.
-  function getValidators() public constant returns (address[]) {
+  function getValidators() public view returns (address[]) {
     return _validatorArr;
   }
 
@@ -57,12 +57,12 @@ contract Validator {
 
   function initiateChange() private {
     _finalized = false;
-    InitiateChange(block.blockhash(block.number - 1), _pendingArr);
+    emit InitiateChange(blockhash(block.number - 1), _pendingArr);
   }
 
   function finalizeChange() public {
     _validatorArr = _pendingArr;
     _finalized = true;
-    ChangeFinalized(_validatorArr);
+    emit ChangeFinalized(_validatorArr);
   }
 }

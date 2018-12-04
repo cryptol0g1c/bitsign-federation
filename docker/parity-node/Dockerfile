@@ -1,4 +1,4 @@
-FROM parity/parity:v1.11.11
+FROM parity/parity:v2.1.8
 
 WORKDIR /bitsign
 

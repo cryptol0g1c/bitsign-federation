@@ -23,7 +23,7 @@ engine_signer = "$ENGINE_SIGNER"
 reseal_max_period = 30000
 
 [misc]
-logging = "external_tx=debug,network=info,own_tx=debug,poa=info,txqueue=debug"
+logging = "external_tx=debug,network=info,own_tx=debug,poa=debug,txqueue=debug"
 log_file = "parity-validator.log"
 color = true
 
