@@ -2,6 +2,8 @@ FROM parity/parity:v2.1.8
 
 WORKDIR /bitsign
 
+USER root
+
 RUN apt-get update && apt-get install -yq --no-install-recommends \
         gettext \
         nano \
