@@ -1,0 +1,45 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "who",
+        "type": "address"
+      }
+    ],
+    "name": "Confirmed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "who",
+        "type": "address"
+      }
+    ],
+    "name": "Revoked",
+    "type": "event"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_who",
+        "type": "address"
+      }
+    ],
+    "name": "certified",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
