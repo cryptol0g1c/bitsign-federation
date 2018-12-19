@@ -20,7 +20,7 @@ reserved_peers = "$NODES_PATH"
 [mining]
 author = "$AUTHOR"
 engine_signer = "$ENGINE_SIGNER"
-reseal_max_period = 30000
+reseal_max_period = 300000
 
 [misc]
 logging = "external_tx=debug,network=info,own_tx=debug,poa=debug,txqueue=debug"

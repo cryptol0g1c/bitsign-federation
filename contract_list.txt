@@ -1,2 +1,0 @@
-0x00..05 < validators
-0x00..06 < registrar

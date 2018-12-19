@@ -3,9 +3,9 @@
 set -e
 
 # Set default values for ENV's variables
-export UNLOCK=${UNLOCK:-'0x0a0f29a9b479d91f6d112b203c7d9db0cb4cdb84'}
-export AUTHOR=${AUTHOR:-'0x0a0f29a9b479d91f6d112b203c7d9db0cb4cdb84'}
-export ENGINE_SIGNER=${ENGINE_SIGNER:-'0x0a0f29a9b479d91f6d112b203c7d9db0cb4cdb84'}
+export UNLOCK=${UNLOCK:-''}
+export AUTHOR=${AUTHOR:-''}
+export ENGINE_SIGNER=${ENGINE_SIGNER:-''}
 export NETWORK_PORT=${NETWORK_PORT:-'30303'}
 export PASS_PATH=${PASS_PATH:-'/bitsign/password.txt'}
 export KEY_PATH=${KEY_PATH:-''}
