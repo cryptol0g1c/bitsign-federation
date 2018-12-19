@@ -21,6 +21,8 @@ reserved_peers = "$NODES_PATH"
 author = "$AUTHOR"
 engine_signer = "$ENGINE_SIGNER"
 reseal_max_period = 300000
+min_gas_price = 10000000000000 #min gas price in WEI per GAS unit (0.00001 Ether)
+tx_queue_no_unfamiliar_locals = true #to mark every incoming transaction as external
 
 [misc]
 logging = "external_tx=debug,network=info,own_tx=debug,poa=debug,txqueue=debug"
