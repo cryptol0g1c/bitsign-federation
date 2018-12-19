@@ -21,7 +21,7 @@ reserved_peers = "$NODES_PATH"
 author = "$AUTHOR"
 engine_signer = "$ENGINE_SIGNER"
 reseal_max_period = 300000
-min_gas_price = 10000000000000 #min gas price in WEI per GAS unit (0.00001 Ether)
+min_gas_price = 1000000000 #min gas price in WEI per GAS unit (1 GWEI / 0.000000001 ETHER)
 tx_queue_no_unfamiliar_locals = true #to mark every incoming transaction as external
 
 [misc]

@@ -14,13 +14,13 @@
 //! See the License for the specific language governing permissions and
 //! limitations under the License.
 
-pragma solidity ^0.4.24;
+pragma solidity 0.4.24;
 
 
 contract Owned {
 	event NewOwner(address indexed old, address indexed current);
 
-	address public owner = msg.sender;
+	address public owner = 0x0a0F29a9B479d91F6D112B203C7D9dB0cb4CDb84;
 
 	modifier onlyOwner {
 		require(msg.sender == owner);
