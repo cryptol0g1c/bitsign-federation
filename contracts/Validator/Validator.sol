@@ -2,7 +2,7 @@ pragma solidity 0.4.25;
 
 contract Validator {
   address[] private _validatorArr;
-  address[] private _pendingArr = [0x0a0F29a9B479d91F6D112B203C7D9dB0cb4CDb84];
+  address[] private _pendingArr = [0x0a0F29a9B479d91F6D112B203C7D9dB0cb4CDb84, 0x31ad95aff37d2079eae45826c928a63d1fa5f05f, 0xb76954c02d7c3bef7f3470fc80d054a847cab644];
   bool private _finalized = true;
 
   event InitiateChange(bytes32 indexed _parent_hash, address[] _new_set);
