@@ -1,6 +1,9 @@
-![Bitsign](https://bitsign.io/dist/de0a1c415444858ae585783c1e7e7e01.png "Bitsign")
+<div align="center">
 
-# Bitsign Federation Network
+<img src="https://bitsign.io/dist/de0a1c415444858ae585783c1e7e7e01.png" alt="BSG" width="375" />
+
+##### Bitsign Federation Network
+</div>
 
 ### What is Bitsign Federation?
 
@@ -86,7 +89,7 @@ For running Parity on Bitsign Federation an example command line can be:
 $ parity --config config.toml
 ```
 
-#### Running a Bitsign node using Docker
+### Running a Bitsign node using Docker
 
 ```
 $ docker run --detach \
@@ -98,7 +101,7 @@ $ docker run --detach \
 
 The *NODE_NAME* environment variable is a reference name for the statistics explorer, you can choose whatever you want.
 
-##### Using Docker Compose
+#### Using Docker Compose
 
 Edit the `.env` file and set the environment variables *TAG* and *NODE_NAME*, then run `docker-compose`:
 
