@@ -29,6 +29,6 @@ fat_db = "on"
 pruning = "archive"
 
 [misc]
-logging = "external_tx=debug,network=info,own_tx=debug,txqueue=debug, rpc=debug"
+logging = "external_tx=debug,network=info,own_tx=debug,txqueue=debug,rpc=debug"
 log_file = "parity-rpc.log"
 color = true
