@@ -1,19 +1,19 @@
+![Bitsign](https://bitsign.io/dist/de0a1c415444858ae585783c1e7e7e01.png "Bitsign")
+
 # Bitsign Federation Network
 
-#### What is Bitsign Federation?
+### What is Bitsign Federation?
 
 Bitsign Federation blockchain is a special type of blockchain (PoA algorithm) that lets you use features of blockchain/smart contracts like notarization, timestamping, escrow/crowdsale contracts but with low to zero fee and costs.
 Also we've created an abstraction layer on top of our EVM based blockchain that can be used to integrate business models with blockchain and smart contract features using only RESTful APIs.
 
+For more information please visit the [Official Website](https://bitsign.io/).
 
-#### Explorer
+
+### Explorer
 Bitsign Federation block explorer can be found [here](https://explorer.bitsign.io)
 
-#### Statistics
-Statistic explorer can be found [here](https://stats.bitsign.io)
-
-#### Configuration
-
+### Configuration
 To connect to Bitsign Federation Blockchain you need to use **genesis.json** for settings and initial conditions.
 
 File can be downloaded from [here](https://github.com/cryptol0g1c/bitsign-federation/blob/master/genesis.json)
@@ -72,8 +72,7 @@ enode://399eb9b379410a66c80899cf03bec59bce930cd6f8a8440e6c8601c881f68d994f054f29
 ```
 
 #### Running Parity
-
-Parity software can be downloaded [here](https://github.com/paritytech/parity/releases/tag/v1.9.2) (version 1.9.x+ recommended)
+Parity software can be downloaded [here](https://github.com/paritytech/parity-ethereum/releases/tag/v1.11.11) (version 1.11.11+ recommended).
 
 #### Configuration file
 
@@ -90,7 +89,7 @@ $ parity --config config.toml
 #### Running a Bitsign node using Docker
 
 ```
-docker run --detach \
+$ docker run --detach \
             --name bitsign-node \
             -e NODE_NAME=some-name \
             --restart=unless-stopped \
@@ -104,6 +103,6 @@ The *NODE_NAME* environment variable is a reference name for the statistics expl
 Edit the `.env` file and set the environment variables *TAG* and *NODE_NAME*, then run `docker-compose`:
 
 ```
-nano .env
-docker-compose up -d
+$ nano .env
+$ docker-compose up -d
 ```
